@@ -130,6 +130,12 @@ namespace SVEMS::Remote
         DataManager::Soc.value =
             data.battery.soc;
 
+        DataManager::Battery.remainingCapacity =
+            data.battery.remainingCapacity;
+
+        DataManager::Battery.totalCapacity =
+            data.battery.totalCapacity;
+
         DataManager::Soc.status.online =
             data.battery.online;
 
@@ -142,6 +148,12 @@ namespace SVEMS::Remote
         DataManager::Temperature.battery =
             data.battery.temperature;
 
+        for (uint8_t i = 0U; i < 4U; ++i)
+        {
+            DataManager::Battery.cellVoltage[i] =
+                data.battery.cellVoltage[i];
+        }
+        
         DataManager::Temperature.powerBankStatus.online =
             data.battery.online;
 
@@ -304,5 +316,82 @@ namespace SVEMS::Remote
             data.communication.http.failureCount,
             data.communication.http.consecutiveFailures
         );
+    }
+
+    void RemoteDataBridge::ApplyOffline()
+    {
+        //-----------------------------------------------------
+        // Solar
+        //-----------------------------------------------------
+
+        DataManager::Solar.status.online =
+            false;
+
+        DataManager::Solar.status.state =
+            DataManager::CommunicationState::Offline;
+
+
+        //-----------------------------------------------------
+        // Charge
+        //-----------------------------------------------------
+
+        DataManager::Charge.status.online =
+            false;
+
+        DataManager::Charge.status.state =
+            DataManager::CommunicationState::Offline;
+
+
+        //-----------------------------------------------------
+        // Battery / SOC
+        //-----------------------------------------------------
+
+        DataManager::Battery.status.online =
+            false;
+
+        DataManager::Soc.status.online =
+            false;
+
+
+        //-----------------------------------------------------
+        // Load
+        //-----------------------------------------------------
+
+        DataManager::Load.status.online =
+            false;
+
+        DataManager::Load.status.state =
+            DataManager::CommunicationState::Offline;
+
+
+        //-----------------------------------------------------
+        // Temperature
+        //-----------------------------------------------------
+
+        DataManager::Temperature.cabinStatus.online =
+            false;
+
+        DataManager::Temperature.cabinStatus.state =
+            DataManager::CommunicationState::Offline;
+
+        DataManager::Temperature.powerBankStatus.online =
+            false;
+
+        DataManager::Temperature.powerBankStatus.state =
+            DataManager::CommunicationState::Offline;
+
+        DataManager::Temperature.controllerStatus.online =
+            false;
+
+        DataManager::Temperature.controllerStatus.state =
+            DataManager::CommunicationState::Offline;
+
+
+        //-----------------------------------------------------
+        // Environment
+        //-----------------------------------------------------
+
+        DataManager::Environment.status.online =
+            false;
     }
 }

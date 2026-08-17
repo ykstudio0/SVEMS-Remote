@@ -301,8 +301,26 @@ namespace SVEMS::Telemetry
         data.battery.soc =
             battery["soc"] | 0U;
 
+        data.battery.remainingCapacity =
+            battery["remainingCapacity"] | 0.0f;
+
+        data.battery.totalCapacity =
+            battery["totalCapacity"] | 0.0f;
+
         data.battery.temperature =
             battery["temperature"] | 0.0f;
+
+        data.battery.cellVoltage[0] =
+            battery["cell1"] | 0.0f;
+
+        data.battery.cellVoltage[1] =
+            battery["cell2"] | 0.0f;
+
+        data.battery.cellVoltage[2] =
+            battery["cell3"] | 0.0f;
+
+        data.battery.cellVoltage[3] =
+            battery["cell4"] | 0.0f;
 
         data.battery.online =
             battery["online"] | false;

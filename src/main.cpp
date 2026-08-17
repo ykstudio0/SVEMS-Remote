@@ -162,6 +162,24 @@ void loop()
                 true;
             break;
 
+        case ButtonManager::Button::HomeLong:
+        {
+            const uint8_t subPageCount =
+                DisplayPages::GetSubPageCount(
+                    pageManager.Current()
+                );
+
+            if (subPageCount > 1U)
+            {
+                pageManager.NextSubPage();
+
+                forceDisplayRefresh =
+                    true;
+            }
+
+            break;
+        }
+
         default:
             break;
     }

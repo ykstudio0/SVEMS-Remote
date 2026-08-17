@@ -9,10 +9,14 @@
 
 #include "ButtonManager.h"
 #include "Pins.h"
+#include "Config.h"
 
 namespace
 {
-    constexpr uint32_t DEBOUNCE_MS =
+    constexpr uint32_t LONG_PRESS_MS =
+        1000UL;
+
+    constexpr uint32_t DEBOUNCE_MS = 
         30UL;
 
     struct ButtonState
@@ -23,6 +27,9 @@ namespace
         bool stableState;
 
         uint32_t lastChangeTime;
+
+        uint32_t pressedTime;
+        bool longReported;
     };
 
     ButtonState g_previous =
@@ -30,7 +37,9 @@ namespace
         PIN_BUTTON_PREV,
         HIGH,
         HIGH,
-        0UL
+        0UL,
+        0UL,
+        false
     };
 
     ButtonState g_next =
@@ -55,7 +64,8 @@ namespace
 
     void UpdateButton(
         ButtonState& button,
-        ButtonManager::Button id)
+        ButtonManager::Button id,
+        bool allowLongPress = false)
     {
         const bool raw =
             digitalRead(button.pin);
@@ -78,25 +88,65 @@ namespace
             return;
         }
 
-        if (button.stableState ==
+        //---------------------------------------------------------
+        // Stable state changed
+        //---------------------------------------------------------
+
+        if (button.stableState !=
             button.rawState)
         {
-            return;
+            button.stableState =
+                button.rawState;
+
+            // Pressed
+            if (button.stableState == LOW)
+            {
+                button.pressedTime =
+                    now;
+
+                button.longReported =
+                    false;
+
+                // Long press를 사용하지 않는 버튼은
+                // 기존처럼 즉시 클릭 처리
+                if (!allowLongPress)
+                {
+                    g_pressed =
+                        id;
+                }
+            }
+            // Released
+            else
+            {
+                // Home이 long press가 아니었다면
+                // release 시 short click 발생
+                if (allowLongPress &&
+                    !button.longReported)
+                {
+                    g_pressed =
+                        id;
+                }
+            }
         }
 
-        button.stableState =
-            button.rawState;
+        //---------------------------------------------------------
+        // Long Press
+        //---------------------------------------------------------
 
-        // INPUT_PULLUP:
-        // LOW = Pressed
-        if (button.stableState == LOW)
+        if (allowLongPress &&
+            button.stableState == LOW &&
+            !button.longReported &&
+            now - button.pressedTime >=
+                LONG_PRESS_MS)
         {
+            button.longReported =
+                true;
+
             g_pressed =
-                id;
+                ButtonManager::Button::HomeLong;
         }
     }
 }
-
 
 namespace ButtonManager
 {
@@ -152,7 +202,8 @@ namespace ButtonManager
 
         UpdateButton(
             g_home,
-            Button::Home);
+            Button::Home,
+            true);
     }
 
 

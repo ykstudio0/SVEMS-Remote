@@ -20,5 +20,7 @@ namespace SVEMS::Remote
         static void Apply(
             const SVEMS::Telemetry::TelemetryData& data
         );
+
+        static void ApplyOffline();
     };
 }

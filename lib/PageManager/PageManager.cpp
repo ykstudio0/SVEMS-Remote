@@ -98,4 +98,10 @@ namespace PageManager
         m_subPage =
             0U;
     }
+
+    void Manager::ResetSubPage()
+    {
+        m_subPage =
+            0U;
+    }
 }

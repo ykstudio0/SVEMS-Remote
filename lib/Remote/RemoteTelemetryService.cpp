@@ -20,6 +20,7 @@
 #include "TelemetryJsonParser.h"
 #include "DataManager.h"
 #include "RemoteDataBridge.h"
+#include "RemoteSystemState.h"
 
 SVEMS::Telemetry::TelemetryData
     RemoteTelemetryService::m_data;
@@ -42,35 +43,45 @@ bool RemoteTelemetryService::HasData()
 
 namespace
 {
-    constexpr uint32_t UPDATE_INTERVAL_MS =
-        5000UL;
-
     uint32_t lastUpdate =
         0;
 }
 
 void RemoteTelemetryService::Update()
 {
-    if (!WiFiService::IsConnected())
-    {
-        return;
-    }
-
     const uint32_t now =
         millis();
 
     if (now - lastUpdate <
-            UPDATE_INTERVAL_MS)
+            SVEMS::Config::UPDATE_INTERVAL_MS)
     {
         return;
     }
 
     lastUpdate =
         now;
+    
+    SVEMS::Remote::RemoteSystemState::
+        UpdateFreshness();
 
+    if (!SVEMS::Remote::RemoteSystemState::
+            Get().telemetryOnline
+    )
+    {
+        SVEMS::Remote::RemoteDataBridge::
+            ApplyOffline();
+    }
+
+    if (!WiFiService::IsConnected())
+    {
+        return;
+    }
+    
     WiFiClientSecure client;
 
     client.setInsecure();
+
+    client.setHandshakeTimeout(3);
 
     HTTPClient http;
 
@@ -85,15 +96,14 @@ void RemoteTelemetryService::Update()
         return;
     }
 
+    http.setConnectTimeout(3000);
+
+    http.setTimeout(3000);
+
     http.setAuthorization(
         SVEMS::Config::SERVER_USER,
         SVEMS::Config::SERVER_PASSWORD
     );
-
-    // http.addHeader(
-    //     "X-SVEMS-API-Key",
-    //     SVEMS::Config::SVEMS_API_KEY
-    // );
     
     const int httpCode =
         http.GET();
@@ -105,6 +115,26 @@ void RemoteTelemetryService::Update()
     Serial.println(
         httpCode
     );
+
+    if (httpCode < 0)
+    {
+        Serial.printf(
+            "[REMOTE] HTTP ERROR: %s\n",
+            HTTPClient::errorToString(
+                httpCode
+            ).c_str()
+        );
+
+        Serial.printf(
+            "[REMOTE] WIFI=%s RSSI=%d IP=%s DNS=%s\n",
+            WiFi.isConnected()
+                ? "CONNECTED"
+                : "DISCONNECTED",
+            WiFi.RSSI(),
+            WiFi.localIP().toString().c_str(),
+            WiFi.dnsIP().toString().c_str()
+        );
+    }
 
     if (httpCode == HTTP_CODE_OK)
     {

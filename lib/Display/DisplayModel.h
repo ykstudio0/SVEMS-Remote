@@ -16,10 +16,12 @@ namespace DisplayModel
 {
     enum class EnergyStatus
     {
+        Unknown,
         Charging,
         Idle,
         Night,
-        Warning
+        Warning,
+        Offline
     };
 
     struct HeaderData
@@ -153,6 +155,8 @@ namespace DisplayModel
 
         // BMS Detail
         DisplayTypes::DisplayValue remainingCapacity;
+        DisplayTypes::DisplayValue totalCapacity;
+        DisplayTypes::DisplayText communicationStatus;
 
         DisplayTypes::DisplayValue cellVoltage1;
         DisplayTypes::DisplayValue cellVoltage2;
@@ -196,6 +200,13 @@ namespace DisplayModel
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::Capacity)),
+            
+            totalCapacity(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::Capacity)),
+
+            communicationStatus(),
 
             cellVoltage1(
                 DisplayTypes::MakeValue(
@@ -557,9 +568,16 @@ namespace DisplayModel
     private:
         EnergyStatus DetermineEnergyStatus() const
         {
-            // --------Status Test ----------
-            //return EnergyStatus::Warning;
-            
+            //---------------------------------------------------------
+            // Offline
+            //---------------------------------------------------------
+
+            if (solar.power.state ==
+                DisplayTypes::WidgetState::Offline)
+            {
+                return EnergyStatus::Offline;
+            }
+
             // 가장 높은 우선순위:
             // 주요 에너지 데이터에 Warning 또는 Alarm이 존재하는 경우
             if (solar.power.HasAlert() ||

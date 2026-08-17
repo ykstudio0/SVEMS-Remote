@@ -198,6 +198,28 @@ namespace
 
         battery.remainingCapacity.decimals = 1U;
 
+        battery.totalCapacity =
+            DisplayTypes::MakeValue(
+                DataManager::Battery.totalCapacity,
+                DisplayTypes::ValueType::Capacity);
+
+        if (DataManager::Battery.status.online)
+        {
+            battery.communicationStatus.text =
+                "ONLINE";
+
+            battery.communicationStatus.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            battery.communicationStatus.text =
+                "OFFLINE";
+
+            battery.communicationStatus.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+
         battery.cellVoltage1 =
             DisplayTypes::MakeValue(
                 DataManager::Battery.cellVoltage[0],
@@ -283,6 +305,10 @@ namespace
 
         ApplyStatus(
             battery.remainingCapacity,
+            DataManager::Battery.status);
+
+        ApplyStatus(
+            battery.totalCapacity,
             DataManager::Battery.status);
 
         ApplyStatus(
@@ -395,6 +421,10 @@ namespace
         ApplyStatus(
             temperature.controllerTemperature,
             DataManager::Temperature.controllerStatus);
+
+        ApplyStatus(
+            temperature.cabinHumidity,
+            DataManager::Environment.status);
     }
 
     void BuildSystem(DisplayModel::Model& model)
@@ -700,6 +730,12 @@ namespace
                 header.energy.text = "Warning";
                 header.energy.color =
                     DisplayTheme::COLOR_ALARM;
+                break;
+
+            case DisplayModel::EnergyStatus::Offline:
+                header.energy.text = "OFF";
+                header.energy.color =
+                    DisplayTheme::COLOR_DISABLED;
                 break;
 
             default:

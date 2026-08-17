@@ -58,7 +58,18 @@ namespace SVEMS::Telemetry
 
         uint8_t soc = 0U;
 
+        float remainingCapacity = 0.0f;
+        float totalCapacity = 0.0f;
+
         float temperature = 0.0f;
+
+        float cellVoltage[4] =
+        {
+            0.0f,
+            0.0f,
+            0.0f,
+            0.0f
+        };
 
         bool online = false;
     };

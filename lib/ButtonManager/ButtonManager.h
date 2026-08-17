@@ -14,7 +14,8 @@ namespace ButtonManager
         None = 0U,
         Previous,
         Next,
-        Home
+        Home,
+        HomeLong
     };
 
     void Begin();

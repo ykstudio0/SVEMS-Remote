@@ -23,6 +23,9 @@ namespace SVEMS::Remote
 
             uint32_t timestampReceivedMillis = 0U;
 
+            bool telemetryReceived = false;
+            bool telemetryOnline = false;
+
             bool rs485Ready = false;
             bool modbusReady = false;
 
@@ -50,7 +53,14 @@ namespace SVEMS::Remote
             uint32_t httpConsecutiveFailures
         );
 
+        static void UpdateFreshness();
+
     private:
+        static bool IsSameTimestamp(
+            const SVEMS::Telemetry::TimestampData& a,
+            const SVEMS::Telemetry::TimestampData& b
+        );    
+    
         static State m_state;
     };
 }

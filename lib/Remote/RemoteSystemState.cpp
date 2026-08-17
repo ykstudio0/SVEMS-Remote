@@ -8,7 +8,8 @@
 //-------------------------------------------------------------
 
 #include "RemoteSystemState.h"
-
+#include "Config.h"
+#include <Arduino.h>
 
 namespace SVEMS::Remote
 {
@@ -22,6 +23,18 @@ namespace SVEMS::Remote
         return m_state;
     }
 
+    bool RemoteSystemState::IsSameTimestamp(
+        const SVEMS::Telemetry::TimestampData& a,
+        const SVEMS::Telemetry::TimestampData& b)
+    {
+        return
+            a.year   == b.year   &&
+            a.month  == b.month  &&
+            a.day    == b.day    &&
+            a.hour   == b.hour   &&
+            a.minute == b.minute &&
+            a.second == b.second;
+    }
 
     void RemoteSystemState::Update(
         const SVEMS::Telemetry::TimestampData& timestamp,
@@ -34,11 +47,35 @@ namespace SVEMS::Remote
         uint32_t httpFailureCount,
         uint32_t httpConsecutiveFailures)
     {
-        m_state.timestamp =
-            timestamp;
+        //-----------------------------------------------------
+        // Telemetry Timestamp
+        //-----------------------------------------------------
 
-        m_state.timestampReceivedMillis =
-            millis();
+        const bool newTelemetry =
+            !m_state.telemetryReceived ||
+            !IsSameTimestamp(
+                m_state.timestamp,
+                timestamp
+            );
+
+        if (newTelemetry)
+        {
+            m_state.timestamp =
+                timestamp;
+
+            m_state.timestampReceivedMillis =
+                millis();
+
+            m_state.telemetryReceived =
+                true;
+
+            m_state.telemetryOnline =
+                true;
+        }
+
+        //-----------------------------------------------------
+        // MAIN System State
+        //-----------------------------------------------------
 
         m_state.rs485Ready =
             rs485Ready;
@@ -63,5 +100,27 @@ namespace SVEMS::Remote
 
         m_state.httpConsecutiveFailures =
             httpConsecutiveFailures;
+    }
+
+
+    void RemoteSystemState::UpdateFreshness()
+    {
+        if (!m_state.telemetryReceived)
+        {
+            m_state.telemetryOnline =
+                false;
+
+            return;
+        }
+
+        if (
+            millis() -
+            m_state.timestampReceivedMillis >=
+                SVEMS::Config::TELEMETRY_TIMEOUT_MS
+        )
+        {
+            m_state.telemetryOnline =
+                false;
+        }
     }
 }
