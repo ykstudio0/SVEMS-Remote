@@ -16,6 +16,10 @@
 #include "PageManager.h"
 #include "Pins.h"
 #include "ButtonManager.h"
+#include <Wire.h>
+#include "TouchManager.h"
+
+SVEMS::Remote::TouchManager touchManager;
 
 namespace
 {
@@ -43,7 +47,7 @@ void setup()
     );
 
     delay(
-        1000
+        5000
     );
 
     Serial.println();
@@ -58,6 +62,24 @@ void setup()
     );
 
     //---------------------------------------------------------
+    // I2C
+    //---------------------------------------------------------
+    Wire.begin(8, 9);
+
+    if (!touchManager.Begin())
+    {
+        Serial.println(
+            "[TOUCH] Manager Begin failed"
+        );
+    }
+    else
+    {
+        Serial.println(
+            "[TOUCH] Manager Ready"
+        );
+    }
+
+    //---------------------------------------------------------
     // LCD
     //---------------------------------------------------------
 
@@ -67,6 +89,26 @@ void setup()
         3
     );
 
+    Serial.println(
+        "[I2C] Scanning..."
+    );
+
+    for (uint8_t address = 1U;
+        address < 127U;
+        ++address)
+    {
+        Wire.beginTransmission(
+            address
+        );
+
+        if (Wire.endTransmission() == 0U)
+        {
+            Serial.printf(
+                "[I2C] Found 0x%02X\n",
+                address
+            );
+        }
+    }
     display.setBrightness(
         180
     );
@@ -78,26 +120,6 @@ void setup()
     //---------------------------------------------------------
     // Display Framework
     //---------------------------------------------------------
-
-    pinMode(
-        PIN_BUTTON_PREV,
-        INPUT_PULLUP
-    );
-
-    pinMode(
-        PIN_BUTTON_NEXT,
-        INPUT_PULLUP
-    );
-
-    pinMode(
-        PIN_BUTTON_HOME,
-        INPUT_PULLUP
-    );
-
-    Serial.println(
-        "[BUTTON] Test Ready"
-    );
-
     Display::Begin();
 
     if (!displayRenderer.Begin(
@@ -211,5 +233,49 @@ void loop()
             pageManager.SubPage(),
             displayModel
         );
+    }
+
+    touchManager.Update();
+
+    const SVEMS::Remote::TouchManager::Action
+        touchAction =
+            touchManager.GetAction();
+
+    switch (touchAction)
+    {
+        case SVEMS::Remote::TouchManager::Action::Previous:
+            pageManager.Previous();
+
+            forceDisplayRefresh =
+                true;
+            break;
+
+        case SVEMS::Remote::TouchManager::Action::Next:
+            pageManager.Next();
+
+            forceDisplayRefresh =
+                true;
+            break;
+
+        case SVEMS::Remote::TouchManager::Action::Content:
+        {
+            const uint8_t subPageCount =
+                DisplayPages::GetSubPageCount(
+                    pageManager.Current()
+                );
+
+            if (subPageCount > 1U)
+            {
+                pageManager.NextSubPage();
+
+                forceDisplayRefresh =
+                    true;
+            }
+
+            break;
+        }
+
+        default:
+            break;
     }
 }

@@ -49,7 +49,7 @@ namespace DisplayModel
         EnergyStatus energyStatus;
 
         DisplayTypes::DisplayValue solarPower;
-        DisplayTypes::DisplayValue batteryVoltage;
+        DisplayTypes::DisplayValue batteryRemaining;
         DisplayTypes::DisplayValue batteryPercent;
         DisplayTypes::DisplayValue loadPower;
         DisplayTypes::DisplayValue temperature;
@@ -64,10 +64,10 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::Power)),
 
-              batteryVoltage(
+              batteryRemaining(
                 DisplayTypes::MakeValue(
                     0.0f,
-                    DisplayTypes::ValueType::Voltage)),
+                    DisplayTypes::ValueType::Capacity)),
 
               batteryPercent(
                 DisplayTypes::MakeValue(
@@ -547,8 +547,8 @@ namespace DisplayModel
             overview.solarPower =
                 solar.power;
 
-            overview.batteryVoltage =
-                battery.voltage;
+            overview.batteryRemaining =
+                battery.remainingCapacity;
 
             overview.batteryPercent =
                 battery.percent;
