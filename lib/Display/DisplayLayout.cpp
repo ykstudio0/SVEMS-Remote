@@ -65,12 +65,12 @@ namespace
 
     static constexpr DisplayLayout::StaticRow g_systemDetailRows[] =
     {
-        { 0U, "SOLAR OFF",  true },
-        { 1U, "CHARGE OFF", true },
-        { 2U, "BMS OFF",    true },
-        { 3U, "LOAD OFF",   true },
-        { 4U, "CTRL OFF",   true },
-        { 5U, "SOC OFF",    true }
+        { 0U, "RSSI",        true },
+        { 1U, "EPEVER",      true },
+        { 2U, "BMS",         true },
+        { 3U, "DEVICES",     true },
+        { 4U, "UPTIME",      true },
+        { 5U, "HTTP",        true }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetail2Rows[] =
@@ -81,6 +81,16 @@ namespace
         { 3U, "HTTP CONSEC", true },
         { 4U, "HTTP MAX",    true },
         { 5U, "HTTP ERROR",  true }
+    };
+
+    static constexpr DisplayLayout::StaticRow g_systemDetail3Rows[] =
+    {
+        { 0U, "SOLAR OFF",  true },
+        { 1U, "CHARGE OFF", true },
+        { 2U, "BMS OFF",    true },
+        { 3U, "LOAD OFF",   true },
+        { 4U, "CTRL OFF",   true },
+        { 5U, "SOC OFF",    true }
     };
 
     const DisplayLayout::StaticRow g_loadRows[] =
@@ -107,7 +117,7 @@ namespace
         { 4U, "TELEMETRY", true },
         { 5U, "AGE",       true }
     };
-    
+
 } // anonymous namespace
 
 const DisplayLayout::StaticRow*
@@ -191,6 +201,15 @@ const DisplayLayout::StaticRow*
                         sizeof(g_systemDetail2Rows[0]);
 
                     return g_systemDetail2Rows;
+                }
+
+                if (subPage == 3U)
+                {
+                    count =
+                        sizeof(g_systemDetail3Rows) /
+                        sizeof(g_systemDetail3Rows[0]);
+
+                    return g_systemDetail3Rows;
                 }
 
                 count =

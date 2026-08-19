@@ -33,6 +33,7 @@ namespace SVEMS::Remote
             int32_t mainWifiRssi = 0;
 
             bool mainHttpOnline = false;
+            uint32_t mainUptimeSeconds = 0U;
 
             String httpState;
 
@@ -52,6 +53,7 @@ namespace SVEMS::Remote
             bool modbusReady,
             bool mainWifiConnected,
             int32_t mainWifiRssi,
+            uint32_t mainUptimeSeconds,
             bool mainHttpOnline,
             const String& httpState,
             uint32_t httpSuccessCount,

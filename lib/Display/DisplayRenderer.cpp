@@ -931,81 +931,91 @@ namespace DisplayRenderer
             m_lastModel.GetSystem();
 
         //-------------------------------------------------
-        // SYSTEM DTL(1)
+        // MAINSYS DTL(1)
         //-------------------------------------------------
 
         if (subPage == 1U)
         {
-            const bool solarChanged =
+            // MAIN RSSI
+            const bool mainWifiChanged =
                 HasValueChanged(
-                    data.solarOfflineCount,
-                    lastData.solarOfflineCount);
+                    data.mainWifiSignal,
+                    lastData.mainWifiSignal);
 
-            if (ShouldDraw(solarChanged))
+            if (ShouldDraw(mainWifiChanged))
             {
                 DrawRowValue(
-                    data.solarOfflineCount,
+                    data.mainWifiSignal,
                     0U);
             }
 
-            const bool chargeChanged =
-                HasValueChanged(
-                    data.chargeOfflineCount,
-                    lastData.chargeOfflineCount);
+            // EPEVER
+            const bool epeverChanged =
+                HasDisplayTextChanged(
+                    data.epeverStatus,
+                    lastData.epeverStatus);
 
-            if (ShouldDraw(chargeChanged))
+            if (ShouldDraw(epeverChanged))
             {
-                DrawRowValue(
-                    data.chargeOfflineCount,
-                    1U);
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    1U,
+                    data.epeverStatus);
             }
 
+            // BMS
             const bool bmsChanged =
-                HasValueChanged(
-                    data.bmsOfflineCount,
-                    lastData.bmsOfflineCount);
+                HasDisplayTextChanged(
+                    data.bmsStatus,
+                    lastData.bmsStatus);
 
             if (ShouldDraw(bmsChanged))
             {
-                DrawRowValue(
-                    data.bmsOfflineCount,
-                    2U);
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    2U,
+                    data.bmsStatus);
             }
 
-            const bool loadChanged =
-                HasValueChanged(
-                    data.loadOfflineCount,
-                    lastData.loadOfflineCount);
+            // DEVICES
+            const bool deviceCountChanged =
+                HasDisplayTextChanged(
+                    data.deviceCount,
+                    lastData.deviceCount);
 
-            if (ShouldDraw(loadChanged))
+            if (ShouldDraw(deviceCountChanged))
             {
-                DrawRowValue(
-                    data.loadOfflineCount,
-                    3U);
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    3U,
+                    data.deviceCount);
             }
 
-            const bool controllerChanged =
+            // MAIN UPTIME
+            const bool mainUptimeChanged =
                 HasValueChanged(
-                    data.controllerOfflineCount,
-                    lastData.controllerOfflineCount);
+                    data.mainUptime,
+                    lastData.mainUptime);
 
-            if (ShouldDraw(controllerChanged))
+            if (ShouldDraw(mainUptimeChanged))
             {
                 DrawRowValue(
-                    data.controllerOfflineCount,
+                    data.mainUptime,
                     4U);
             }
 
-            const bool socChanged =
-                HasValueChanged(
-                    data.socOfflineCount,
-                    lastData.socOfflineCount);
+            // MAIN HTTP
+            const bool mainHttpChanged =
+                HasDisplayTextChanged(
+                    data.mainHttpStatus,
+                    lastData.mainHttpStatus);
 
-            if (ShouldDraw(socChanged))
+            if (ShouldDraw(mainHttpChanged))
             {
-                DrawRowValue(
-                    data.socOfflineCount,
-                    5U);
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    5U,
+                    data.mainHttpStatus);
             }
 
             return;
@@ -1093,6 +1103,101 @@ namespace DisplayRenderer
             return;
         }
 
+        //-------------------------------------------------
+        // SYSTEM DTL(3)
+        //-------------------------------------------------
+
+        if (subPage == 3U)
+        {
+            const bool solarChanged =
+                HasValueChanged(
+                    data.solarOfflineCount,
+                    lastData.solarOfflineCount);
+
+            if (ShouldDraw(solarChanged))
+            {
+                DrawRowValue(
+                    data.solarOfflineCount,
+                    0U);
+            }
+
+            const bool chargeChanged =
+                HasValueChanged(
+                    data.chargeOfflineCount,
+                    lastData.chargeOfflineCount);
+
+            if (ShouldDraw(chargeChanged))
+            {
+                DrawRowValue(
+                    data.chargeOfflineCount,
+                    1U);
+            }
+
+            const bool bmsChanged =
+                HasValueChanged(
+                    data.bmsOfflineCount,
+                    lastData.bmsOfflineCount);
+
+            if (ShouldDraw(bmsChanged))
+            {
+                DrawRowValue(
+                    data.bmsOfflineCount,
+                    2U);
+            }
+
+            const bool loadChanged =
+                HasValueChanged(
+                    data.loadOfflineCount,
+                    lastData.loadOfflineCount);
+
+            if (ShouldDraw(loadChanged))
+            {
+                DrawRowValue(
+                    data.loadOfflineCount,
+                    3U);
+            }
+
+            const bool controllerChanged =
+                HasValueChanged(
+                    data.controllerOfflineCount,
+                    lastData.controllerOfflineCount);
+
+            if (ShouldDraw(controllerChanged))
+            {
+                DrawRowValue(
+                    data.controllerOfflineCount,
+                    4U);
+            }
+
+            const bool socChanged =
+                HasValueChanged(
+                    data.socOfflineCount,
+                    lastData.socOfflineCount);
+
+            if (ShouldDraw(socChanged))
+            {
+                DrawRowValue(
+                    data.socOfflineCount,
+                    5U);
+            }
+
+            return;
+        }
+
+        // WIFI
+        const bool wifiChanged =
+            HasDisplayTextChanged(
+                data.wifiStatus,
+                lastData.wifiStatus);
+
+        if (ShouldDraw(wifiChanged))
+        {
+            DisplayWidgets::ValueWidget::DrawTextValue(
+                *m_target,
+                0U,
+                data.wifiStatus);
+        }
+
         // RSSI
         const bool wifiSignalChanged =
             HasValueChanged(
@@ -1103,49 +1208,7 @@ namespace DisplayRenderer
         {
             DrawRowValue(
                 data.wifiSignal,
-                0U);
-        }
-
-        // EPEVER
-        const bool epeverChanged =
-            HasDisplayTextChanged(
-                data.epeverStatus,
-                lastData.epeverStatus);
-
-        if (ShouldDraw(epeverChanged))
-        {
-            DisplayWidgets::ValueWidget::DrawTextValue(
-                *m_target,
-                1U,
-                data.epeverStatus);
-        }
-
-        // BMS
-        const bool bmsChanged =
-            HasDisplayTextChanged(
-                data.bmsStatus,
-                lastData.bmsStatus);
-
-        if (ShouldDraw(bmsChanged))
-        {
-            DisplayWidgets::ValueWidget::DrawTextValue(
-                *m_target,
-                2U,
-                data.bmsStatus);
-        }
-
-        // DEVICES
-        const bool deviceCountChanged =
-            HasDisplayTextChanged(
-                data.deviceCount,
-                lastData.deviceCount);
-
-        if (ShouldDraw(deviceCountChanged))
-        {
-            DisplayWidgets::ValueWidget::DrawTextValue(
-                *m_target,
-                3U,
-                data.deviceCount);
+                1U);
         }
 
         // HEAP
@@ -1158,7 +1221,7 @@ namespace DisplayRenderer
         {
             DrawRowValue(
                 data.heapPercent,
-                4U);
+                2U);
         }
 
         // UPTIME
@@ -1171,6 +1234,33 @@ namespace DisplayRenderer
         {
             DrawRowValue(
                 data.uptime,
+                3U);
+        }
+
+        // TELEMETRY
+        const bool telemetryChanged =
+            HasDisplayTextChanged(
+                data.telemetryStatus,
+                lastData.telemetryStatus);
+
+        if (ShouldDraw(telemetryChanged))
+        {
+            DisplayWidgets::ValueWidget::DrawTextValue(
+                *m_target,
+                4U,
+                data.telemetryStatus);
+        }
+
+        // AGE
+        const bool telemetryAgeChanged =
+            HasValueChanged(
+                data.telemetryAge,
+                lastData.telemetryAge);
+
+        if (ShouldDraw(telemetryAgeChanged))
+        {
+            DrawRowValue(
+                data.telemetryAge,
                 5U);
         }
     }

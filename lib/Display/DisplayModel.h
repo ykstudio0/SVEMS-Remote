@@ -332,7 +332,10 @@ namespace DisplayModel
         DisplayTypes::DisplayValue uptime;
         DisplayTypes::DisplayValue heapPercent;
         DisplayTypes::DisplayValue wifiSignal;
+        DisplayTypes::DisplayText wifiStatus;
         DisplayTypes::DisplayText deviceCount;
+        DisplayTypes::DisplayText telemetryStatus;
+        DisplayTypes::DisplayValue telemetryAge;
 
         DisplayTypes::DisplayText rs485Status;
         DisplayTypes::DisplayText modbusStatus;
@@ -341,13 +344,10 @@ namespace DisplayModel
         DisplayTypes::DisplayText epeverStatus;
         DisplayTypes::DisplayText bmsStatus;
 
-        // SYSTEM DTL(1) - Communication statistics
-        DisplayTypes::DisplayValue solarOfflineCount;
-        DisplayTypes::DisplayValue chargeOfflineCount;
-        DisplayTypes::DisplayValue bmsOfflineCount;
-        DisplayTypes::DisplayValue loadOfflineCount;
-        DisplayTypes::DisplayValue controllerOfflineCount;
-        DisplayTypes::DisplayValue socOfflineCount;
+        // SYSTEM DTL(1)
+        DisplayTypes::DisplayValue mainWifiSignal;
+        DisplayTypes::DisplayValue mainUptime;
+        DisplayTypes::DisplayText mainHttpStatus;
 
         // SYSTEM DTL(2) - HTTP diagnostics
         DisplayTypes::DisplayText httpState;
@@ -356,6 +356,14 @@ namespace DisplayModel
         DisplayTypes::DisplayValue httpConsecutiveFailures;
         DisplayTypes::DisplayValue httpMaxConsecutiveFailures;
         DisplayTypes::DisplayValue httpLastErrorCode;
+
+        // SYSTEM DTL(3) - Communication statistics
+        DisplayTypes::DisplayValue solarOfflineCount;
+        DisplayTypes::DisplayValue chargeOfflineCount;
+        DisplayTypes::DisplayValue bmsOfflineCount;
+        DisplayTypes::DisplayValue loadOfflineCount;
+        DisplayTypes::DisplayValue controllerOfflineCount;
+        DisplayTypes::DisplayValue socOfflineCount;
 
         bool wifiConnected;
         bool rs485Ready;
@@ -390,9 +398,16 @@ namespace DisplayModel
             rs485Status(),
             modbusStatus(),
             deviceManagerStatus(),
-
+            wifiStatus(),
             epeverStatus(),
             bmsStatus(),
+
+            telemetryStatus(),
+
+            telemetryAge(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::Duration)),
 
             solarOfflineCount(
                 DisplayTypes::MakeValue(
@@ -423,6 +438,18 @@ namespace DisplayModel
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::None)),
+
+            mainWifiSignal(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::SignalStrength)),
+
+            mainUptime(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::Duration)),
+
+            mainHttpStatus(),
 
             httpState(),
 
@@ -469,11 +496,15 @@ namespace DisplayModel
             controllerOfflineCount.decimals = 0U;
             socOfflineCount.decimals = 0U;
 
+            mainWifiSignal.decimals = 0U;
+            mainUptime.decimals = 0U;
+
             httpSuccessCount.decimals = 0U;
             httpFailureCount.decimals = 0U;
             httpConsecutiveFailures.decimals = 0U;
             httpMaxConsecutiveFailures.decimals = 0U;
             httpLastErrorCode.decimals = 0U;
+            telemetryAge.decimals = 0U;
         }
     };
 

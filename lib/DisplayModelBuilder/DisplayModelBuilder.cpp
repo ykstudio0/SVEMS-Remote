@@ -473,9 +473,55 @@ namespace
                 uptimeSeconds,
                 DisplayTypes::ValueType::Duration);
 
+        //-------------------------------------------------
+        // Remote Telemetry Status
+        //-------------------------------------------------
+
+        system.telemetryStatus.text =
+            mainState.telemetryOnline
+                ? "ONLINE"
+                : "OFFLINE";
+
+        system.telemetryStatus.color =
+            mainState.telemetryOnline
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_ALARM;
+
+        const uint32_t telemetryAgeSeconds =
+            mainState.telemetryReceived
+                ? (
+                    millis() -
+                    mainState.timestampReceivedMillis
+                ) / 1000UL
+                : 0U;
+
+        system.telemetryAge =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    telemetryAgeSeconds),
+                DisplayTypes::ValueType::Duration);
+
+        system.telemetryAge.decimals = 0U;
+
+        if (!mainState.telemetryReceived)
+        {
+            system.telemetryAge.state =
+                DisplayTypes::WidgetState::Offline;
+        }
+        
         // WiFi RSSI
         system.wifiConnected =
             WiFiService::IsConnected();
+
+        system.wifiStatus.text =
+            system.wifiConnected
+                ? "ONLINE"
+                : "OFFLINE";
+
+        system.wifiStatus.color =
+            system.wifiConnected
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_ALARM;
 
         system.wifiSignal =
             DisplayTypes::MakeValue(
@@ -610,6 +656,44 @@ namespace
         system.bmsOnline =
             DataManager::Battery.status.online;
 
+        //-------------------------------------------------
+        // MAINSYS DTL(1)
+        //-------------------------------------------------
+
+        system.mainWifiSignal =
+            DisplayTypes::MakeValue(
+                mainState.mainWifiConnected
+                    ? static_cast<float>(
+                        mainState.mainWifiRssi)
+                    : 0.0f,
+                DisplayTypes::ValueType::SignalStrength);
+
+        system.mainWifiSignal.decimals = 0U;
+
+        if (!mainState.mainWifiConnected)
+        {
+            system.mainWifiSignal.state =
+                DisplayTypes::WidgetState::Offline;
+        }
+
+        system.mainUptime =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.mainUptimeSeconds),
+                DisplayTypes::ValueType::Duration);
+
+        system.mainUptime.decimals = 0U;
+
+        system.mainHttpStatus.text =
+            mainState.mainHttpOnline
+                ? "ONLINE"
+                : "OFFLINE";
+
+        system.mainHttpStatus.color =
+            mainState.mainHttpOnline
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_ALARM;
+
         // Communication / Manager State
         system.rs485Ready =
             mainState.rs485Ready;
@@ -719,24 +803,6 @@ namespace
         if (!system.wifiConnected)
         {
             header.status.text = "NET";
-            header.status.color =
-                DisplayTheme::COLOR_WARNING;
-        }
-        else if (!system.rs485Ready)
-        {
-            header.status.text = "485";
-            header.status.color =
-                DisplayTheme::COLOR_WARNING;
-        }
-        else if (!system.modbusReady)
-        {
-            header.status.text = "MOD";
-            header.status.color =
-                DisplayTheme::COLOR_WARNING;
-        }
-        else if (!system.deviceManagerReady)
-        {
-            header.status.text = "DEV";
             header.status.color =
                 DisplayTheme::COLOR_WARNING;
         }

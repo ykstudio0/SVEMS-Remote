@@ -72,7 +72,7 @@ namespace DisplayPages
                 return "TEMPERATURE";
 
             case Page::System:
-                return "SYSTEM";
+                return "REMOTE SYSTEM";
 
             default:
                 return "UNKNOWN";
@@ -121,7 +121,7 @@ namespace DisplayPages
                 return 3U;
 
             case Page::System:
-                return 3U;
+                return 4U;
 
             default:
                 return 1U;
@@ -148,7 +148,7 @@ namespace DisplayPages
                 return "TEMP";
 
             case Page::System:
-                return "MAINSYS";
+                return "MAIN SYS";
 
             default:
                 return "PAGE";
