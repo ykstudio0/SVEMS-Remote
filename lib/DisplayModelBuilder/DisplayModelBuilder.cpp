@@ -528,12 +528,55 @@ namespace
                     DataManager::CommStats.socOfflineCount),
                 DisplayTypes::ValueType::None);
 
+        system.httpState.text =
+            mainState.httpState.c_str();
+
+        system.httpState.color =
+            mainState.mainHttpOnline
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_ALARM;
+
+        system.httpSuccessCount =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.httpSuccessCount),
+                DisplayTypes::ValueType::None);
+
+        system.httpFailureCount =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.httpFailureCount),
+                DisplayTypes::ValueType::None);
+
+        system.httpConsecutiveFailures =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.httpConsecutiveFailures),
+                DisplayTypes::ValueType::None);
+
+        system.httpMaxConsecutiveFailures =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.httpMaxConsecutiveFailures),
+                DisplayTypes::ValueType::None);
+
+        system.httpLastErrorCode =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.httpLastErrorCode),
+                DisplayTypes::ValueType::None);
+
         system.solarOfflineCount.decimals = 0U;
         system.chargeOfflineCount.decimals = 0U;
         system.bmsOfflineCount.decimals = 0U;
         system.loadOfflineCount.decimals = 0U;
         system.controllerOfflineCount.decimals = 0U;
         system.socOfflineCount.decimals = 0U;
+        system.httpSuccessCount.decimals = 0U;
+        system.httpFailureCount.decimals = 0U;
+        system.httpConsecutiveFailures.decimals = 0U;
+        system.httpMaxConsecutiveFailures.decimals = 0U;
+        system.httpLastErrorCode.decimals = 0U;
 
         // Heap Usage
         const uint32_t totalHeap =
@@ -627,6 +670,8 @@ namespace
             system.bmsOnline
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_DISABLED;
+
+        
     }
 
     void BuildHeader(DisplayModel::Model& model)

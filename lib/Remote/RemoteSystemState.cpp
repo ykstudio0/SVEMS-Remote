@@ -43,9 +43,12 @@ namespace SVEMS::Remote
         bool mainWifiConnected,
         int32_t mainWifiRssi,
         bool mainHttpOnline,
+        const String& httpState,
         uint32_t httpSuccessCount,
         uint32_t httpFailureCount,
-        uint32_t httpConsecutiveFailures)
+        uint32_t httpConsecutiveFailures,
+        uint32_t httpMaxConsecutiveFailures,
+        int32_t httpLastErrorCode)
     {
         //-----------------------------------------------------
         // Telemetry Timestamp
@@ -92,6 +95,9 @@ namespace SVEMS::Remote
         m_state.mainHttpOnline =
             mainHttpOnline;
 
+        m_state.httpState =
+            httpState;
+
         m_state.httpSuccessCount =
             httpSuccessCount;
 
@@ -100,6 +106,12 @@ namespace SVEMS::Remote
 
         m_state.httpConsecutiveFailures =
             httpConsecutiveFailures;
+
+        m_state.httpMaxConsecutiveFailures =
+            httpMaxConsecutiveFailures;
+
+        m_state.httpLastErrorCode =
+            httpLastErrorCode;
     }
 
 

@@ -349,6 +349,14 @@ namespace DisplayModel
         DisplayTypes::DisplayValue controllerOfflineCount;
         DisplayTypes::DisplayValue socOfflineCount;
 
+        // SYSTEM DTL(2) - HTTP diagnostics
+        DisplayTypes::DisplayText httpState;
+        DisplayTypes::DisplayValue httpSuccessCount;
+        DisplayTypes::DisplayValue httpFailureCount;
+        DisplayTypes::DisplayValue httpConsecutiveFailures;
+        DisplayTypes::DisplayValue httpMaxConsecutiveFailures;
+        DisplayTypes::DisplayValue httpLastErrorCode;
+
         bool wifiConnected;
         bool rs485Ready;
         bool modbusReady;
@@ -416,6 +424,33 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::None)),
 
+            httpState(),
+
+            httpSuccessCount(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpFailureCount(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpConsecutiveFailures(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpMaxConsecutiveFailures(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpLastErrorCode(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
             wifiConnected(false),
             rs485Ready(false),
             modbusReady(false),
@@ -433,6 +468,12 @@ namespace DisplayModel
             loadOfflineCount.decimals = 0U;
             controllerOfflineCount.decimals = 0U;
             socOfflineCount.decimals = 0U;
+
+            httpSuccessCount.decimals = 0U;
+            httpFailureCount.decimals = 0U;
+            httpConsecutiveFailures.decimals = 0U;
+            httpMaxConsecutiveFailures.decimals = 0U;
+            httpLastErrorCode.decimals = 0U;
         }
     };
 

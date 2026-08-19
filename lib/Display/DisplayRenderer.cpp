@@ -1011,6 +1011,88 @@ namespace DisplayRenderer
             return;
         }
 
+        //-------------------------------------------------
+        // SYSTEM DTL(2)
+        //-------------------------------------------------
+
+        if (subPage == 2U)
+        {
+            const bool stateChanged =
+                HasDisplayTextChanged(
+                    data.httpState,
+                    lastData.httpState);
+
+            if (ShouldDraw(stateChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    0U,
+                    data.httpState);
+            }
+
+            const bool successChanged =
+                HasValueChanged(
+                    data.httpSuccessCount,
+                    lastData.httpSuccessCount);
+
+            if (ShouldDraw(successChanged))
+            {
+                DrawRowValue(
+                    data.httpSuccessCount,
+                    1U);
+            }
+
+            const bool failureChanged =
+                HasValueChanged(
+                    data.httpFailureCount,
+                    lastData.httpFailureCount);
+
+            if (ShouldDraw(failureChanged))
+            {
+                DrawRowValue(
+                    data.httpFailureCount,
+                    2U);
+            }
+
+            const bool consecutiveChanged =
+                HasValueChanged(
+                    data.httpConsecutiveFailures,
+                    lastData.httpConsecutiveFailures);
+
+            if (ShouldDraw(consecutiveChanged))
+            {
+                DrawRowValue(
+                    data.httpConsecutiveFailures,
+                    3U);
+            }
+
+            const bool maxChanged =
+                HasValueChanged(
+                    data.httpMaxConsecutiveFailures,
+                    lastData.httpMaxConsecutiveFailures);
+
+            if (ShouldDraw(maxChanged))
+            {
+                DrawRowValue(
+                    data.httpMaxConsecutiveFailures,
+                    4U);
+            }
+
+            const bool errorChanged =
+                HasValueChanged(
+                    data.httpLastErrorCode,
+                    lastData.httpLastErrorCode);
+
+            if (ShouldDraw(errorChanged))
+            {
+                DrawRowValue(
+                    data.httpLastErrorCode,
+                    5U);
+            }
+
+            return;
+        }
+
         // RSSI
         const bool wifiSignalChanged =
             HasValueChanged(

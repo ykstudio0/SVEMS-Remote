@@ -312,9 +312,12 @@ namespace SVEMS::Remote
             data.system.wifiRssi,
 
             data.communication.http.online,
+            data.system.httpState,
             data.communication.http.successCount,
             data.communication.http.failureCount,
-            data.communication.http.consecutiveFailures
+            data.communication.http.consecutiveFailures,
+            data.system.httpMaxConsecutiveFailures,
+            data.system.httpLastErrorCode
         );
     }
 

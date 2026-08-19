@@ -149,6 +149,16 @@ namespace SVEMS::Telemetry
         int32_t wifiRssi = 0;
 
         bool wifiConnected = false;
+
+        // HTTP diagnostics
+        String httpState;
+
+        uint32_t httpSuccessCount = 0U;
+        uint32_t httpFailureCount = 0U;
+        uint32_t httpConsecutiveFailures = 0U;
+        uint32_t httpMaxConsecutiveFailures = 0U;
+
+        int32_t httpLastErrorCode = 0;
     };
 
     struct TelemetryData

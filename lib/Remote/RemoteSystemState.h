@@ -34,9 +34,14 @@ namespace SVEMS::Remote
 
             bool mainHttpOnline = false;
 
+            String httpState;
+
             uint32_t httpSuccessCount = 0U;
             uint32_t httpFailureCount = 0U;
             uint32_t httpConsecutiveFailures = 0U;
+            uint32_t httpMaxConsecutiveFailures = 0U;
+
+            int32_t httpLastErrorCode = 0;
         };
 
         static const State& Get();
@@ -48,9 +53,12 @@ namespace SVEMS::Remote
             bool mainWifiConnected,
             int32_t mainWifiRssi,
             bool mainHttpOnline,
+            const String& httpState,
             uint32_t httpSuccessCount,
             uint32_t httpFailureCount,
-            uint32_t httpConsecutiveFailures
+            uint32_t httpConsecutiveFailures,
+            uint32_t httpMaxConsecutiveFailures,
+            int32_t httpLastErrorCode
         );
 
         static void UpdateFreshness();

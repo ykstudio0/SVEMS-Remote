@@ -457,6 +457,27 @@ namespace SVEMS::Telemetry
             http["consecutiveFailures"] | 0U;
 
         //---------------------------------------------------------
+        // HTTP diagnostics
+        //---------------------------------------------------------
+        data.system.httpState =
+            http["state"] | "";
+
+        data.system.httpSuccessCount =
+            http["success"] | 0U;
+
+        data.system.httpFailureCount =
+            http["failure"] | 0U;
+
+        data.system.httpConsecutiveFailures =
+            http["consecutiveFailures"] | 0U;
+
+        data.system.httpMaxConsecutiveFailures =
+            http["maxConsecutiveFailures"] | 0U;
+
+        data.system.httpLastErrorCode =
+            http["lastErrorCode"] | 0;
+        
+        //---------------------------------------------------------
         // System
         //---------------------------------------------------------
 

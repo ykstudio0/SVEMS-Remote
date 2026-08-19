@@ -73,6 +73,16 @@ namespace
         { 5U, "SOC OFF",    true }
     };
 
+    static constexpr DisplayLayout::StaticRow g_systemDetail2Rows[] =
+    {
+        { 0U, "HTTP STATE",  true },
+        { 1U, "HTTP OK",     true },
+        { 2U, "HTTP FAIL",   true },
+        { 3U, "HTTP CONSEC", true },
+        { 4U, "HTTP MAX",    true },
+        { 5U, "HTTP ERROR",  true }
+    };
+
     const DisplayLayout::StaticRow g_loadRows[] =
     {
         {0, "Voltage"},
@@ -90,13 +100,14 @@ namespace
 
     const DisplayLayout::StaticRow g_systemRows[] =
     {
-        {0, "RSSI"},
-        {1, "EPEVER"},
-        {2, "BMS"},
-        {3, "DEVICES"},
-        {4, "HEAP"},
-        {5, "UPTIME"}
+        { 0U, "WIFI",      true },
+        { 1U, "RSSI",      true },
+        { 2U, "HEAP",      true },
+        { 3U, "UPTIME",    true },
+        { 4U, "TELEMETRY", true },
+        { 5U, "AGE",       true }
     };
+    
 } // anonymous namespace
 
 const DisplayLayout::StaticRow*
@@ -171,6 +182,15 @@ const DisplayLayout::StaticRow*
                         sizeof(g_systemDetailRows[0]);
 
                     return g_systemDetailRows;
+                }
+
+                if (subPage == 2U)
+                {
+                    count =
+                        sizeof(g_systemDetail2Rows) /
+                        sizeof(g_systemDetail2Rows[0]);
+
+                    return g_systemDetail2Rows;
                 }
 
                 count =
