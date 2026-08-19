@@ -98,6 +98,12 @@ namespace SVEMS::Remote
         m_state.mainUptimeSeconds =
             mainUptimeSeconds;
 
+        m_state.deviceCount = 
+            deviceCount;
+        
+        m_state.deviceTotal = 
+            deviceTotal;
+
         m_state.mainHttpOnline =
             mainHttpOnline;
 
