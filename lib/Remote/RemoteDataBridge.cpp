@@ -311,7 +311,8 @@ namespace SVEMS::Remote
             data.system.wifiConnected,
             data.system.wifiRssi,
             data.system.uptimeSeconds,
-            
+            data.system.deviceCount,
+            data.system.deviceTotal,
             data.communication.http.online,
             data.system.httpState,
             data.communication.http.successCount,

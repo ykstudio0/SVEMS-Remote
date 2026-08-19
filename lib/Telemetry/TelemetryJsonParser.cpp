@@ -493,6 +493,12 @@ namespace SVEMS::Telemetry
         data.system.wifiRssi =
             system["rssi"] | 0;
 
+        data.system.deviceCount =
+            system["deviceCount"] | 0U;
+
+        data.system.deviceTotal =
+            system["deviceTotal"] | 0U;
+
         return true;
     }
 }

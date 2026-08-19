@@ -43,6 +43,9 @@ namespace SVEMS::Remote
             uint32_t httpMaxConsecutiveFailures = 0U;
 
             int32_t httpLastErrorCode = 0;
+
+            uint32_t deviceCount = 0U;
+            uint32_t deviceTotal = 0U;
         };
 
         static const State& Get();
@@ -54,6 +57,8 @@ namespace SVEMS::Remote
             bool mainWifiConnected,
             int32_t mainWifiRssi,
             uint32_t mainUptimeSeconds,
+            uint32_t deviceCount,
+            uint32_t deviceTotal,
             bool mainHttpOnline,
             const String& httpState,
             uint32_t httpSuccessCount,

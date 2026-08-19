@@ -43,6 +43,8 @@ namespace SVEMS::Remote
         bool mainWifiConnected,
         int32_t mainWifiRssi,
         uint32_t mainUptimeSeconds,
+        uint32_t deviceCount,
+        uint32_t deviceTotal,
         bool mainHttpOnline,
         const String& httpState,
         uint32_t httpSuccessCount,

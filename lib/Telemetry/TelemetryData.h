@@ -144,6 +144,9 @@ namespace SVEMS::Telemetry
 
     struct SystemData
     {
+        uint32_t deviceCount = 0U;
+        uint32_t deviceTotal = 0U;
+        
         uint32_t uptimeSeconds = 0U;
 
         int32_t wifiRssi = 0;

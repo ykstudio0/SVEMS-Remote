@@ -538,6 +538,24 @@ namespace
                 DisplayTypes::WidgetState::Offline;
         }
 
+        static char deviceCountText[8];
+
+        snprintf(
+            deviceCountText,
+            sizeof(deviceCountText),
+            "%u/%u",
+            static_cast<unsigned>(mainState.deviceCount),
+            static_cast<unsigned>(mainState.deviceTotal));
+
+        system.deviceCount.text =
+            deviceCountText;
+
+        system.deviceCount.color =
+            (mainState.deviceTotal > 0U &&
+            mainState.deviceCount == mainState.deviceTotal)
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_WARNING;
+
         system.solarOfflineCount =
             DisplayTypes::MakeValue(
                 static_cast<float>(
