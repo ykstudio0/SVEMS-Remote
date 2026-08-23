@@ -282,6 +282,12 @@ namespace SVEMS::Remote
         DataManager::Environment.status.lastUpdate =
             millis();
 
+        //-----------------------------------------------------
+        // Vehicle
+        //-----------------------------------------------------
+
+        DataManager::Vehicle.active =
+            data.vehicle.active;
 
         //-----------------------------------------------------
         // Communication Counters

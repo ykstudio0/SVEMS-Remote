@@ -83,6 +83,10 @@ namespace SVEMS::Telemetry
         bool online = false;
     };
 
+    struct VehicleData
+    {
+        bool active = false;
+    };
 
     struct TemperatureData
     {
@@ -175,5 +179,6 @@ namespace SVEMS::Telemetry
         EnvironmentData environment;
         CommunicationData communication;
         SystemData system;
+        VehicleData vehicle;
     };
 }

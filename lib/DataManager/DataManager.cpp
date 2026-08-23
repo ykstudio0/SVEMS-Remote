@@ -37,6 +37,8 @@ DataManager::EnvironmentData
 DataManager::CommunicationStats
     DataManager::CommStats;
 
+DataManager::VehicleData 
+    DataManager::Vehicle;
 
 void DataManager::ClearUpdates()
 {
