@@ -12,6 +12,19 @@
 namespace
 {
     //---------------------------------------------------------
+    // Header
+    //---------------------------------------------------------
+
+    constexpr uint16_t HEADER_BOTTOM =
+        39U;
+
+    constexpr uint16_t HEADER_STATUS_LEFT =
+        290U;
+
+    constexpr uint16_t HEADER_STATUS_RIGHT =
+        319U;
+
+    //---------------------------------------------------------
     // Display
     //---------------------------------------------------------
 
@@ -63,6 +76,9 @@ namespace SVEMS::Remote
             Action::None;
 
         m_wasTouched =
+            false;
+
+        m_wifiSetupConfirm =
             false;
 
         return m_device.Begin();
@@ -215,6 +231,27 @@ namespace SVEMS::Remote
         uint16_t x,
         uint16_t y) const
     {
+        if (m_wifiSetupConfirm)
+        {
+            if (y >= 135U &&
+                y <= 162U)
+            {
+                if (x >= 70U &&
+                    x <= 144U)
+                {
+                    return Action::Cancel;
+                }
+
+                if (x >= 175U &&
+                    x <= 249U)
+                {
+                    return Action::Confirm;
+                }
+            }
+
+            return Action::None;
+        }
+
         //-----------------------------------------------------
         // Footer
         //-----------------------------------------------------
@@ -249,6 +286,24 @@ namespace SVEMS::Remote
         // Header
         //-----------------------------------------------------
 
+        if (y <= HEADER_BOTTOM)
+        {
+            if (x >= HEADER_STATUS_LEFT &&
+                x <= HEADER_STATUS_RIGHT)
+            {
+                return Action::WiFiSetup;
+            }
+
+            return Action::None;
+        }
+
         return Action::None;
+    }
+
+    void TouchManager::SetWiFiSetupConfirm(
+        bool active)
+    {
+        m_wifiSetupConfirm =
+            active;
     }
 }

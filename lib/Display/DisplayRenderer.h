@@ -38,6 +38,16 @@ namespace DisplayRenderer
             uint8_t subPage,
             const DisplayModel::Model& model);
 
+        void SetWiFiSetupConfirm(
+            bool visible);
+
+        bool IsWiFiSetupConfirm() const;
+
+        void SetWiFiSetupMode(
+            bool active);
+
+        bool IsWiFiSetupMode() const;
+
     private:
         // Common
         void DrawHeader(
@@ -137,5 +147,18 @@ namespace DisplayRenderer
 
         void DrawBatteryDetail2(
             const DisplayModel::BatteryData& data);
+
+        void DrawWiFiSetupConfirm();
+
+        bool m_wifiSetupConfirm =
+            false;
+
+        bool m_wifiSetupConfirmDrawn =
+            false;
+
+        void DrawWiFiSetupMode();
+
+        bool m_wifiSetupMode =
+            false;
     };
 }

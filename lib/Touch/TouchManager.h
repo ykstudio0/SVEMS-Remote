@@ -23,7 +23,10 @@ namespace SVEMS::Remote
             None = 0U,
             Previous,
             Next,
-            Content
+            Content,
+            WiFiSetup,
+            Cancel,
+            Confirm
         };
 
         bool Begin();
@@ -31,6 +34,9 @@ namespace SVEMS::Remote
         void Update();
 
         Action GetAction();
+
+        void SetWiFiSetupConfirm(
+            bool active);
 
     private:
         Action DetermineAction(
@@ -49,6 +55,9 @@ namespace SVEMS::Remote
             Action::None;
 
         bool m_wasTouched =
+            false;
+
+        bool m_wifiSetupConfirm =
             false;
     };
 }

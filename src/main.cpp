@@ -152,6 +152,26 @@ void loop()
 {
     WiFiService::Update();
 
+    static bool lastWiFiSetupMode =
+        false;
+
+    const bool wifiSetupMode =
+        WiFiService::IsSetupMode();
+
+    if (wifiSetupMode !=
+        lastWiFiSetupMode)
+    {
+        lastWiFiSetupMode =
+            wifiSetupMode;
+
+        displayRenderer.SetWiFiSetupMode(
+            wifiSetupMode
+        );
+
+        forceDisplayRefresh =
+            true;
+    }
+
     RemoteTelemetryService::Update();
 
     ButtonManager::Update();
@@ -160,7 +180,7 @@ void loop()
         ButtonManager::GetPressed();
 
     switch (button)
-    {
+    {   
         case ButtonManager::Button::Previous:
             pageManager.Previous();
 
@@ -243,6 +263,88 @@ void loop()
 
     switch (touchAction)
     {
+        case SVEMS::Remote::TouchManager::Action::WiFiSetup:
+        {
+            if (
+                pageManager.Current() ==
+                DisplayPages::Page::System
+            )
+            {
+                Serial.println(
+                    "[UI] WiFi Setup"
+                );
+
+                displayRenderer.SetWiFiSetupConfirm(
+                    true
+                );
+
+                touchManager.SetWiFiSetupConfirm(
+                    true
+                );
+
+                forceDisplayRefresh =
+                    true;
+            }
+
+            break;
+        }
+        
+        case SVEMS::Remote::TouchManager::Action::Cancel:
+        {
+            Serial.println(
+                "[UI] WiFi Setup Cancel"
+            );
+
+            displayRenderer.SetWiFiSetupConfirm(
+                false
+            );
+
+            touchManager.SetWiFiSetupConfirm(
+                false
+            );
+
+            forceDisplayRefresh =
+                true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::Confirm:
+        {
+            Serial.println(
+                "[UI] WiFi Setup Confirm"
+            );
+
+            displayRenderer.SetWiFiSetupConfirm(
+                false
+            );
+
+            touchManager.SetWiFiSetupConfirm(
+                false
+            );
+
+            const bool started =
+                WiFiService::StartSetupMode();
+
+            Serial.println(
+                started
+                    ? "[UI] WiFi Setup AP OK"
+                    : "[UI] WiFi Setup AP FAILED"
+            );
+
+            if (started)
+            {
+                displayRenderer.SetWiFiSetupMode(
+                    true
+                );
+
+                forceDisplayRefresh =
+                    true;
+            }
+
+            break;
+        }
+
         case SVEMS::Remote::TouchManager::Action::Previous:
             pageManager.Previous();
 

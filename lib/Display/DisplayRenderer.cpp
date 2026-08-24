@@ -123,6 +123,40 @@ namespace DisplayRenderer
 
         m_target->BeginFrame();
 
+        if (m_wifiSetupMode)
+        {
+            if (m_firstRender)
+            {
+                m_target->Clear(
+                    DisplayTheme::COLOR_BACKGROUND
+                );
+
+                DrawWiFiSetupMode();
+
+                m_firstRender =
+                    false;
+            }
+
+            m_target->EndFrame();
+
+            return true;
+        }
+
+        if (m_wifiSetupConfirm)
+        {
+            if (!m_wifiSetupConfirmDrawn)
+            {
+                DrawWiFiSetupConfirm();
+
+                m_wifiSetupConfirmDrawn =
+                    true;
+            }
+
+            m_target->EndFrame();
+
+            return true;
+        }
+
         if (m_pageChanged)
         {
             m_target->Clear(
@@ -1585,5 +1619,197 @@ namespace DisplayRenderer
                 break;
             }
         }
+    }
+
+    void Renderer::SetWiFiSetupConfirm(
+        bool visible)
+    {
+        if (m_wifiSetupConfirm == visible)
+        {
+            return;
+        }
+
+        m_wifiSetupConfirm =
+            visible;
+
+        m_wifiSetupConfirmDrawn =
+            false;
+
+        if (!visible)
+        {
+            m_firstRender =
+                true;
+        }
+    }
+
+    bool Renderer::IsWiFiSetupConfirm() const
+    {
+        return m_wifiSetupConfirm;
+    }
+
+    void Renderer::DrawWiFiSetupConfirm()
+    {
+        constexpr int16_t POPUP_X =
+            45;
+
+        constexpr int16_t POPUP_Y =
+            65;
+
+        constexpr int16_t POPUP_WIDTH =
+            230;
+
+        constexpr int16_t POPUP_HEIGHT =
+            110;
+
+        constexpr int16_t BUTTON_Y =
+            135;
+
+        constexpr int16_t BUTTON_HEIGHT =
+            28;
+
+        constexpr int16_t BUTTON_WIDTH =
+            75;
+
+        constexpr int16_t CANCEL_X =
+            70;
+
+        constexpr int16_t OK_X =
+            175;
+
+        //---------------------------------------------------------
+        // Popup
+        //---------------------------------------------------------
+
+        m_target->FillRect(
+            POPUP_X,
+            POPUP_Y,
+            POPUP_WIDTH,
+            POPUP_HEIGHT,
+            DisplayTheme::COLOR_BACKGROUND);
+
+        m_target->DrawRect(
+            POPUP_X,
+            POPUP_Y,
+            POPUP_WIDTH,
+            POPUP_HEIGHT,
+            DisplayTheme::COLOR_LABEL);
+
+        //---------------------------------------------------------
+        // Title
+        //---------------------------------------------------------
+
+        m_target->DrawText(
+            160,
+            82,
+            "WiFi Setup",
+            DisplayTheme::COLOR_VALUE,
+            2U,
+            DisplayTypes::TextAlign::Center);
+
+        //---------------------------------------------------------
+        // Message
+        //---------------------------------------------------------
+
+        m_target->DrawText(
+            160,
+            112,
+            "Start setup mode?",
+            DisplayTheme::COLOR_LABEL,
+            1U,
+            DisplayTypes::TextAlign::Center);
+
+        //---------------------------------------------------------
+        // CANCEL
+        //---------------------------------------------------------
+
+        m_target->DrawRect(
+            CANCEL_X,
+            BUTTON_Y,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            DisplayTheme::COLOR_LABEL);
+
+        m_target->DrawText(
+            CANCEL_X + BUTTON_WIDTH / 2,
+            BUTTON_Y + 9,
+            "CANCEL",
+            DisplayTheme::COLOR_LABEL,
+            1U,
+            DisplayTypes::TextAlign::Center);
+
+        //---------------------------------------------------------
+        // OK
+        //---------------------------------------------------------
+
+        m_target->DrawRect(
+            OK_X,
+            BUTTON_Y,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            DisplayTheme::COLOR_SUCCESS);
+
+        m_target->DrawText(
+            OK_X + BUTTON_WIDTH / 2,
+            BUTTON_Y + 9,
+            "OK",
+            DisplayTheme::COLOR_SUCCESS,
+            1U,
+            DisplayTypes::TextAlign::Center);
+    }
+
+    void Renderer::SetWiFiSetupMode(
+        bool active)
+    {
+        if (m_wifiSetupMode == active)
+        {
+            return;
+        }
+
+        m_wifiSetupMode =
+            active;
+
+        m_firstRender =
+            true;
+    }
+
+
+    bool Renderer::IsWiFiSetupMode() const
+    {
+        return m_wifiSetupMode;
+    }
+
+    void Renderer::DrawWiFiSetupMode()
+    {
+        m_target->DrawText(
+            160,
+            55,
+            "WiFi Setup Mode",
+            DisplayTheme::COLOR_VALUE,
+            2U,
+            DisplayTypes::TextAlign::Center);
+
+        m_target->DrawText(
+            160,
+            100,
+            "SSID: SVEMS-SETUP",
+            DisplayTheme::COLOR_LABEL,
+            1U,
+            DisplayTypes::TextAlign::Center);
+
+        m_target->DrawText(
+            160,
+            130,
+            "Open: 192.168.4.1",
+            DisplayTheme::COLOR_SUCCESS,
+            1U,
+            DisplayTypes::TextAlign::Center);
+
+        m_target->DrawText(
+            160,
+            165,
+            "Save -> Restart",
+            DisplayTheme::COLOR_LABEL,
+            1U,
+            DisplayTypes::TextAlign::Center);
     }
 }
