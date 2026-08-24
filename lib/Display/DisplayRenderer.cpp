@@ -1218,6 +1218,42 @@ namespace DisplayRenderer
             return;
         }
 
+        //-------------------------------------------------
+        // SYSTEM DTL(4)
+        //-------------------------------------------------
+
+        if (subPage == 4U)
+        {
+            const bool bootCountChanged =
+                HasValueChanged(
+                    data.mainBootCount,
+                    lastData.mainBootCount);
+
+            if (ShouldDraw(
+                    bootCountChanged))
+            {
+                DrawRowValue(
+                    data.mainBootCount,
+                    0U);
+            }
+
+            const bool resetReasonChanged =
+                HasDisplayTextChanged(
+                    data.mainResetReason,
+                    lastData.mainResetReason);
+
+            if (ShouldDraw(
+                    resetReasonChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    1U,
+                    data.mainResetReason);
+            }
+
+            return;
+        }
+
         // WIFI
         const bool wifiChanged =
             HasDisplayTextChanged(

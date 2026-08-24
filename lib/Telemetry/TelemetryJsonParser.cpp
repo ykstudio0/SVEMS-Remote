@@ -509,6 +509,12 @@ namespace SVEMS::Telemetry
         data.system.deviceTotal =
             system["deviceTotal"] | 0U;
 
+        data.system.bootCount =
+            system["bootCount"] | 0U;
+
+        data.system.resetReason =
+            system["resetReason"] | "Unknown";
+
         return true;
     }
 }

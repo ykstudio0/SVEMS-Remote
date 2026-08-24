@@ -35,6 +35,12 @@ namespace SVEMS::Remote
             bool mainHttpOnline = false;
             uint32_t mainUptimeSeconds = 0U;
 
+            uint32_t mainBootCount =
+                0U;
+
+            String mainResetReason =
+                "Unknown";
+
             String httpState;
 
             uint32_t httpSuccessCount = 0U;
@@ -57,6 +63,8 @@ namespace SVEMS::Remote
             bool mainWifiConnected,
             int32_t mainWifiRssi,
             uint32_t mainUptimeSeconds,
+            uint32_t mainBootCount,
+            const String& mainResetReason,
             uint32_t deviceCount,
             uint32_t deviceTotal,
             bool mainHttpOnline,

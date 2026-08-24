@@ -93,6 +93,12 @@ namespace
         { 5U, "SOC OFF",    true }
     };
 
+    static constexpr DisplayLayout::StaticRow g_systemDetail4Rows[]
+    {
+        { 0U, "BOOT COUNT",   true },
+        { 1U, "RST REASON", true }
+    };
+
     const DisplayLayout::StaticRow g_loadRows[] =
     {
         {0, "Voltage"},
@@ -210,6 +216,15 @@ const DisplayLayout::StaticRow*
                         sizeof(g_systemDetail3Rows[0]);
 
                     return g_systemDetail3Rows;
+                }
+
+                if (subPage == 4U)
+                {
+                    count =
+                        sizeof(g_systemDetail4Rows) /
+                        sizeof(g_systemDetail4Rows[0]);
+
+                    return g_systemDetail4Rows;
                 }
 
                 count =

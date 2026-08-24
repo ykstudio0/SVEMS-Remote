@@ -773,7 +773,24 @@ namespace
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_DISABLED;
 
-        
+        //-------------------------------------------------
+        // MAINSYS DTL(4) - Boot diagnostics
+        //-------------------------------------------------
+
+        system.mainBootCount =
+            DisplayTypes::MakeValue(
+                static_cast<float>(
+                    mainState.mainBootCount),
+                DisplayTypes::ValueType::None);
+
+        system.mainBootCount.decimals =
+            0U;
+
+        system.mainResetReason.text =
+            mainState.mainResetReason.c_str();
+
+        system.mainResetReason.color =
+            DisplayTheme::COLOR_VALUE;
     }
 
     void BuildHeader(DisplayModel::Model& model)

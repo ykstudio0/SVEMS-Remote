@@ -365,6 +365,10 @@ namespace DisplayModel
         DisplayTypes::DisplayValue controllerOfflineCount;
         DisplayTypes::DisplayValue socOfflineCount;
 
+        // SYSTEM DTL(4) - Boot diagnostics
+        DisplayTypes::DisplayValue mainBootCount;
+        DisplayTypes::DisplayText mainResetReason;
+
         bool wifiConnected;
         bool rs485Ready;
         bool modbusReady;
@@ -382,6 +386,13 @@ namespace DisplayModel
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::Duration)),
+
+            mainBootCount(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            mainResetReason(),
 
             heapPercent(
                 DisplayTypes::MakeValue(
@@ -487,6 +498,7 @@ namespace DisplayModel
         {
             currentTime.decimals = 0U;
             uptime.decimals = 0U;
+            mainBootCount.decimals = 0U;
             wifiSignal.decimals = 0U;
 
             solarOfflineCount.decimals = 0U;

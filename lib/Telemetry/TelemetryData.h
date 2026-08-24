@@ -153,6 +153,11 @@ namespace SVEMS::Telemetry
         
         uint32_t uptimeSeconds = 0U;
 
+        uint32_t bootCount = 0U;
+
+        String resetReason =
+            "Unknown";
+
         int32_t wifiRssi = 0;
 
         bool wifiConnected = false;
