@@ -167,8 +167,11 @@ namespace DisplayModel
 
         DisplayTypes::DisplayValue bmsTemperature;
         DisplayTypes::DisplayValue externalTemperature;
+        DisplayTypes::DisplayText runtime;
+        char runtimeText[16];
 
         constexpr BatteryData()
+
             : voltage(
                 DisplayTypes::MakeValue(
                     0.0f,
@@ -241,7 +244,11 @@ namespace DisplayModel
             externalTemperature(
                 DisplayTypes::MakeValue(
                     0.0f,
-                    DisplayTypes::ValueType::Temperature))
+                    DisplayTypes::ValueType::Temperature)),
+
+            runtime(),
+
+            runtimeText{}
         {
             remainingCapacity.decimals = 1U;
 
@@ -251,6 +258,9 @@ namespace DisplayModel
             cellVoltage4.decimals = 3U;
 
             cellDelta.decimals = 3U;
+
+            runtime.text =
+                runtimeText;
         }
     };
 

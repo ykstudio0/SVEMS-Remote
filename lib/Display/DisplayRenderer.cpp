@@ -840,18 +840,18 @@ namespace DisplayRenderer
                 4U);
         }
 
-        // BMS Communication Status
-        const bool statusChanged =
+        // Estimated Runtime
+        const bool runtimeChanged =
             HasDisplayTextChanged(
-                data.communicationStatus,
-                lastData.communicationStatus);
+                data.runtime,
+                lastData.runtime);
 
-        if (ShouldDraw(statusChanged))
+        if (ShouldDraw(runtimeChanged))
         {
             DisplayWidgets::ValueWidget::DrawTextValue(
                 *m_target,
                 5U,
-                data.communicationStatus);
+                data.runtime);
         }
     }
 

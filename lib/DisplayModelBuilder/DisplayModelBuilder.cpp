@@ -203,20 +203,82 @@ namespace
                 DataManager::Battery.totalCapacity,
                 DisplayTypes::ValueType::Capacity);
 
-        if (DataManager::Battery.status.online)
-        {
-            battery.communicationStatus.text =
-                "ONLINE";
+        //-------------------------------------------------
+        // Estimated Runtime
+        //-------------------------------------------------
 
-            battery.communicationStatus.color =
+        constexpr float MIN_DISCHARGE_POWER_W = 5.0f;
+
+        const float batteryPower =
+            DataManager::Battery.power;
+
+        const float batteryVoltage =
+            DataManager::Battery.voltage;
+
+        const float remainingCapacity =
+            DataManager::Battery.remainingCapacity;
+
+        if (
+            DataManager::Battery.status.online &&
+            batteryPower <= -MIN_DISCHARGE_POWER_W &&
+            batteryVoltage > 0.0f &&
+            remainingCapacity > 0.0f
+        )
+        {
+            const float runtimeHours =
+                (
+                    batteryVoltage *
+                    remainingCapacity
+                ) /
+                (-batteryPower);
+
+            const uint32_t runtimeMinutes =
+                static_cast<uint32_t>(
+                    runtimeHours * 60.0f
+                );
+
+            const uint32_t days =
+                runtimeMinutes / 1440U;
+
+            const uint32_t hours =
+                (runtimeMinutes / 60U) % 24U;
+
+            const uint32_t minutes =
+                runtimeMinutes % 60U;
+
+            if (days > 0U)
+            {
+                snprintf(
+                    battery.runtimeText,
+                    sizeof(battery.runtimeText),
+                    "%lud %02luh",
+                    static_cast<unsigned long>(days),
+                    static_cast<unsigned long>(hours)
+                );
+            }
+            else
+            {
+                snprintf(
+                    battery.runtimeText,
+                    sizeof(battery.runtimeText),
+                    "%02luh %02lum",
+                    static_cast<unsigned long>(hours),
+                    static_cast<unsigned long>(minutes)
+                );
+            }
+
+            battery.runtime.color =
                 DisplayTheme::COLOR_VALUE;
         }
         else
         {
-            battery.communicationStatus.text =
-                "OFFLINE";
+            snprintf(
+                battery.runtimeText,
+                sizeof(battery.runtimeText),
+                "-"
+            );
 
-            battery.communicationStatus.color =
+            battery.runtime.color =
                 DisplayTheme::COLOR_DISABLED;
         }
 
