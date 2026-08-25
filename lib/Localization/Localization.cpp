@@ -52,6 +52,18 @@ namespace Localization
         "배터리"
     };
 
+    const Text BMSTemp =
+    {
+        "BMS Temp",
+        "BMS온도"
+    };
+
+    const Text ExtTemp =
+    {
+        "Ext Temp",
+        "외부온도"
+    };
+
     const Text Capacity =
     {
         "Capacity",
@@ -62,6 +74,12 @@ namespace Localization
     {
         "Remaining",
         "잔여용량"
+    };
+
+    const Text SOC =
+    {
+        "SOC",
+        "충전잔량"
     };
 
     const Text Runtime =

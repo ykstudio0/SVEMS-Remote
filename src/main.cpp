@@ -147,8 +147,8 @@ void setup()
 
     ButtonManager::Begin();
 
-    Localization::SetLanguage(
-        Localization::Language::Korean);
+    // Localization::SetLanguage(
+    //     Localization::Language::Korean);
 }
 
 

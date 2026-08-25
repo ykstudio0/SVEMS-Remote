@@ -212,6 +212,18 @@ namespace DisplayRenderer
 
             switch (rows[i].textKey)
             {
+                case DisplayTypes::TextKey::BMSTemp:
+                    label =
+                        Localization::Get(
+                            Localization::BMSTemp);
+                    break;
+
+                case DisplayTypes::TextKey::ExtTemp:
+                    label =
+                        Localization::Get(
+                            Localization::ExtTemp);
+                    break;
+
                 case DisplayTypes::TextKey::Capacity:
                     label =
                         Localization::Get(
@@ -222,6 +234,12 @@ namespace DisplayRenderer
                     label =
                         Localization::Get(
                             Localization::Remaining);
+                    break;
+
+                case DisplayTypes::TextKey::SOC:
+                    label =
+                        Localization::Get(
+                            Localization::SOC);
                     break;
 
                 case DisplayTypes::TextKey::Runtime:

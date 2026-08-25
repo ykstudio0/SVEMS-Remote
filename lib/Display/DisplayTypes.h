@@ -85,6 +85,7 @@
     {
         Default = 0U,
         // Korean14,
+        // Korean20,
         Korean16,
         Korean18
     };
@@ -93,8 +94,11 @@
     {
         None = 0U,
         Battery,
+        BMSTemp,
+        ExtTemp,
         Capacity,
         Remaining,
+        SOC,
         Runtime
     };
 

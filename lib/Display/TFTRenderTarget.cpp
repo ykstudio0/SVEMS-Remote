@@ -34,6 +34,10 @@ static const lgfx::U8g2font g_svemsKr18(
     SVEMS_KR_18
 );
 
+// static const lgfx::U8g2font g_svemsKr20(
+//     SVEMS_KR_20
+// );
+
 bool TFTRenderTarget::Begin()
 {
     if (m_display == nullptr)
@@ -169,6 +173,14 @@ void TFTRenderTarget::DrawTextFont(
 
             break;
         }
+
+        // case DisplayTypes::FontType::Korean20:
+        // {
+        //     m_display->setFont(
+        //         &g_svemsKr20);
+
+        //     break;
+        // }
 
         default:
         {

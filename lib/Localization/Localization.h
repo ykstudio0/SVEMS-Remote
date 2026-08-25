@@ -29,9 +29,12 @@ namespace Localization
         Language language);
 
     extern const Text Battery;
-    extern const Text Runtime;
+    extern const Text BMSTemp;
+    extern const Text ExtTemp;
     extern const Text Capacity;
     extern const Text Remaining;
+    extern const Text SOC;
+    extern const Text Runtime;
 
     Language GetLanguage();
     void SetLanguage(
