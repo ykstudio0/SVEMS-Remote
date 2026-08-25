@@ -62,7 +62,8 @@ namespace DisplayWidgets
     void ValueWidget::DrawStatic(
         IRenderTarget& target,
         uint8_t row,
-        const char* label)
+        const char* label,
+        DisplayTypes::FontType fontType)
     {
         const int16_t rowY =
             DisplayLayout::CONTENT_FIRST_ROW_Y +
@@ -72,14 +73,15 @@ namespace DisplayWidgets
         if (label != nullptr &&
             label[0] != '\0')
         {
-            target.DrawText(
+            target.DrawTextFont(
                 DisplayLayout::CONTENT_LABEL_X,
                 rowY,
                 label,
                 DisplayTheme::COLOR_LABEL,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Normal),
-                DisplayTypes::TextAlign::Left);
+                DisplayTypes::TextAlign::Left,
+                fontType);
         }
     }
 

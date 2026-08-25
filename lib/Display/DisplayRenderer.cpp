@@ -15,7 +15,7 @@
 #include "HeaderWidget.h"
 #include "ValueWidget.h"
 #include "FooterWidget.h"
-
+#include "Localization.h"
 
 namespace DisplayRenderer
 {
@@ -204,10 +204,51 @@ namespace DisplayRenderer
                 continue;
             }
 
+            const char* label =
+                rows[i].label;
+
+            DisplayTypes::FontType fontType =
+                DisplayTypes::FontType::Default;
+
+            switch (rows[i].textKey)
+            {
+                case DisplayTypes::TextKey::Capacity:
+                    label =
+                        Localization::Get(
+                            Localization::Capacity);
+                    break;
+
+                case DisplayTypes::TextKey::Remaining:
+                    label =
+                        Localization::Get(
+                            Localization::Remaining);
+                    break;
+
+                case DisplayTypes::TextKey::Runtime:
+                    label =
+                        Localization::Get(
+                            Localization::Runtime);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (
+                rows[i].textKey != DisplayTypes::TextKey::None &&
+                Localization::GetLanguage() ==
+                    Localization::Language::Korean
+            )
+            {
+                fontType =
+                    DisplayTypes::FontType::Korean16;
+            }
+
             DisplayWidgets::ValueWidget::DrawStatic(
                 *m_target,
                 rows[i].row,
-                rows[i].label);
+                label,
+                fontType);
         }
     }
     
@@ -391,6 +432,24 @@ namespace DisplayRenderer
                 {
                     DrawBatteryDetail2(
                         model.GetBattery());
+
+                    // m_target->DrawTextFont(
+                    //     120,
+                    //     185,
+                    //     "배터리",
+                    //     DisplayTheme::COLOR_VALUE,
+                    //     1U,
+                    //     DisplayTypes::TextAlign::Left,
+                    //     DisplayTypes::FontType::Korean16);
+
+                    // m_target->DrawTextFont(
+                    //     120,
+                    //     212,
+                    //     "배터리",
+                    //     DisplayTheme::COLOR_VALUE,
+                    //     1U,
+                    //     DisplayTypes::TextAlign::Left,
+                    //     DisplayTypes::FontType::Korean18);
                 }
 
                 break;

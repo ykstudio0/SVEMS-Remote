@@ -9,6 +9,9 @@
 
 #include "TFTRenderTarget.h"
 #include "DisplayLayout.h"
+// #include "SVEMS_KR_14.h"
+#include "SVEMS_KR_16.h"
+#include "SVEMS_KR_18.h"
 
 TFTRenderTarget::TFTRenderTarget(
     lgfx::LGFX_Device& display)
@@ -18,6 +21,18 @@ TFTRenderTarget::TFTRenderTarget(
 {
 
 }
+
+// static const lgfx::U8g2font g_svemsKr14(
+//     SVEMS_KR_14
+// );
+
+static const lgfx::U8g2font g_svemsKr16(
+    SVEMS_KR_16
+);
+
+static const lgfx::U8g2font g_svemsKr18(
+    SVEMS_KR_18
+);
 
 bool TFTRenderTarget::Begin()
 {
@@ -86,6 +101,102 @@ void TFTRenderTarget::DrawText(
         text,
         x,
         y);
+}
+
+void TFTRenderTarget::DrawTextFont(
+    int16_t x,
+    int16_t y,
+    const char* text,
+    DisplayTheme::Color color,
+    uint8_t fontSize,
+    DisplayTypes::TextAlign align,
+    DisplayTypes::FontType fontType)
+{
+    if (!IsReady() || text == nullptr)
+    {
+        return;
+    }
+
+    //-------------------------------------------------
+    // Default Font
+    //-------------------------------------------------
+
+    if (fontType == DisplayTypes::FontType::Default)
+    {
+        DrawText(
+            x,
+            y,
+            text,
+            color,
+            fontSize,
+            align);
+
+        return;
+    }
+
+    //-------------------------------------------------
+    // Custom Font
+    //-------------------------------------------------
+
+    m_display->setTextDatum(
+        ToTextDatum(align));
+
+    m_display->setTextColor(
+        ToNativeColor(color));
+
+    switch (fontType)
+    {
+        // case DisplayTypes::FontType::Korean14:
+        // {
+        //     m_display->setFont(
+        //         &g_svemsKr14);
+
+        //     break;
+        // }
+
+        case DisplayTypes::FontType::Korean16:
+        {
+            m_display->setFont(
+                &g_svemsKr16);
+
+            break;
+        }
+
+        case DisplayTypes::FontType::Korean18:
+        {
+            m_display->setFont(
+                &g_svemsKr18);
+
+            break;
+        }
+
+        default:
+        {
+            DrawText(
+                x,
+                y,
+                text,
+                color,
+                fontSize,
+                align);
+
+            return;
+        }
+    }
+
+    // U8g2 font 자체가 16px 크기로 만들어졌으므로
+    // 추가 확대 없이 1배로 출력
+    m_display->setTextSize(1);
+
+    m_display->drawString(
+        text,
+        x,
+        y);
+
+    // 기존 영문 UI에 영향을 주지 않도록
+    // LovyanGFX 기본 폰트로 즉시 복귀
+    m_display->setFont(
+        nullptr);
 }
 
 void TFTRenderTarget::DrawTextBg(

@@ -57,10 +57,10 @@ namespace
     {
         { 0U, "BMS Temp",   true },
         { 1U, "Ext Temp",   true },
-        { 2U, "Capacity",   true },
-        { 3U, "Remaining",  true },
+        { 2U, "Capacity",   true, DisplayTypes::TextKey::Capacity },
+        { 3U, "Remaining",  true, DisplayTypes::TextKey::Remaining },
         { 4U, "SOC",        true },
-        { 5U, "RUNTIME",    true }
+        { 5U, "RUNTIME",    true, DisplayTypes::TextKey::Runtime  }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetailRows[] =

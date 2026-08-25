@@ -70,6 +70,26 @@ public:
         uint8_t fontSize,
         DisplayTypes::TextAlign align) = 0;
     
+    virtual void DrawTextFont(
+        int16_t x,
+        int16_t y,
+        const char* text,
+        DisplayTheme::Color color,
+        uint8_t fontSize,
+        DisplayTypes::TextAlign align,
+        DisplayTypes::FontType fontType)
+    {
+        (void)fontType;
+
+        DrawText(
+            x,
+            y,
+            text,
+            color,
+            fontSize,
+            align);
+    }
+    
     /*
      * 배경색을 함께 사용하여 문자열을 출력한다.
      *

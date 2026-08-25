@@ -21,7 +21,9 @@ namespace DisplayWidgets
         static void DrawStatic(
             IRenderTarget& target,
             uint8_t row,
-            const char* label);
+            const char* label,
+            DisplayTypes::FontType fontType =
+                DisplayTypes::FontType::Default);
 
         static void DrawValue(
             IRenderTarget& target,

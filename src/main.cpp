@@ -18,6 +18,7 @@
 #include "ButtonManager.h"
 #include <Wire.h>
 #include "TouchManager.h"
+#include "Localization.h"
 
 SVEMS::Remote::TouchManager touchManager;
 
@@ -145,6 +146,9 @@ void setup()
     WiFiService::Begin();
 
     ButtonManager::Begin();
+
+    Localization::SetLanguage(
+        Localization::Language::Korean);
 }
 
 

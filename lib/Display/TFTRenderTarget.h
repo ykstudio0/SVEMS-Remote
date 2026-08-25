@@ -77,6 +77,15 @@ public:
 
     void EndFrame() override;
 
+    void DrawTextFont(
+        int16_t x,
+        int16_t y,
+        const char* text,
+        DisplayTheme::Color color,
+        uint8_t fontSize,
+        DisplayTypes::TextAlign align,
+        DisplayTypes::FontType fontType) override;
+
 private:
     static uint16_t ToNativeColor(
         DisplayTheme::Color color);

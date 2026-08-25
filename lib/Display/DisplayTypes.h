@@ -81,6 +81,23 @@
         Settings
     };
 
+    enum class FontType : uint8_t
+    {
+        Default = 0U,
+        // Korean14,
+        Korean16,
+        Korean18
+    };
+
+    enum class TextKey : uint8_t
+    {
+        None = 0U,
+        Battery,
+        Capacity,
+        Remaining,
+        Runtime
+    };
+
     struct DisplayText
     {
         const char* text;

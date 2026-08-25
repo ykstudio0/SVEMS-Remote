@@ -12,6 +12,7 @@
 #include <stddef.h>
 #include "DisplayPages.h"
 #include "DisplayRect.h"
+#include "DisplayTypes.h"
 
 namespace DisplayLayout
 {
@@ -20,6 +21,9 @@ namespace DisplayLayout
         uint8_t row;
         const char* label;
         bool visible = true;
+
+        DisplayTypes::TextKey textKey =
+            DisplayTypes::TextKey::None;
     };
 
     const StaticRow* GetStaticRows(
