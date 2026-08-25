@@ -901,9 +901,11 @@ namespace DisplayRenderer
 
         // Estimated Runtime
         const bool runtimeChanged =
-            HasDisplayTextChanged(
-                data.runtime,
-                lastData.runtime);
+            strcmp(
+                data.runtimeText,
+                lastData.runtimeText) != 0 ||
+            data.runtime.color !=
+                lastData.runtime.color;
 
         if (ShouldDraw(runtimeChanged))
         {

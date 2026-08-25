@@ -282,6 +282,13 @@ namespace
                 DisplayTheme::COLOR_DISABLED;
         }
 
+        //-------------------------------------------------
+        // Runtime text buffer binding
+        //-------------------------------------------------
+
+        battery.runtime.text =
+            battery.runtimeText;
+
         battery.cellVoltage1 =
             DisplayTypes::MakeValue(
                 DataManager::Battery.cellVoltage[0],
