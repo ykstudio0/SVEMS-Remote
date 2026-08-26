@@ -228,6 +228,78 @@ namespace DisplayRenderer
             // 한글화 대상
             switch (rows[i].textKey)
             {
+                case DisplayTypes::TextKey::OverViewSolar:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewSolar);
+                    break;
+
+                case DisplayTypes::TextKey::OverViewBatRemain:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewBatRemain);
+                    break;
+
+                case DisplayTypes::TextKey::OverViewSOC:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewSOC);
+                    break;
+
+                case DisplayTypes::TextKey::OverViewLoad:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewLoad);
+                    break;
+
+                case DisplayTypes::TextKey::OverViewCabin:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewCabin);
+                    break;
+
+                case DisplayTypes::TextKey::OverViewHumidity:
+                    label =
+                        Localization::Get(
+                            Localization::OverViewHumidity);
+                    break;
+
+                case DisplayTypes::TextKey::PvVoltage:
+                    label =
+                        Localization::Get(
+                            Localization::PvVoltage);
+                    break;
+
+                case DisplayTypes::TextKey::PvCurrent:
+                    label =
+                        Localization::Get(
+                            Localization::PvCurrent);
+                    break;
+
+                case DisplayTypes::TextKey::PvPower:
+                    label =
+                        Localization::Get(
+                            Localization::PvPower);
+                    break;
+
+                case DisplayTypes::TextKey::PvStage:
+                    label =
+                        Localization::Get(
+                            Localization::PvStage);
+                    break;
+
+                case DisplayTypes::TextKey::PvInput:
+                    label =
+                        Localization::Get(
+                            Localization::PvInput);
+                    break;
+
+                case DisplayTypes::TextKey::PvDailyEng:
+                    label =
+                        Localization::Get(
+                            Localization::PvDailyEng);
+                    break;
+                
                 case DisplayTypes::TextKey::BatterySOC:
                     label =
                         Localization::Get(
@@ -262,6 +334,48 @@ namespace DisplayRenderer
                     label =
                         Localization::Get(
                             Localization::BatteryStatus);
+                    break;
+
+                case DisplayTypes::TextKey::LoadVoltage:
+                    label =
+                        Localization::Get(
+                            Localization::LoadVoltage);
+                    break;
+
+                case DisplayTypes::TextKey::LoadCurrent:
+                    label =
+                        Localization::Get(
+                            Localization::LoadCurrent);
+                    break;
+
+                case DisplayTypes::TextKey::LoadPower:
+                    label =
+                        Localization::Get(
+                            Localization::LoadPower);
+                    break;
+
+                case DisplayTypes::TextKey::TemperatureCabin:
+                    label =
+                        Localization::Get(
+                            Localization::TemperatureCabin);
+                    break;
+
+                case DisplayTypes::TextKey::TemperatureBattery:
+                    label =
+                        Localization::Get(
+                            Localization::TemperatureBattery);
+                    break;
+
+                case DisplayTypes::TextKey::TemperatureBMS:
+                    label =
+                        Localization::Get(
+                            Localization::TemperatureBMS);
+                    break;
+
+                case DisplayTypes::TextKey::TemperatureController:
+                    label =
+                        Localization::Get(
+                            Localization::TemperatureController);
                     break;
                 
                 case DisplayTypes::TextKey::BMSTemp:
@@ -334,6 +448,42 @@ namespace DisplayRenderer
                     label =
                         Localization::Get(
                             Localization::Delta);
+                    break;
+
+                case DisplayTypes::TextKey::DtlRSSI:
+                    label =
+                        Localization::Get(
+                            Localization::DtlRSSI);
+                    break;
+
+                case DisplayTypes::TextKey::DtlEpever:
+                    label =
+                        Localization::Get(
+                            Localization::DtlEpever);
+                    break;
+
+                case DisplayTypes::TextKey::DtlBMS:
+                    label =
+                        Localization::Get(
+                            Localization::DtlBMS);
+                    break;
+
+                case DisplayTypes::TextKey::DtlDevices:
+                    label =
+                        Localization::Get(
+                            Localization::DtlDevices);
+                    break;
+
+                case DisplayTypes::TextKey::DtlUptime:
+                    label =
+                        Localization::Get(
+                            Localization::DtlUptime);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttp:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttp);
                     break;
 
                 default:
@@ -2094,7 +2244,7 @@ namespace DisplayRenderer
         )
         {
             m_target->DrawText(
-                250,
+                200,
                 125,
                 "*",
                 DisplayTheme::COLOR_VALUE,
@@ -2121,7 +2271,7 @@ namespace DisplayRenderer
         )
         {
             m_target->DrawText(
-                250,
+                200,
                 170,
                 "*",
                 DisplayTheme::COLOR_VALUE,

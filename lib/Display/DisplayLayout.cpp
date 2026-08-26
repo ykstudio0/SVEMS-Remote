@@ -16,22 +16,22 @@ namespace
     // 한글화 대상
     const DisplayLayout::StaticRow g_overviewRows[] =
     {
-        {0, "Solar"},
-        {1, "Bat Remain"},
-        {2, "SOC"},
-        {3, "Load"},
-        {4, "Cabin"},
-        {5, "Humidity"}
+        {0, "Solar",        true, DisplayTypes::TextKey::OverViewSolar },
+        {1, "Bat Remain",   true, DisplayTypes::TextKey::OverViewBatRemain },
+        {2, "SOC",          true, DisplayTypes::TextKey::OverViewSOC },
+        {3, "Load",         true, DisplayTypes::TextKey::OverViewLoad },
+        {4, "Cabin",        true, DisplayTypes::TextKey::OverViewCabin },
+        {5, "Humidity",     true, DisplayTypes::TextKey::OverViewHumidity }
     };
     
     const DisplayLayout::StaticRow g_solarRows[] =
     {
-        {0, "PV Voltage"},
-        {1, "PV Current"},
-        {2, "PV Power"},
-        {3, "Stage"},
-        {4, "Input"},
-        {5, "Daily Eng"}
+        {0, "PV Voltage",   true, DisplayTypes::TextKey::PvVoltage },
+        {1, "PV Current",   true, DisplayTypes::TextKey::PvCurrent },
+        {2, "PV Power",     true, DisplayTypes::TextKey::PvPower },
+        {3, "Stage",        true, DisplayTypes::TextKey::PvStage },
+        {4, "Input",        true, DisplayTypes::TextKey::PvInput },
+        {5, "Daily Eng",    true, DisplayTypes::TextKey::PvDailyEng }
     };
 
     const DisplayLayout::StaticRow g_batteryRows[] =
@@ -61,17 +61,17 @@ namespace
         { 2U, "Capacity",   true, DisplayTypes::TextKey::Capacity },
         { 3U, "Remaining",  true, DisplayTypes::TextKey::DtlRemaining },
         { 4U, "SOC",        true, DisplayTypes::TextKey::DtlSOC },
-        { 5U, "RUNTIME",    true, DisplayTypes::TextKey::Runtime  }
+        { 5U, "RUNTIME",    true, DisplayTypes::TextKey::Runtime }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetailRows[] =
     {
-        { 0U, "RSSI",        true },
-        { 1U, "EPEVER",      true },
-        { 2U, "BMS",         true },
-        { 3U, "DEVICES",     true },
-        { 4U, "UPTIME",      true },
-        { 5U, "HTTP",        true }
+        { 0U, "RSSI",        true, DisplayTypes::TextKey::DtlRSSI },
+        { 1U, "EPEVER",      true, DisplayTypes::TextKey::DtlEpever },
+        { 2U, "BMS",         true, DisplayTypes::TextKey::DtlBMS },
+        { 3U, "DEVICES",     true, DisplayTypes::TextKey::DtlDevices },
+        { 4U, "UPTIME",      true, DisplayTypes::TextKey::DtlUptime },
+        { 5U, "HTTP",        true, DisplayTypes::TextKey::DtlHttp }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetail2Rows[] =
@@ -102,17 +102,17 @@ namespace
 
     const DisplayLayout::StaticRow g_loadRows[] =
     {
-        {0, "Voltage"},
-        {1, "Current"},
-        {2, "Power"}
+        {0, "Voltage",      true, DisplayTypes::TextKey::LoadVoltage },
+        {1, "Current",      true, DisplayTypes::TextKey::LoadCurrent },
+        {2, "Power",        true, DisplayTypes::TextKey::LoadPower }
     };
 
     const DisplayLayout::StaticRow g_temperatureRows[] =
     {
-        {0, "Cabin"},
-        {1, "Battery"},
-        {2, "BMS"},
-        {3, "Controller"}
+        {0, "Cabin",        true, DisplayTypes::TextKey::TemperatureCabin },
+        {1, "Battery",      true, DisplayTypes::TextKey::TemperatureBattery },
+        {2, "BMS",          true, DisplayTypes::TextKey::TemperatureBMS },
+        {3, "Controller",   true, DisplayTypes::TextKey::TemperatureController }
     };
 
     const DisplayLayout::StaticRow g_systemRows[] =

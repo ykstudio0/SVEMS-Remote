@@ -96,12 +96,31 @@
     enum class TextKey : uint8_t
     {
         None = 0U,
+        OverViewSolar,
+        OverViewBatRemain,
+        OverViewSOC,
+        OverViewLoad,
+        OverViewCabin,
+        OverViewHumidity,
+        PvVoltage,
+        PvCurrent,
+        PvPower,
+        PvStage,
+        PvInput,
+        PvDailyEng,
         BatterySOC,
         BatteryRemaining,
         BatteryPower,
         BatteryCurrent,
         BatteryTemp,
         BatteryStatus,
+        LoadVoltage,
+        LoadCurrent,
+        LoadPower,
+        TemperatureCabin,
+        TemperatureBattery,
+        TemperatureBMS,
+        TemperatureController,
         BMSTemp,
         ExtTemp,
         Capacity,
@@ -113,7 +132,13 @@
         Cell2,
         Cell3,
         Cell4,
-        Delta
+        Delta,
+        DtlRSSI,
+        DtlEpever,
+        DtlBMS,
+        DtlDevices,
+        DtlUptime,
+        DtlHttp
     };
 
     struct DisplayText

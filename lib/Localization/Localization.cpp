@@ -53,9 +53,82 @@ namespace Localization
             g_language);
     }
 
-    // 한글과 대상
-    // Battery Main
+    // 한글화 대상
+    // OverView Main
+    const Text OverViewSolar =
+    {
+        "Solar",
+        "태양광"
+    };
+    
+    const Text OverViewBatRemain =
+    {
+        "Bat Remain",
+        "배터리량"
+    };
 
+    const Text OverViewSOC =
+    {
+        "SOC",
+        "충전잔량"
+    };
+
+    const Text OverViewLoad =
+    {
+        "Load",
+        "부하"
+    };
+
+    const Text OverViewCabin =
+    {
+        "Cabin",
+        "실내온도"
+    };
+
+    const Text OverViewHumidity =
+    {
+        "Humidity",
+        "실내습도"
+    };
+
+    //Solar Main
+    const Text PvVoltage =
+    {
+        "Pv Voltage",
+        "Pv전압"
+    };
+
+    const Text PvCurrent =
+    {
+        "Pv Current",
+        "Pv전류"
+    };
+
+    const Text PvPower =
+    {
+        "Pv Power",
+        "Pv전력"
+    };
+
+    const Text PvStage =
+    {
+        "Stage",
+        "충전단계"
+    };
+
+    const Text PvInput =
+    {
+        "Input",
+        "입력상태"
+    };
+
+    const Text PvDailyEng =
+    {
+        "Daily Eng",
+        "일발전량"
+    };
+
+    // Battery Main
     const Text BatterySOC =
     {
         "SOC",
@@ -90,6 +163,50 @@ namespace Localization
     {
         "Status",
         "상태"
+    };
+
+    // Load Main
+    const Text LoadVoltage =
+    {
+        "Voltage",
+        "전압"
+    };
+
+    const Text LoadCurrent =
+    {
+        "Current",
+        "전류"
+    };
+
+    const Text LoadPower =
+    {
+        "Power",
+        "전력"
+    };
+
+    // Temperature Main
+    const Text TemperatureCabin =
+    {
+        "Cabin",
+        "실내"
+    };
+
+    const Text TemperatureBattery =
+    {
+        "Battery",
+        "배터리"
+    };
+
+    const Text TemperatureBMS =
+    {
+        "BMS",
+        "BMS"
+    };
+
+    const Text TemperatureController =
+    {
+        "Controller",
+        "컨트롤러"
     };
 
     // Battery Dtl(2)
@@ -164,6 +281,42 @@ namespace Localization
     {
         "Delta",
         "셀편차"
+    };
+
+    const Text DtlRSSI =
+    {
+        "RSSI",
+        "RSSI"
+    };
+
+    const Text DtlEpever =
+    {
+        "EPEVER",
+        "EPEVER"
+    };
+
+    const Text DtlBMS =
+    {
+        "BMS",
+        "BMS"
+    };
+
+    const Text DtlDevices =
+    {
+        "Devices",
+        "장치"
+    };
+
+    const Text DtlUptime =
+    {
+        "Uptime",
+        "가동시간"
+    };
+
+    const Text DtlHttp =
+    {
+        "HTTP",
+        "HTTP"
     };
 }
 
