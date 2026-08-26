@@ -191,6 +191,23 @@ namespace
 
         // battery.status.color = DisplayTheme::COLOR_VALUE;
 
+        if (DataManager::Battery.status.online)
+        {
+            battery.communicationStatus.text =
+                "ONLINE";
+
+            battery.communicationStatus.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            battery.communicationStatus.text =
+                "OFFLINE";
+
+            battery.communicationStatus.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+
         battery.remainingCapacity =
             DisplayTypes::MakeValue(
                 DataManager::Battery.remainingCapacity,

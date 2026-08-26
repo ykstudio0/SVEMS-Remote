@@ -81,25 +81,39 @@
         Settings
     };
 
+    // 한글화
     enum class FontType : uint8_t
     {
         Default = 0U,
-        // Korean14,
-        // Korean20,
+        Korean12,
+        Korean14,
         Korean16,
-        Korean18
+        Korean18,
+        Korean20
     };
 
+    // 한글화 대상
     enum class TextKey : uint8_t
     {
         None = 0U,
-        Battery,
+        BatterySOC,
+        BatteryRemaining,
+        BatteryPower,
+        BatteryCurrent,
+        BatteryTemp,
+        BatteryStatus,
         BMSTemp,
         ExtTemp,
         Capacity,
-        Remaining,
-        SOC,
-        Runtime
+        DtlRemaining,
+        DtlSOC,
+        Runtime,
+        DtlVoltage,
+        Cell1,
+        Cell2,
+        Cell3,
+        Cell4,
+        Delta
     };
 
     struct DisplayText

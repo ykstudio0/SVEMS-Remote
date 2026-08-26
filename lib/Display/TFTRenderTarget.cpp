@@ -9,9 +9,12 @@
 
 #include "TFTRenderTarget.h"
 #include "DisplayLayout.h"
-// #include "SVEMS_KR_14.h"
+// 한글화
+#include "SVEMS_KR_12.h"
+#include "SVEMS_KR_14.h"
 #include "SVEMS_KR_16.h"
 #include "SVEMS_KR_18.h"
+#include "SVEMS_KR_20.h"
 
 TFTRenderTarget::TFTRenderTarget(
     lgfx::LGFX_Device& display)
@@ -21,10 +24,14 @@ TFTRenderTarget::TFTRenderTarget(
 {
 
 }
+// 한글화
+static const lgfx::U8g2font g_svemsKr12(
+    SVEMS_KR_12
+);
 
-// static const lgfx::U8g2font g_svemsKr14(
-//     SVEMS_KR_14
-// );
+static const lgfx::U8g2font g_svemsKr14(
+    SVEMS_KR_14
+);
 
 static const lgfx::U8g2font g_svemsKr16(
     SVEMS_KR_16
@@ -34,9 +41,9 @@ static const lgfx::U8g2font g_svemsKr18(
     SVEMS_KR_18
 );
 
-// static const lgfx::U8g2font g_svemsKr20(
-//     SVEMS_KR_20
-// );
+static const lgfx::U8g2font g_svemsKr20(
+    SVEMS_KR_20
+);
 
 bool TFTRenderTarget::Begin()
 {
@@ -148,15 +155,24 @@ void TFTRenderTarget::DrawTextFont(
     m_display->setTextColor(
         ToNativeColor(color));
 
+    // 한글화
     switch (fontType)
     {
-        // case DisplayTypes::FontType::Korean14:
-        // {
-        //     m_display->setFont(
-        //         &g_svemsKr14);
+        case DisplayTypes::FontType::Korean12:
+        {
+            m_display->setFont(
+                &g_svemsKr12);
 
-        //     break;
-        // }
+            break;
+        }
+
+        case DisplayTypes::FontType::Korean14:
+        {
+            m_display->setFont(
+                &g_svemsKr14);
+
+            break;
+        }
 
         case DisplayTypes::FontType::Korean16:
         {
@@ -170,6 +186,14 @@ void TFTRenderTarget::DrawTextFont(
         {
             m_display->setFont(
                 &g_svemsKr18);
+
+            break;
+        }
+
+        case DisplayTypes::FontType::Korean20:
+        {
+            m_display->setFont(
+                &g_svemsKr20);
 
             break;
         }

@@ -89,7 +89,8 @@ namespace SVEMS::Remote
     // Update
     //---------------------------------------------------------
 
-    void TouchManager::Update()
+    void TouchManager::Update(
+        DisplayPages::Page page)
     {
         m_action =
             Action::None;
@@ -160,9 +161,16 @@ namespace SVEMS::Remote
         m_action =
             DetermineAction(
                 screenX,
-                screenY);
+                screenY,
+                page);
     }
 
+    void TouchManager::SetSettingsMenu(
+        bool active)
+    {
+        m_settingsMenu =
+            active;
+    }
 
     //---------------------------------------------------------
     // GetAction
@@ -229,8 +237,62 @@ namespace SVEMS::Remote
     TouchManager::Action
     TouchManager::DetermineAction(
         uint16_t x,
-        uint16_t y) const
+        uint16_t y,
+        DisplayPages::Page page) const
     {
+        //-------------------------------------------------
+        // Settings Menu
+        //-------------------------------------------------
+        if (m_settingsMenu)
+        {   
+            if (
+                y <= HEADER_BOTTOM &&
+                x >= HEADER_STATUS_LEFT &&
+                x <= HEADER_STATUS_RIGHT
+            )
+            {
+                return Action::SettingsClose;
+            }
+
+            //-------------------------------------------------
+            // WiFi Setup
+            //-------------------------------------------------
+
+            if (
+                y >= 60U &&
+                y <= 105U
+            )
+            {
+                return Action::WiFiSetup;
+            }
+
+            //-------------------------------------------------
+            // English
+            //-------------------------------------------------
+
+            if (
+                y >= 106U &&
+                y <= 150U
+            )
+            {
+                return Action::English;
+            }
+
+            //-------------------------------------------------
+            // Korean
+            //-------------------------------------------------
+
+            if (
+                y >= 151U &&
+                y <= 195U
+            )
+            {
+                return Action::Korean;
+            }
+
+            return Action::None;
+        }
+
         if (m_wifiSetupConfirm)
         {
             if (y >= 135U &&
@@ -291,6 +353,11 @@ namespace SVEMS::Remote
             if (x >= HEADER_STATUS_LEFT &&
                 x <= HEADER_STATUS_RIGHT)
             {
+                if (page == DisplayPages::Page::System)
+                {
+                    return Action::Settings;
+                }
+
                 return Action::WiFiSetup;
             }
 

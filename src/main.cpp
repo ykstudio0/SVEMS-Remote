@@ -19,6 +19,7 @@
 #include <Wire.h>
 #include "TouchManager.h"
 #include "Localization.h"
+#include "DisplaySettings.h"
 
 SVEMS::Remote::TouchManager touchManager;
 
@@ -79,6 +80,10 @@ void setup()
             "[TOUCH] Manager Ready"
         );
     }
+
+    Localization::SetLanguage(
+        SVEMS::Remote::DisplaySettings::LoadLanguage()
+    );
 
     //---------------------------------------------------------
     // LCD
@@ -259,7 +264,8 @@ void loop()
         );
     }
 
-    touchManager.Update();
+    touchManager.Update(
+        pageManager.Current());
 
     const SVEMS::Remote::TouchManager::Action
         touchAction =
@@ -274,6 +280,14 @@ void loop()
                 DisplayPages::Page::System
             )
             {
+                displayRenderer.SetSettingsMenu(
+                    false
+                );
+
+                touchManager.SetSettingsMenu(
+                    false
+                );
+                
                 Serial.println(
                     "[UI] WiFi Setup"
                 );
@@ -289,6 +303,50 @@ void loop()
                 forceDisplayRefresh =
                     true;
             }
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::English:
+        {
+            Serial.println(
+                "[UI] Language English"
+            );
+
+            Localization::SetLanguage(
+                Localization::Language::English
+            );
+
+            SVEMS::Remote::DisplaySettings::SaveLanguage(
+                Localization::Language::English
+            );
+
+            displayRenderer.SetSettingsMenu(false);
+            touchManager.SetSettingsMenu(false);
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::Korean:
+        {
+            Serial.println(
+                "[UI] Language Korean"
+            );
+
+            Localization::SetLanguage(
+                Localization::Language::Korean
+            );
+
+            SVEMS::Remote::DisplaySettings::SaveLanguage(
+                Localization::Language::Korean
+            );
+
+            displayRenderer.SetSettingsMenu(false);
+            touchManager.SetSettingsMenu(false);
+
+            forceDisplayRefresh = true;
 
             break;
         }
@@ -349,6 +407,26 @@ void loop()
             break;
         }
 
+        case SVEMS::Remote::TouchManager::Action::Settings:
+        {
+            Serial.println(
+                "[UI] Settings Menu"
+            );
+
+            displayRenderer.SetSettingsMenu(
+                true
+            );
+
+            touchManager.SetSettingsMenu(
+                true
+            );
+
+            forceDisplayRefresh =
+                true;
+
+            break;
+        }
+
         case SVEMS::Remote::TouchManager::Action::Previous:
             pageManager.Previous();
 
@@ -377,6 +455,20 @@ void loop()
                 forceDisplayRefresh =
                     true;
             }
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::SettingsClose:
+        {
+            displayRenderer.SetSettingsMenu(
+                false);
+
+            touchManager.SetSettingsMenu(
+                false);
+
+            forceDisplayRefresh =
+                true;
 
             break;
         }

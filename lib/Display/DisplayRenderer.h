@@ -48,6 +48,14 @@ namespace DisplayRenderer
 
         bool IsWiFiSetupMode() const;
 
+        void SetSettingsMenu(
+            bool visible);
+
+        void DrawSettingsMenu();
+
+        bool m_settingsMenu = false;
+        bool m_settingsMenuDrawn = false;
+
     private:
         // Common
         void DrawHeader(

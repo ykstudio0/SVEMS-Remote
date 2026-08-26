@@ -13,6 +13,7 @@ namespace
 {
     using namespace DisplayLayout;
 
+    // 한글화 대상
     const DisplayLayout::StaticRow g_overviewRows[] =
     {
         {0, "Solar"},
@@ -35,22 +36,22 @@ namespace
 
     const DisplayLayout::StaticRow g_batteryRows[] =
     {
-        {0, "SOC"},
-        {1, "Remaining"},
-        {2, "Power"},
-        {3, "Current"},
-        {4, "Temp"},
-        {5, "Status"}
+        {0, "SOC",          true, DisplayTypes::TextKey::BatterySOC },
+        {1, "Remaining",    true, DisplayTypes::TextKey::BatteryRemaining },
+        {2, "Power",        true, DisplayTypes::TextKey::BatteryPower },
+        {3, "Current",      true, DisplayTypes::TextKey::BatteryCurrent },
+        {4, "Temp",         true, DisplayTypes::TextKey::BatteryTemp },
+        {5, "Status",       true, DisplayTypes::TextKey::BatteryStatus }
     };
 
     constexpr StaticRow g_batteryDetailRows[] =
     {
-        { 0U, "Voltage",   true },
-        { 1U, "Cell 1",    true },
-        { 2U, "Cell 2",    true },
-        { 3U, "Cell 3",    true },
-        { 4U, "Cell 4",    true },
-        { 5U, "Delta",     true }
+        { 0U, "Voltage",   true, DisplayTypes::TextKey::DtlVoltage },
+        { 1U, "Cell 1",    true, DisplayTypes::TextKey::Cell1 },
+        { 2U, "Cell 2",    true, DisplayTypes::TextKey::Cell2 },
+        { 3U, "Cell 3",    true, DisplayTypes::TextKey::Cell3 },
+        { 4U, "Cell 4",    true, DisplayTypes::TextKey::Cell4 },
+        { 5U, "Delta",     true, DisplayTypes::TextKey::Delta }
     };
 
     constexpr StaticRow g_batteryDetail2Rows[] =
@@ -58,8 +59,8 @@ namespace
         { 0U, "BMS Temp",   true, DisplayTypes::TextKey::BMSTemp },
         { 1U, "Ext Temp",   true, DisplayTypes::TextKey::ExtTemp },
         { 2U, "Capacity",   true, DisplayTypes::TextKey::Capacity },
-        { 3U, "Remaining",  true, DisplayTypes::TextKey::Remaining },
-        { 4U, "SOC",        true, DisplayTypes::TextKey::SOC },
+        { 3U, "Remaining",  true, DisplayTypes::TextKey::DtlRemaining },
+        { 4U, "SOC",        true, DisplayTypes::TextKey::DtlSOC },
         { 5U, "RUNTIME",    true, DisplayTypes::TextKey::Runtime  }
     };
 

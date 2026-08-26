@@ -12,6 +12,7 @@
 #include <Arduino.h>
 
 #include "TouchDevice.h"
+#include "DisplayPages.h"
 
 namespace SVEMS::Remote
 {
@@ -24,24 +25,37 @@ namespace SVEMS::Remote
             Previous,
             Next,
             Content,
+
             WiFiSetup,
             Cancel,
-            Confirm
+            Confirm,
+
+            Settings,
+            SettingsClose,
+            
+            English,
+            Korean
         };
 
         bool Begin();
 
-        void Update();
+        void Update(DisplayPages::Page page);
 
         Action GetAction();
 
         void SetWiFiSetupConfirm(
             bool active);
 
+        void SetSettingsMenu(
+            bool active);
+
+        bool m_settingsMenu = false;
+
     private:
         Action DetermineAction(
             uint16_t x,
-            uint16_t y) const;
+            uint16_t y,
+            DisplayPages::Page page) const;
 
         void ConvertCoordinates(
             uint16_t rawX,

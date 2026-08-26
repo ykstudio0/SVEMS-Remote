@@ -8,6 +8,13 @@
 //-------------------------------------------------------------
 
 #include "Localization.h"
+#include <Preferences.h>
+
+namespace
+{
+    constexpr const char* NVS_NAMESPACE = "display";
+    constexpr const char* NVS_KEY_LANGUAGE = "language";
+}
 
 namespace Localization
 {
@@ -46,12 +53,46 @@ namespace Localization
             g_language);
     }
 
-    const Text Battery =
+    // 한글과 대상
+    // Battery Main
+
+    const Text BatterySOC =
     {
-        "BATTERY",
-        "배터리"
+        "SOC",
+        "충전잔량"
     };
 
+    const Text BatteryRemaining =
+    {
+        "Remaining",
+        "잔여용량"
+    };
+
+    const Text BatteryPower =
+    {
+        "Power",
+        "전력"
+    };
+
+    const Text BatteryCurrent =
+    {
+        "Current",
+        "전류"
+    };
+
+    const Text BatteryTemp =
+    {
+        "Temp",
+        "온도"
+    };
+
+    const Text BatteryStatus =
+    {
+        "Status",
+        "상태"
+    };
+
+    // Battery Dtl(2)
     const Text BMSTemp =
     {
         "BMS Temp",
@@ -70,13 +111,13 @@ namespace Localization
         "용량"
     };
 
-    const Text Remaining =
+    const Text DtlRemaining =
     {
         "Remaining",
         "잔여용량"
     };
 
-    const Text SOC =
+    const Text DtlSOC =
     {
         "SOC",
         "충전잔량"
@@ -86,6 +127,43 @@ namespace Localization
     {
         "RUNTIME",
         "가용시간"
+    };
+
+    // Battery Dtl(1)
+    const Text DtlVoltage =
+    {
+        "Voltage",
+        "전압"
+    };
+
+    const Text Cell1 =
+    {
+        "Cell1",
+        "셀 1"
+    };
+
+    const Text Cell2 =
+    {
+        "Cell2",
+        "셀 2"
+    };
+
+    const Text Cell3 =
+    {
+        "Cell3",
+        "셀 3"
+    };
+
+    const Text Cell4 =
+    {
+        "Cell4",
+        "셀 4"
+    };
+
+    const Text Delta =
+    {
+        "Delta",
+        "셀편차"
     };
 }
 

@@ -142,6 +142,21 @@ namespace DisplayRenderer
             return true;
         }
 
+        if (m_settingsMenu)
+        {
+            if (!m_settingsMenuDrawn)
+            {
+                DrawSettingsMenu();
+
+                m_settingsMenuDrawn =
+                    true;
+            }
+
+            m_target->EndFrame();
+
+            return true;
+        }
+
         if (m_wifiSetupConfirm)
         {
             if (!m_wifiSetupConfirmDrawn)
@@ -210,8 +225,45 @@ namespace DisplayRenderer
             DisplayTypes::FontType fontType =
                 DisplayTypes::FontType::Default;
 
+            // 한글화 대상
             switch (rows[i].textKey)
             {
+                case DisplayTypes::TextKey::BatterySOC:
+                    label =
+                        Localization::Get(
+                            Localization::BatterySOC);
+                    break;
+
+                case DisplayTypes::TextKey::BatteryRemaining:
+                    label =
+                        Localization::Get(
+                            Localization::BatteryRemaining);
+                    break;
+
+                case DisplayTypes::TextKey::BatteryPower:
+                    label =
+                        Localization::Get(
+                            Localization::BatteryPower);
+                    break;
+
+                case DisplayTypes::TextKey::BatteryCurrent:
+                    label =
+                        Localization::Get(
+                            Localization::BatteryCurrent);
+                    break;
+
+                case DisplayTypes::TextKey::BatteryTemp:
+                    label =
+                        Localization::Get(
+                            Localization::BatteryTemp);
+                    break;
+
+                case DisplayTypes::TextKey::BatteryStatus:
+                    label =
+                        Localization::Get(
+                            Localization::BatteryStatus);
+                    break;
+                
                 case DisplayTypes::TextKey::BMSTemp:
                     label =
                         Localization::Get(
@@ -230,16 +282,16 @@ namespace DisplayRenderer
                             Localization::Capacity);
                     break;
 
-                case DisplayTypes::TextKey::Remaining:
+                case DisplayTypes::TextKey::DtlRemaining:
                     label =
                         Localization::Get(
-                            Localization::Remaining);
+                            Localization::DtlRemaining);
                     break;
 
-                case DisplayTypes::TextKey::SOC:
+                case DisplayTypes::TextKey::DtlSOC:
                     label =
                         Localization::Get(
-                            Localization::SOC);
+                            Localization::DtlSOC);
                     break;
 
                 case DisplayTypes::TextKey::Runtime:
@@ -248,10 +300,47 @@ namespace DisplayRenderer
                             Localization::Runtime);
                     break;
 
+                case DisplayTypes::TextKey::DtlVoltage:
+                    label =
+                        Localization::Get(
+                            Localization::DtlVoltage);
+                    break;
+
+                case DisplayTypes::TextKey::Cell1:
+                    label =
+                        Localization::Get(
+                            Localization::Cell1);
+                    break;
+
+                case DisplayTypes::TextKey::Cell2:
+                    label =
+                        Localization::Get(
+                            Localization::Cell2);
+                    break;
+
+                case DisplayTypes::TextKey::Cell3:
+                    label =
+                        Localization::Get(
+                            Localization::Cell3);
+                    break;
+
+                case DisplayTypes::TextKey::Cell4:
+                    label =
+                        Localization::Get(
+                            Localization::Cell4);
+                    break;
+
+                case DisplayTypes::TextKey::Delta:
+                    label =
+                        Localization::Get(
+                            Localization::Delta);
+                    break;
+
                 default:
                     break;
             }
 
+            // 한글화
             if (
                 rows[i].textKey != DisplayTypes::TextKey::None &&
                 Localization::GetLanguage() ==
@@ -389,10 +478,20 @@ namespace DisplayRenderer
 
         if (ShouldDraw(statusChanged))
         {
-            DisplayWidgets::HeaderWidget::DrawStatus(
-                *m_target,
-                header.status.text,
-                header.status.color);
+            if (page == DisplayPages::Page::System)
+            {
+                DisplayWidgets::HeaderWidget::DrawStatus(
+                    *m_target,
+                    "SET",
+                    DisplayTheme::COLOR_VALUE);
+            }
+            else
+            {
+                DisplayWidgets::HeaderWidget::DrawStatus(
+                    *m_target,
+                    header.status.text,
+                    header.status.color);
+            }
         }
     }
 
@@ -746,12 +845,11 @@ namespace DisplayRenderer
         //---------------------------------------------------------
         // Row 5 : BMS Communication Status
         //---------------------------------------------------------
-
         const bool statusChanged =
             HasDisplayTextChanged(
                 data.communicationStatus,
                 lastData.communicationStatus);
-
+        
         if (ShouldDraw(statusChanged))
         {
             DisplayWidgets::ValueWidget::DrawTextValue(
@@ -1927,4 +2025,109 @@ namespace DisplayRenderer
             1U,
             DisplayTypes::TextAlign::Center);
     }
+
+    void Renderer::SetSettingsMenu(
+        bool visible)
+    {
+        if (m_settingsMenu == visible)
+        {
+            return;
+        }
+
+        m_settingsMenu =
+            visible;
+
+        m_settingsMenuDrawn =
+            false;
+
+        if (!visible)
+        {
+            m_firstRender =
+                true;
+        }
+    }
+
+    void Renderer::DrawSettingsMenu()
+    {
+        m_target->Clear(
+            DisplayTheme::COLOR_BACKGROUND);
+
+        DisplayWidgets::HeaderWidget::DrawStatic(
+            *m_target,
+            "SETTINGS");
+
+        DisplayWidgets::HeaderWidget::DrawStatus(
+            *m_target,
+            "EXIT",
+            DisplayTheme::COLOR_VALUE);
+
+        const Localization::Language language =
+            Localization::GetLanguage();
+
+        //-------------------------------------------------
+        // WiFi Setup
+        //-------------------------------------------------
+        m_target->DrawText(
+            40,
+            80,
+            "WiFi Setup",
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left);
+
+        //-------------------------------------------------
+        // English
+        //-------------------------------------------------
+        m_target->DrawText(
+            40,
+            125,
+            "English",
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left);
+
+        if (
+            language ==
+            Localization::Language::English
+        )
+        {
+            m_target->DrawText(
+                250,
+                125,
+                "*",
+                DisplayTheme::COLOR_VALUE,
+                DisplayTheme::GetFontSize(
+                    DisplayTheme::FontRole::Large),
+                DisplayTypes::TextAlign::Center);
+        }
+
+        //-------------------------------------------------
+        // Korean
+        //-------------------------------------------------
+        m_target->DrawText(
+            40,
+            170,
+            "Korean",
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left);
+        
+        if (
+            language ==
+            Localization::Language::Korean
+        )
+        {
+            m_target->DrawText(
+                250,
+                170,
+                "*",
+                DisplayTheme::COLOR_VALUE,
+                DisplayTheme::GetFontSize(
+                    DisplayTheme::FontRole::Large),
+                DisplayTypes::TextAlign::Center);
+        }
+    };
 }
