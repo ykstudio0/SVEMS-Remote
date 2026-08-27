@@ -17,7 +17,8 @@ namespace DisplayWidgets
         IRenderTarget& target,
         const char* leftText,
         const char* centerText,
-        const char* rightText)
+        const char* rightText,
+        DisplayTypes::FontType fontType)
     {
         // Footer Background
         target.FillRect(
@@ -39,14 +40,15 @@ namespace DisplayWidgets
         // Left
         if (leftText && leftText[0])
         {
-            target.DrawText(
+            target.DrawTextFont(
                 DisplayLayout::FOOTER_PREVIOUS_X,
                 DisplayLayout::FOOTER_PREVIOUS_Y,
                 leftText,
                 DisplayTheme::COLOR_TEXT,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Small),
-                DisplayTypes::TextAlign::Left);
+                DisplayTypes::TextAlign::Left,
+                fontType);
         }
 
         // Center
@@ -65,14 +67,15 @@ namespace DisplayWidgets
         // Right
         if (rightText && rightText[0])
         {
-            target.DrawText(
+            target.DrawTextFont(
                 DisplayLayout::FOOTER_NEXT_X,
                 DisplayLayout::FOOTER_NEXT_Y,
                 rightText,
                 DisplayTheme::COLOR_TEXT,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Small),
-                DisplayTypes::TextAlign::Right);
+                DisplayTypes::TextAlign::Right,
+                fontType);
         }
     }
 }

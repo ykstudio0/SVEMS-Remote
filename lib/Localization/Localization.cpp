@@ -54,6 +54,44 @@ namespace Localization
     }
 
     // 한글화 대상
+    // Header
+    const Text HeaderOverview =
+    {
+        "OVERVIEW",
+        "개요"
+    };
+
+    const Text HeaderSolar =
+    {
+        "SOLAR",
+        "태양광"
+    };
+
+    const Text HeaderBattery =
+    {
+        "BATTERY",
+        "배터리"
+    };
+
+    const Text HeaderLoad =
+    {
+        "LOAD",
+        "부하"
+    };
+
+    const Text HeaderTemperature =
+    {
+        "TEMPERATURE",
+        "온도"
+    };
+
+    const Text HeaderSystem =
+    {
+        "REMOTE SYSTEM",
+        "시스템"
+    };
+    
+    // Contents
     // OverView Main
     const Text OverViewSolar =
     {
@@ -441,6 +479,74 @@ namespace Localization
     {
         "RST REASON",
         "리셋원인"
+    };
+
+    // Footer
+    const Text FooterPrev =
+    {
+        "< Prev",
+        "< 이전"
+    };
+
+    const Text FooterNext =
+    {
+        "Next >",
+        "다음 >"
+    };
+
+    // Settings UI
+    const Text SettingsTitle =
+    {
+        "SETTINGS",
+        "설정"
+    };
+
+    const Text SettingsExit =
+    {
+        "EXIT",
+        "나가기"
+    };
+
+    const Text SettingsWiFi =
+    {
+        "WiFi Setup",
+        "WiFi설정"
+    };
+
+    const Text SettingsEnglish =
+    {
+        "English",
+        "영어"
+    };
+
+    const Text SettingsKorean =
+    {
+        "Korean",
+        "한국어"
+    };
+
+    const Text WiFiConfirmTitle =
+    {
+        "WiFi Setup",
+        "WiFi설정"
+    };
+
+    const Text WiFiConfirmMessage =
+    {
+        "Start setup mode?",
+        "설정모드 시작?"
+    };
+
+    const Text WiFiConfirmCancel =
+    {
+        "CANCEL",
+        "취소"
+    };
+
+    const Text WiFiConfirmOk =
+    {
+        "OK",
+        "확인"
     };
 }
 

@@ -19,7 +19,8 @@ namespace DisplayWidgets
     //-------------------------------------------------------------
     void HeaderWidget::DrawStatic(
         IRenderTarget& target,
-        const char* title)
+        const char* title,
+        DisplayTypes::FontType fontType)
     {
         // Header background
         target.FillRect(
@@ -33,14 +34,15 @@ namespace DisplayWidgets
         if (title != nullptr &&
             title[0] != '\0')
         {
-            target.DrawText(
+            target.DrawTextFont(
                 DisplayLayout::HEADER_TITLE_X,
                 DisplayLayout::HEADER_TITLE_Y,
                 title,
                 DisplayTheme::COLOR_TITLE,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Title),
-                DisplayTypes::TextAlign::Left);
+                DisplayTypes::TextAlign::Left,
+                fontType);
         }
 
         // Divider

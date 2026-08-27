@@ -29,6 +29,15 @@ namespace Localization
         const Text& text,
         Language language);
 
+    // Header
+    extern const Text HeaderOverview;
+    extern const Text HeaderSolar;
+    extern const Text HeaderBattery;
+    extern const Text HeaderLoad;
+    extern const Text HeaderTemperature;
+    extern const Text HeaderSystem;
+
+    // Contents
     extern const Text OverViewSolar;
     extern const Text OverViewBatRemain;
     extern const Text OverViewSOC;
@@ -92,6 +101,22 @@ namespace Localization
     extern const Text DtlSysUptime;
     extern const Text DtlSysTelemetry;
     extern const Text DtlSysAge;
+
+    // Footer
+    extern const Text FooterPrev;
+    extern const Text FooterNext;
+
+    // Settings UI
+    extern const Text SettingsTitle;
+    extern const Text SettingsExit;
+    extern const Text SettingsWiFi;
+    extern const Text SettingsEnglish;
+    extern const Text SettingsKorean;
+
+    extern const Text WiFiConfirmTitle;
+    extern const Text WiFiConfirmMessage;
+    extern const Text WiFiConfirmCancel;
+    extern const Text WiFiConfirmOk;
 
     Language GetLanguage();
     void SetLanguage(

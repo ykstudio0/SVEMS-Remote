@@ -20,7 +20,9 @@ namespace DisplayWidgets
     public:
         static void DrawStatic(
             IRenderTarget& target,
-            const char* title);
+            const char* title,
+            DisplayTypes::FontType fontType =
+                DisplayTypes::FontType::Default);
 
         static void DrawEnergy(
             IRenderTarget& target,

@@ -17,6 +17,44 @@
 #include "FooterWidget.h"
 #include "Localization.h"
 
+// 한글화 (Header)
+namespace
+{
+    const char* GetLocalizedTitle(
+        DisplayPages::Page page)
+    {
+        switch (page)
+        {
+            case DisplayPages::Page::Overview:
+                return Localization::Get(
+                    Localization::HeaderOverview);
+
+            case DisplayPages::Page::Solar:
+                return Localization::Get(
+                    Localization::HeaderSolar);
+
+            case DisplayPages::Page::Battery:
+                return Localization::Get(
+                    Localization::HeaderBattery);
+
+            case DisplayPages::Page::Load:
+                return Localization::Get(
+                    Localization::HeaderLoad);
+
+            case DisplayPages::Page::Temperature:
+                return Localization::Get(
+                    Localization::HeaderTemperature);
+
+            case DisplayPages::Page::System:
+                return Localization::Get(
+                    Localization::HeaderSystem);
+
+            default:
+                return DisplayPages::GetTitle(page);
+        }
+    }
+}
+
 namespace DisplayRenderer
 {
     bool Renderer::ShouldDraw(
@@ -628,7 +666,7 @@ namespace DisplayRenderer
                 fontType);
         }
     }
-    
+
     void Renderer::DrawStatic(
         DisplayPages::Page page,
         uint8_t subPage)
@@ -636,7 +674,7 @@ namespace DisplayRenderer
         Serial.println("DrawStatic()");
 
         const char* title =
-            DisplayPages::GetTitle(page);
+            GetLocalizedTitle(page);    
 
         char detailTitle[24];
 
@@ -650,15 +688,30 @@ namespace DisplayRenderer
                 detailTitle,
                 sizeof(detailTitle),
                 "%s DTL(%u)",
-                DisplayPages::GetDetailTitle(page),
+                GetLocalizedTitle(page),
                 static_cast<unsigned>(subPage));
 
             title = detailTitle;
         }
 
+        // 한글화
+        const DisplayTypes::FontType titleFont =
+            Localization::GetLanguage() ==
+                Localization::Language::Korean
+            ? DisplayTypes::FontType::Korean20
+            : DisplayTypes::FontType::Default;
+
+        // Serial.printf(
+        //     "[STATIC] page=%u sub=%u title=%s\n",
+        //     static_cast<unsigned>(page),
+        //     static_cast<unsigned>(subPage),
+        //     title
+        // );
+
         DisplayWidgets::HeaderWidget::DrawStatic(
             *m_target,
-            title);
+            title,
+            titleFont);
 
         DrawContentStatic(
             page,
@@ -779,11 +832,23 @@ namespace DisplayRenderer
             static_cast<unsigned>(
                 DisplayPages::PAGE_COUNT));
 
+        const DisplayTypes::FontType footerFont =
+            Localization::GetLanguage() ==
+                Localization::Language::Korean
+            ? DisplayTypes::FontType::Korean14
+            : DisplayTypes::FontType::Default;
+
         DisplayWidgets::FooterWidget::Draw(
             *m_target,
-            "< Prev",
+            Localization::Get(
+                Localization::FooterPrev
+            ),
             pageText,
-            "Next >");
+            Localization::Get(
+                Localization::FooterNext
+            ),
+            footerFont
+        );
     }
 
     void Renderer::DrawContent(
@@ -819,24 +884,6 @@ namespace DisplayRenderer
                 {
                     DrawBatteryDetail2(
                         model.GetBattery());
-
-                    // m_target->DrawTextFont(
-                    //     120,
-                    //     185,
-                    //     "배터리",
-                    //     DisplayTheme::COLOR_VALUE,
-                    //     1U,
-                    //     DisplayTypes::TextAlign::Left,
-                    //     DisplayTypes::FontType::Korean16);
-
-                    // m_target->DrawTextFont(
-                    //     120,
-                    //     212,
-                    //     "배터리",
-                    //     DisplayTheme::COLOR_VALUE,
-                    //     1U,
-                    //     DisplayTypes::TextAlign::Left,
-                    //     DisplayTypes::FontType::Korean18);
                 }
 
                 break;
@@ -1398,10 +1445,6 @@ namespace DisplayRenderer
                 data.controllerTemperature,
                 3U);
         }
-
-        
-
-        
     }
 
     void Renderer::DrawSystem(
@@ -2132,32 +2175,26 @@ namespace DisplayRenderer
 
     void Renderer::DrawWiFiSetupConfirm()
     {
-        constexpr int16_t POPUP_X =
-            45;
+        constexpr int16_t POPUP_X = 45;
+        constexpr int16_t POPUP_Y = 65;
+        constexpr int16_t POPUP_WIDTH = 230;
+        constexpr int16_t POPUP_HEIGHT = 110;
 
-        constexpr int16_t POPUP_Y =
-            65;
+        constexpr int16_t BUTTON_Y = 135;
+        constexpr int16_t BUTTON_HEIGHT = 28;
+        constexpr int16_t BUTTON_WIDTH = 75;
 
-        constexpr int16_t POPUP_WIDTH =
-            230;
+        constexpr int16_t CANCEL_X = 70;
+        constexpr int16_t OK_X = 175;
 
-        constexpr int16_t POPUP_HEIGHT =
-            110;
+        const Localization::Language language =
+            Localization::GetLanguage();
 
-        constexpr int16_t BUTTON_Y =
-            135;
-
-        constexpr int16_t BUTTON_HEIGHT =
-            28;
-
-        constexpr int16_t BUTTON_WIDTH =
-            75;
-
-        constexpr int16_t CANCEL_X =
-            70;
-
-        constexpr int16_t OK_X =
-            175;
+        const DisplayTypes::FontType popupFont =
+            language ==
+                Localization::Language::Korean
+            ? DisplayTypes::FontType::Korean16
+            : DisplayTypes::FontType::Default;
 
         //---------------------------------------------------------
         // Popup
@@ -2181,25 +2218,29 @@ namespace DisplayRenderer
         // Title
         //---------------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             160,
             82,
-            "WiFi Setup",
+            Localization::Get(
+                Localization::WiFiConfirmTitle),
             DisplayTheme::COLOR_VALUE,
             2U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            popupFont);
 
         //---------------------------------------------------------
         // Message
         //---------------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             160,
             112,
-            "Start setup mode?",
+            Localization::Get(
+                Localization::WiFiConfirmMessage),
             DisplayTheme::COLOR_LABEL,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            popupFont);
 
         //---------------------------------------------------------
         // CANCEL
@@ -2212,13 +2253,15 @@ namespace DisplayRenderer
             BUTTON_HEIGHT,
             DisplayTheme::COLOR_LABEL);
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             CANCEL_X + BUTTON_WIDTH / 2,
             BUTTON_Y + 9,
-            "CANCEL",
+            Localization::Get(
+                Localization::WiFiConfirmCancel),
             DisplayTheme::COLOR_LABEL,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            popupFont);
 
         //---------------------------------------------------------
         // OK
@@ -2231,13 +2274,15 @@ namespace DisplayRenderer
             BUTTON_HEIGHT,
             DisplayTheme::COLOR_SUCCESS);
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             OK_X + BUTTON_WIDTH / 2,
             BUTTON_Y + 9,
-            "OK",
+            Localization::Get(
+                Localization::WiFiConfirmOk),
             DisplayTheme::COLOR_SUCCESS,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            popupFont);
     }
 
     void Renderer::SetWiFiSetupMode(
@@ -2322,41 +2367,84 @@ namespace DisplayRenderer
         m_target->Clear(
             DisplayTheme::COLOR_BACKGROUND);
 
-        DisplayWidgets::HeaderWidget::DrawStatic(
-            *m_target,
-            "SETTINGS");
-
-        DisplayWidgets::HeaderWidget::DrawStatus(
-            *m_target,
-            "EXIT",
-            DisplayTheme::COLOR_VALUE);
-
         const Localization::Language language =
             Localization::GetLanguage();
+
+        // 한글화
+        const DisplayTypes::FontType menuFont =
+            language ==
+                Localization::Language::Korean
+            ? DisplayTypes::FontType::Korean20
+            : DisplayTypes::FontType::Default;
+
+        //-------------------------------------------------
+        // Header
+        //-------------------------------------------------
+
+        DisplayWidgets::HeaderWidget::DrawStatic(
+            *m_target,
+            Localization::Get(
+                Localization::SettingsTitle),
+            menuFont);
+
+        //-------------------------------------------------
+        // EXIT
+        //-------------------------------------------------
+
+        if (
+            language ==
+            Localization::Language::Korean
+        )
+        {
+            m_target->DrawTextFont(
+                DisplayLayout::HEADER_STATUS_X,
+                DisplayLayout::HEADER_STATUS_Y,
+                Localization::Get(
+                    Localization::SettingsExit),
+                DisplayTheme::COLOR_VALUE,
+                DisplayTheme::GetFontSize(
+                    DisplayTheme::FontRole::Small),
+                DisplayTypes::TextAlign::Right,
+                DisplayTypes::FontType::Korean14);
+        }
+        else
+        {
+            DisplayWidgets::HeaderWidget::DrawStatus(
+                *m_target,
+                Localization::Get(
+                    Localization::SettingsExit),
+                DisplayTheme::COLOR_VALUE);
+        }
 
         //-------------------------------------------------
         // WiFi Setup
         //-------------------------------------------------
-        m_target->DrawText(
+
+        m_target->DrawTextFont(
             40,
             80,
-            "WiFi Setup",
+            Localization::Get(
+                Localization::SettingsWiFi),
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Left);
+            DisplayTypes::TextAlign::Left,
+            menuFont);
 
         //-------------------------------------------------
         // English
         //-------------------------------------------------
-        m_target->DrawText(
+
+        m_target->DrawTextFont(
             40,
             125,
-            "English",
+            Localization::Get(
+                Localization::SettingsEnglish),
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Left);
+            DisplayTypes::TextAlign::Left,
+            menuFont);
 
         if (
             language ==
@@ -2376,15 +2464,18 @@ namespace DisplayRenderer
         //-------------------------------------------------
         // Korean
         //-------------------------------------------------
-        m_target->DrawText(
+
+        m_target->DrawTextFont(
             40,
             170,
-            "Korean",
+            Localization::Get(
+                Localization::SettingsKorean),
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Left);
-        
+            DisplayTypes::TextAlign::Left,
+            menuFont);
+
         if (
             language ==
             Localization::Language::Korean
@@ -2399,5 +2490,5 @@ namespace DisplayRenderer
                     DisplayTheme::FontRole::Large),
                 DisplayTypes::TextAlign::Center);
         }
-    };
+    }
 }

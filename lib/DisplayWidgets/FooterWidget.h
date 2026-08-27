@@ -22,6 +22,8 @@ namespace DisplayWidgets
             IRenderTarget& target,
             const char* leftText,
             const char* centerText,
-            const char* rightText);
+            const char* rightText,
+            DisplayTypes::FontType fontType =
+                DisplayTypes::FontType::Default);
     };
 }
