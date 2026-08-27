@@ -64,13 +64,13 @@ namespace Localization
     const Text OverViewBatRemain =
     {
         "Bat Remain",
-        "배터리량"
+        "잔여용량"
     };
 
     const Text OverViewSOC =
     {
         "SOC",
-        "충전잔량"
+        "충전율"
     };
 
     const Text OverViewLoad =
@@ -125,14 +125,14 @@ namespace Localization
     const Text PvDailyEng =
     {
         "Daily Eng",
-        "일발전량"
+        "일일발전"
     };
 
     // Battery Main
     const Text BatterySOC =
     {
         "SOC",
-        "충전잔량"
+        "충전율"
     };
 
     const Text BatteryRemaining =
@@ -225,7 +225,7 @@ namespace Localization
     const Text Capacity =
     {
         "Capacity",
-        "용량"
+        "총용량"
     };
 
     const Text DtlRemaining =
@@ -317,6 +317,130 @@ namespace Localization
     {
         "HTTP",
         "HTTP"
+    };
+
+    // System Main
+    const Text DtlSysWifi =
+    {
+        "WIFI",
+        "WiFi"
+    };
+
+    const Text DtlSysRSSI =
+    {
+        "RSSI",
+        "RSSI"
+    };
+
+    const Text DtlSysHeap =
+    {
+        "HEAP",
+        "힙사용량"
+    };
+
+    const Text DtlSysUptime =
+    {
+        "UPTIME",
+        "가동시간"
+    };
+
+    const Text DtlSysTelemetry =
+    {
+        "TELEMETRY",
+        "원격전송"
+    };
+
+    const Text DtlSysAge =
+    {
+        "AGE",
+        "수신경과"
+    };
+
+    // System Dtl(2)
+    const Text DtlHttpState =
+    {
+        "HTTP STATE",
+        "웹상태"
+    };
+
+    const Text DtlHttpOk =
+    {
+        "HTTP OK",
+        "웹성공"
+    };
+
+    const Text DtlHttpFail =
+    {
+        "HTTP FAIL",
+        "웹실패"
+    };
+
+    const Text DtlHttpConsec =
+    {
+        "HTTP CONSEC",
+        "연속실패"
+    };
+
+    const Text DtlHttpMax =
+    {
+        "HTTP MAX",
+        "최대연속"
+    };
+
+    const Text DtlHttpError =
+    {
+        "HTTP ERROR",
+        "최근오류"
+    };
+
+    // Sysem Dtl(3)
+    const Text DtlSolarOff =
+    {
+        "SOLAR OFF",
+        "PV끊김"
+    };
+
+    const Text DtlChargeOff =
+    {
+        "CHARGE OFF",
+        "충전끊김"
+    };
+
+    const Text DtlBMSOff =
+    {
+        "BMS OFF",
+        "BMS끊김"
+    };
+
+    const Text DtlLoadOff =
+    {
+        "LOAD OFF",
+        "부하끊김"
+    };
+
+    const Text DtlCtrlOff =
+    {
+        "CTRL OFF",
+        "제어끊김"
+    };
+
+    const Text DtlSOCOff =
+    {
+        "SOC OFF",
+        "SOC끊김"
+    };
+
+    // System Dtl(4)
+    const Text DtlBootCount =
+    {
+        "BOOT COUNT",
+        "부팅횟수"
+    };
+
+    const Text DtlRstReason =
+    {
+        "RST REASON",
+        "리셋원인"
     };
 }
 

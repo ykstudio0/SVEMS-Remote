@@ -85,8 +85,8 @@
     enum class FontType : uint8_t
     {
         Default = 0U,
-        Korean12,
         Korean14,
+        Korean15,
         Korean16,
         Korean18,
         Korean20
@@ -138,7 +138,27 @@
         DtlBMS,
         DtlDevices,
         DtlUptime,
-        DtlHttp
+        DtlHttp,
+        DtlHttpState,
+        DtlHttpOk,
+        DtlHttpFail,
+        DtlHttpConsec,
+        DtlHttpMax,
+        DtlHttpError,
+        DtlSolarOff,
+        DtlChargeOff,
+        DtlBMSOff,
+        DtlLoadOff,
+        DtlCtrlOff,
+        DtlSOCOff,
+        DtlBootCount,
+        DtlRstReason,
+        DtlSysWifi,
+        DtlSysRSSI,
+        DtlSysHeap,
+        DtlSysUptime,
+        DtlSysTelemetry,
+        DtlSysAge
     };
 
     struct DisplayText

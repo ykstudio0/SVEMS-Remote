@@ -72,6 +72,26 @@ namespace Localization
     extern const Text DtlDevices;
     extern const Text DtlUptime;
     extern const Text DtlHttp;
+    extern const Text DtlHttpState;
+    extern const Text DtlHttpOk;
+    extern const Text DtlHttpFail;
+    extern const Text DtlHttpConsec;
+    extern const Text DtlHttpMax;
+    extern const Text DtlHttpError;
+    extern const Text DtlSolarOff;
+    extern const Text DtlChargeOff;
+    extern const Text DtlBMSOff;
+    extern const Text DtlLoadOff;
+    extern const Text DtlCtrlOff;
+    extern const Text DtlSOCOff;
+    extern const Text DtlBootCount;
+    extern const Text DtlRstReason;
+    extern const Text DtlSysWifi;
+    extern const Text DtlSysRSSI;
+    extern const Text DtlSysHeap;
+    extern const Text DtlSysUptime;
+    extern const Text DtlSysTelemetry;
+    extern const Text DtlSysAge;
 
     Language GetLanguage();
     void SetLanguage(

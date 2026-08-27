@@ -10,8 +10,8 @@
 #include "TFTRenderTarget.h"
 #include "DisplayLayout.h"
 // 한글화
-#include "SVEMS_KR_12.h"
 #include "SVEMS_KR_14.h"
+#include "SVEMS_KR_15.h"
 #include "SVEMS_KR_16.h"
 #include "SVEMS_KR_18.h"
 #include "SVEMS_KR_20.h"
@@ -25,12 +25,12 @@ TFTRenderTarget::TFTRenderTarget(
 
 }
 // 한글화
-static const lgfx::U8g2font g_svemsKr12(
-    SVEMS_KR_12
-);
-
 static const lgfx::U8g2font g_svemsKr14(
     SVEMS_KR_14
+);
+
+static const lgfx::U8g2font g_svemsKr15(
+    SVEMS_KR_15
 );
 
 static const lgfx::U8g2font g_svemsKr16(
@@ -158,18 +158,18 @@ void TFTRenderTarget::DrawTextFont(
     // 한글화
     switch (fontType)
     {
-        case DisplayTypes::FontType::Korean12:
-        {
-            m_display->setFont(
-                &g_svemsKr12);
-
-            break;
-        }
-
         case DisplayTypes::FontType::Korean14:
         {
             m_display->setFont(
                 &g_svemsKr14);
+
+            break;
+        }
+
+        case DisplayTypes::FontType::Korean15:
+        {
+            m_display->setFont(
+                &g_svemsKr15);
 
             break;
         }

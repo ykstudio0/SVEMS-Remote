@@ -486,6 +486,126 @@ namespace DisplayRenderer
                             Localization::DtlHttp);
                     break;
 
+                case DisplayTypes::TextKey::DtlHttpState:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpState);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttpOk:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpOk);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttpFail:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpFail);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttpConsec:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpConsec);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttpMax:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpMax);
+                    break;
+
+                case DisplayTypes::TextKey::DtlHttpError:
+                    label =
+                        Localization::Get(
+                            Localization::DtlHttpError);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSolarOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSolarOff);
+                    break;
+
+                case DisplayTypes::TextKey::DtlChargeOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlChargeOff);
+                    break;
+
+                case DisplayTypes::TextKey::DtlBMSOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlBMSOff);
+                    break;
+            
+                case DisplayTypes::TextKey::DtlLoadOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlLoadOff);
+                    break;
+
+                case DisplayTypes::TextKey::DtlCtrlOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlCtrlOff);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSOCOff:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSOCOff);
+                    break;
+
+                case DisplayTypes::TextKey::DtlBootCount:
+                    label =
+                        Localization::Get(
+                            Localization::DtlBootCount);
+                    break;
+
+                case DisplayTypes::TextKey::DtlRstReason:
+                    label =
+                        Localization::Get(
+                            Localization::DtlRstReason);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysWifi:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysWifi);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysRSSI:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysRSSI);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysHeap:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysHeap);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysUptime:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysUptime);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysTelemetry:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysTelemetry);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysAge:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysAge);
+                    break;
+
                 default:
                     break;
             }

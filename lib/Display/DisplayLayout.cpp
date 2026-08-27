@@ -76,28 +76,28 @@ namespace
 
     static constexpr DisplayLayout::StaticRow g_systemDetail2Rows[] =
     {
-        { 0U, "HTTP STATE",  true },
-        { 1U, "HTTP OK",     true },
-        { 2U, "HTTP FAIL",   true },
-        { 3U, "HTTP CONSEC", true },
-        { 4U, "HTTP MAX",    true },
-        { 5U, "HTTP ERROR",  true }
+        { 0U, "HTTP STATE",  true, DisplayTypes::TextKey::DtlHttpState },
+        { 1U, "HTTP OK",     true, DisplayTypes::TextKey::DtlHttpOk },
+        { 2U, "HTTP FAIL",   true, DisplayTypes::TextKey::DtlHttpFail },
+        { 3U, "HTTP CONSEC", true, DisplayTypes::TextKey::DtlHttpConsec },
+        { 4U, "HTTP MAX",    true, DisplayTypes::TextKey::DtlHttpMax },
+        { 5U, "HTTP ERROR",  true, DisplayTypes::TextKey::DtlHttpError }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetail3Rows[] =
     {
-        { 0U, "SOLAR OFF",  true },
-        { 1U, "CHARGE OFF", true },
-        { 2U, "BMS OFF",    true },
-        { 3U, "LOAD OFF",   true },
-        { 4U, "CTRL OFF",   true },
-        { 5U, "SOC OFF",    true }
+        { 0U, "SOLAR OFF",  true, DisplayTypes::TextKey::DtlSolarOff },
+        { 1U, "CHARGE OFF", true, DisplayTypes::TextKey::DtlChargeOff },
+        { 2U, "BMS OFF",    true, DisplayTypes::TextKey::DtlBMSOff },
+        { 3U, "LOAD OFF",   true, DisplayTypes::TextKey::DtlLoadOff },
+        { 4U, "CTRL OFF",   true, DisplayTypes::TextKey::DtlCtrlOff },
+        { 5U, "SOC OFF",    true, DisplayTypes::TextKey::DtlSOCOff }
     };
 
     static constexpr DisplayLayout::StaticRow g_systemDetail4Rows[]
     {
-        { 0U, "BOOT COUNT",   true },
-        { 1U, "RST REASON", true }
+        { 0U, "BOOT COUNT",     true, DisplayTypes::TextKey::DtlBootCount },
+        { 1U, "RST REASON",     true, DisplayTypes::TextKey::DtlRstReason }
     };
 
     const DisplayLayout::StaticRow g_loadRows[] =
@@ -117,12 +117,12 @@ namespace
 
     const DisplayLayout::StaticRow g_systemRows[] =
     {
-        { 0U, "WIFI",      true },
-        { 1U, "RSSI",      true },
-        { 2U, "HEAP",      true },
-        { 3U, "UPTIME",    true },
-        { 4U, "TELEMETRY", true },
-        { 5U, "AGE",       true }
+        { 0U, "WIFI",      true, DisplayTypes::TextKey::DtlSysWifi },
+        { 1U, "RSSI",      true, DisplayTypes::TextKey::DtlSysRSSI },
+        { 2U, "HEAP",      true, DisplayTypes::TextKey::DtlSysHeap },
+        { 3U, "UPTIME",    true, DisplayTypes::TextKey::DtlSysUptime },
+        { 4U, "TELEMETRY", true, DisplayTypes::TextKey::DtlSysTelemetry },
+        { 5U, "AGE",       true, DisplayTypes::TextKey::DtlSysAge }
     };
 
 } // anonymous namespace
