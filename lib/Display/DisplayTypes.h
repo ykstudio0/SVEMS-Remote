@@ -89,7 +89,8 @@
         Korean15,
         Korean16,
         Korean18,
-        Korean20
+        Korean20,
+        KoreanGodic20
     };
 
     // 한글화 대상

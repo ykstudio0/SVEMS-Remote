@@ -15,6 +15,7 @@
 #include "SVEMS_KR_16.h"
 #include "SVEMS_KR_18.h"
 #include "SVEMS_KR_20.h"
+#include "SVEMS_KR_GODIC_20.h"
 
 TFTRenderTarget::TFTRenderTarget(
     lgfx::LGFX_Device& display)
@@ -43,6 +44,10 @@ static const lgfx::U8g2font g_svemsKr18(
 
 static const lgfx::U8g2font g_svemsKr20(
     SVEMS_KR_20
+);
+
+static const lgfx::U8g2font g_svemsKrGodic20(
+    SVEMS_KR_GODIC20
 );
 
 bool TFTRenderTarget::Begin()
@@ -194,6 +199,14 @@ void TFTRenderTarget::DrawTextFont(
         {
             m_display->setFont(
                 &g_svemsKr20);
+
+            break;
+        }
+
+        case DisplayTypes::FontType::KoreanGodic20:
+        {
+            m_display->setFont(
+                &g_svemsKrGodic20);
 
             break;
         }

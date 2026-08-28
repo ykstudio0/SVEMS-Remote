@@ -743,17 +743,6 @@ namespace DisplayRenderer
         const DisplayModel::HeaderData& lastHeader =
             m_lastModel.GetHeader();
 
-        // //---------------------------------------------------------
-        // // Static
-        // //---------------------------------------------------------
-
-        // if (m_firstRender || m_pageChanged)
-        // {
-        //     DisplayWidgets::HeaderWidget::DrawStatic(
-        //         *m_target,
-        //         DisplayPages::GetTitle(page));
-        // }
-
         //---------------------------------------------------------
         // Energy
         //---------------------------------------------------------
