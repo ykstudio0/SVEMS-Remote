@@ -11,7 +11,7 @@
 
 #include <ArduinoJson.h>
 #include <string.h>
-
+#include "DataManager.h"
 #include "EpeverStatusParser.h"
 
 namespace
@@ -491,6 +491,12 @@ namespace SVEMS::Telemetry
 
         data.vehicle.reverseChargeEnabled =
             vehicle["reverseChargeEnabled"] | false;
+
+        Serial.printf(
+            "[VEHICLE] ACTIVE=%s V=%.3fV REV=%s\n",
+            data.vehicle.active ? "ON" : "OFF",
+            data.vehicle.voltage,
+            data.vehicle.reverseChargeEnabled ? "ON" : "OFF");
 
         //---------------------------------------------------------
         // System
