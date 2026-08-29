@@ -18,6 +18,12 @@ namespace Localization
         Korean
     };
 
+    enum class DataSource : uint8_t
+    {
+        Main = 0U,
+        TestMain
+    };
+
     struct Text
     {
         const char* english;
@@ -130,4 +136,10 @@ namespace Localization
 
     const char* Get(
         const Text& text);
+
+    DataSource GetDataSource();
+
+    void SetDataSource(
+        DataSource dataSource
+    );
 }

@@ -24,6 +24,9 @@ namespace SVEMS
 
                 constexpr const char* NVS_KEY_LANGUAGE =
                     "language";
+
+                constexpr const char* NVS_KEY_DATA_SOURCE =
+                    "dataSource";
             }
 
             //-------------------------------------------------
@@ -86,6 +89,75 @@ namespace SVEMS
                     preferences.putUChar(
                         NVS_KEY_LANGUAGE,
                         static_cast<uint8_t>(language)
+                    );
+
+                preferences.end();
+
+                return written == sizeof(uint8_t);
+            }
+
+            //-------------------------------------------------
+            // LoadDataSource
+            //-------------------------------------------------
+
+            Localization::DataSource LoadDataSource()
+            {
+                Preferences preferences;
+
+                preferences.begin(
+                    NVS_NAMESPACE,
+                    true
+                );
+
+                const uint8_t value =
+                    preferences.getUChar(
+                        NVS_KEY_DATA_SOURCE,
+                        static_cast<uint8_t>(
+                            Localization::DataSource::Main
+                        )
+                    );
+
+                preferences.end();
+
+                if (
+                    value ==
+                    static_cast<uint8_t>(
+                        Localization::DataSource::TestMain
+                    )
+                )
+                {
+                    return Localization::DataSource::TestMain;
+                }
+
+                return Localization::DataSource::Main;
+            }
+
+            //-------------------------------------------------
+            // SaveDataSource
+            //-------------------------------------------------
+
+            bool SaveDataSource(
+                Localization::DataSource dataSource
+            )
+            {
+                Preferences preferences;
+
+                if (
+                    !preferences.begin(
+                        NVS_NAMESPACE,
+                        false
+                    )
+                )
+                {
+                    return false;
+                }
+
+                const size_t written =
+                    preferences.putUChar(
+                        NVS_KEY_DATA_SOURCE,
+                        static_cast<uint8_t>(
+                            dataSource
+                        )
                     );
 
                 preferences.end();

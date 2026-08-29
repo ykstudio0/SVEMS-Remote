@@ -34,7 +34,10 @@ namespace SVEMS::Remote
             SettingsClose,
             
             English,
-            Korean
+            Korean,
+
+            Main,
+            TestMain
         };
 
         bool Begin();

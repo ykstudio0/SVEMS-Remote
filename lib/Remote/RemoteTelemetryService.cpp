@@ -21,6 +21,7 @@
 #include "DataManager.h"
 #include "RemoteDataBridge.h"
 #include "RemoteSystemState.h"
+#include "Localization.h"
 
 SVEMS::Telemetry::TelemetryData
     RemoteTelemetryService::m_data;
@@ -83,11 +84,47 @@ void RemoteTelemetryService::Update()
 
     client.setHandshakeTimeout(3);
 
+    //-------------------------------------------------
+    // Telemetry Device ID
+    //-------------------------------------------------
+
+    const char* deviceId = "unknown";
+
+    if (
+        Localization::GetDataSource() ==
+        Localization::DataSource::TestMain
+    )
+    {
+        deviceId = "main-test";
+    }
+
+    //-------------------------------------------------
+    // Telemetry URL
+    //-------------------------------------------------
+
+    char telemetryUrl[160];
+
+    snprintf(
+        telemetryUrl,
+        sizeof(telemetryUrl),
+        "%s?deviceId=%s",
+        SVEMS::Config::TELEMETRY_URL,
+        deviceId
+    );
+
+    Serial.print(
+        "[REMOTE] URL = "
+    );
+
+    Serial.println(
+        telemetryUrl
+    );
+    
     HTTPClient http;
 
     if (!http.begin(
             client,
-            SVEMS::Config::TELEMETRY_URL))
+            telemetryUrl))
     {
         Serial.println(
             "[REMOTE] HTTP begin failed"

@@ -259,8 +259,8 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 60U &&
-                y <= 105U
+                y >= 45U &&
+                y <= 82U
             )
             {
                 return Action::WiFiSetup;
@@ -271,8 +271,8 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 106U &&
-                y <= 150U
+                y >= 83U &&
+                y <= 127U
             )
             {
                 return Action::English;
@@ -283,11 +283,28 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 151U &&
-                y <= 195U
+                y >= 128U &&
+                y <= 172U
             )
             {
                 return Action::Korean;
+            }
+
+            //-------------------------------------------------
+            // Data Source
+            //-------------------------------------------------
+
+            if (
+                y >= 173U &&
+                y <= 220U
+            )
+            {
+                if (x < 160U)
+                {
+                    return Action::Main;
+                }
+
+                return Action::TestMain;
             }
 
             return Action::None;

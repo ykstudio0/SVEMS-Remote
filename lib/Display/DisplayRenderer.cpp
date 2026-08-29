@@ -2468,7 +2468,7 @@ namespace DisplayRenderer
 
         m_target->DrawTextFont(
             40,
-            80,
+            60,
             Localization::Get(
                 Localization::SettingsWiFi),
             DisplayTheme::COLOR_VALUE,
@@ -2483,7 +2483,7 @@ namespace DisplayRenderer
 
         m_target->DrawTextFont(
             40,
-            125,
+            105,
             Localization::Get(
                 Localization::SettingsEnglish),
             DisplayTheme::COLOR_VALUE,
@@ -2499,7 +2499,7 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 200,
-                125,
+                105,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
@@ -2513,7 +2513,7 @@ namespace DisplayRenderer
 
         m_target->DrawTextFont(
             40,
-            170,
+            150,
             Localization::Get(
                 Localization::SettingsKorean),
             DisplayTheme::COLOR_VALUE,
@@ -2529,7 +2529,66 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 200,
-                170,
+                150,
+                "*",
+                DisplayTheme::COLOR_VALUE,
+                DisplayTheme::GetFontSize(
+                    DisplayTheme::FontRole::Large),
+                DisplayTypes::TextAlign::Center);
+        }
+
+        //-------------------------------------------------
+        // Data Source
+        //-------------------------------------------------
+
+        const Localization::DataSource dataSource =
+            Localization::GetDataSource();
+
+        // MAIN
+        m_target->DrawTextFont(
+            40,
+            195,
+            "MAIN",
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left,
+            menuFont);
+
+        if (
+            dataSource ==
+            Localization::DataSource::Main
+        )
+        {
+            m_target->DrawText(
+                120,
+                195,
+                "*",
+                DisplayTheme::COLOR_VALUE,
+                DisplayTheme::GetFontSize(
+                    DisplayTheme::FontRole::Large),
+                DisplayTypes::TextAlign::Center);
+        }
+
+        // TEST MAIN
+        m_target->DrawTextFont(
+            170,
+            195,
+            "TEST",
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left,
+            menuFont);
+
+        if (
+            dataSource ==
+            Localization::DataSource::TestMain
+        )
+        {
+            m_target->DrawText(
+                250,
+                195,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(

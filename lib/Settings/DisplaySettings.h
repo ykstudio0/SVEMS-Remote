@@ -22,6 +22,12 @@ namespace SVEMS
             bool SaveLanguage(
                 Localization::Language language
             );
+
+            Localization::DataSource LoadDataSource();
+
+            bool SaveDataSource(
+                Localization::DataSource dataSource
+            );
         }
     }
 }

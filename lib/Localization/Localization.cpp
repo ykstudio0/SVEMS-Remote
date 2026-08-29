@@ -21,6 +21,9 @@ namespace Localization
     static Language g_language =
         Language::English;
 
+    static DataSource g_dataSource =
+        DataSource::Main;
+
     Language GetLanguage()
     {
         return g_language;
@@ -33,6 +36,18 @@ namespace Localization
             language;
     }
     
+    DataSource GetDataSource()
+    {
+        return g_dataSource;
+    }
+
+    void SetDataSource(
+        DataSource dataSource)
+    {
+        g_dataSource =
+            dataSource;
+    }
+
     const char* Get(
         const Text& text,
         Language language)

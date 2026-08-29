@@ -85,6 +85,10 @@ void setup()
         SVEMS::Remote::DisplaySettings::LoadLanguage()
     );
 
+    Localization::SetDataSource(
+        SVEMS::Remote::DisplaySettings::LoadDataSource()
+    );
+
     //---------------------------------------------------------
     // LCD
     //---------------------------------------------------------
@@ -351,6 +355,60 @@ void loop()
             break;
         }
         
+        case SVEMS::Remote::TouchManager::Action::Main:
+        {
+            Serial.println(
+                "[UI] Data Source MAIN"
+            );
+
+            Localization::SetDataSource(
+                Localization::DataSource::Main
+            );
+
+            SVEMS::Remote::DisplaySettings::SaveDataSource(
+                Localization::DataSource::Main
+            );
+
+            displayRenderer.SetSettingsMenu(
+                false
+            );
+
+            touchManager.SetSettingsMenu(
+                false
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::TestMain:
+        {
+            Serial.println(
+                "[UI] Data Source TEST MAIN"
+            );
+
+            Localization::SetDataSource(
+                Localization::DataSource::TestMain
+            );
+
+            SVEMS::Remote::DisplaySettings::SaveDataSource(
+                Localization::DataSource::TestMain
+            );
+
+            displayRenderer.SetSettingsMenu(
+                false
+            );
+
+            touchManager.SetSettingsMenu(
+                false
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
         case SVEMS::Remote::TouchManager::Action::Cancel:
         {
             Serial.println(
