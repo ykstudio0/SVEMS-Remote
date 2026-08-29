@@ -86,6 +86,10 @@ namespace SVEMS::Telemetry
     struct VehicleData
     {
         bool active = false;
+
+        float voltage = 0.0f;
+
+        bool reverseChargeEnabled = false;
     };
 
     struct TemperatureData

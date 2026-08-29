@@ -877,6 +877,24 @@ namespace
 
         system.mainResetReason.color =
             DisplayTheme::COLOR_VALUE;
+
+        system.vehicleVoltage =
+            DisplayTypes::MakeValue(
+                DataManager::Vehicle.voltage,
+                DisplayTypes::ValueType::Voltage);
+
+        system.vehicleVoltage.decimals =
+            1U;
+
+        system.reverseCharge.text =
+            DataManager::Vehicle.reverseChargeEnabled
+                ? "ON"
+                : "OFF";
+
+        system.reverseCharge.color =
+            DataManager::Vehicle.reverseChargeEnabled
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_DISABLED;
     }
 
     void BuildHeader(DisplayModel::Model& model)

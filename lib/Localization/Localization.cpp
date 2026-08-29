@@ -481,6 +481,18 @@ namespace Localization
         "리셋원인"
     };
 
+    const Text DtlSysVehicleBat =
+    {
+        "Vehicle Bat",
+        "차량전압"
+    };
+
+    const Text DtlSysReverseChg =
+    {
+        "Reverse Chg",
+        "역충전"
+    };
+
     // Footer
     const Text FooterPrev =
     {

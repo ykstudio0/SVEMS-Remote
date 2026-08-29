@@ -378,6 +378,8 @@ namespace DisplayModel
         // SYSTEM DTL(4) - Boot diagnostics
         DisplayTypes::DisplayValue mainBootCount;
         DisplayTypes::DisplayText mainResetReason;
+        DisplayTypes::DisplayValue vehicleVoltage;
+        DisplayTypes::DisplayText reverseCharge;
 
         bool wifiConnected;
         bool rs485Ready;

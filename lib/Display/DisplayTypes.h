@@ -159,7 +159,9 @@
         DtlSysHeap,
         DtlSysUptime,
         DtlSysTelemetry,
-        DtlSysAge
+        DtlSysAge,
+        DtlSysVehicleBat,
+        DtlSysReverseChg
     };
 
     struct DisplayText

@@ -100,6 +100,12 @@ namespace
         { 1U, "RST REASON",     true, DisplayTypes::TextKey::DtlRstReason }
     };
 
+    static constexpr DisplayLayout::StaticRow g_systemDetail5Rows[]
+    {
+        { 0U, "Vehicle Bat",     true, DisplayTypes::TextKey::DtlSysVehicleBat },
+        { 1U, "Reverse Chg",     true, DisplayTypes::TextKey::DtlSysReverseChg }
+    };
+
     const DisplayLayout::StaticRow g_loadRows[] =
     {
         {0, "Voltage",      true, DisplayTypes::TextKey::LoadVoltage },
@@ -226,6 +232,15 @@ const DisplayLayout::StaticRow*
                         sizeof(g_systemDetail4Rows[0]);
 
                     return g_systemDetail4Rows;
+                }
+
+                if (subPage == 5U)
+                {
+                    count =
+                        sizeof(g_systemDetail5Rows) /
+                        sizeof(g_systemDetail5Rows[0]);
+
+                    return g_systemDetail5Rows;
                 }
 
                 count =

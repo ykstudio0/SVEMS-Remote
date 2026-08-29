@@ -14,7 +14,6 @@
 
 #include "EpeverStatusParser.h"
 
-
 namespace
 {
     SVEMS::Telemetry::TelemetryState ParseTelemetryState(
@@ -486,6 +485,12 @@ namespace SVEMS::Telemetry
 
         data.vehicle.active =
             vehicle["active"] | false;
+
+        data.vehicle.voltage =
+            vehicle["voltage"] | 0.0f;
+
+        data.vehicle.reverseChargeEnabled =
+            vehicle["reverseChargeEnabled"] | false;
 
         //---------------------------------------------------------
         // System

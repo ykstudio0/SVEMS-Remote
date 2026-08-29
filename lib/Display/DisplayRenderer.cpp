@@ -237,6 +237,11 @@ namespace DisplayRenderer
         DisplayPages::Page page,
         uint8_t subPage)
     {
+        Serial.printf(
+            "[STATIC] page=%u subPage=%u\n",
+            static_cast<unsigned>(page),
+            static_cast<unsigned>(subPage));
+
         size_t count = 0;
 
         auto rows =
@@ -244,6 +249,10 @@ namespace DisplayRenderer
                 page,
                 subPage,
                 count);
+
+        Serial.printf(
+            "[STATIC] rows=%u\n",
+            static_cast<unsigned>(count));
 
         if (rows == nullptr)
         {
@@ -644,6 +653,18 @@ namespace DisplayRenderer
                             Localization::DtlSysAge);
                     break;
 
+                case DisplayTypes::TextKey::DtlSysVehicleBat:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysVehicleBat);
+                    break;
+
+                case DisplayTypes::TextKey::DtlSysReverseChg:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysReverseChg);
+                    break;
+
                 default:
                     break;
             }
@@ -698,7 +719,7 @@ namespace DisplayRenderer
         const DisplayTypes::FontType titleFont =
             Localization::GetLanguage() ==
                 Localization::Language::Korean
-            ? DisplayTypes::FontType::Korean20
+            ? DisplayTypes::FontType::KoreanGodic20
             : DisplayTypes::FontType::Default;
 
         // Serial.printf(
@@ -1733,6 +1754,42 @@ namespace DisplayRenderer
             return;
         }
 
+        //-------------------------------------------------
+        // SYSTEM DTL(5)
+        //-------------------------------------------------
+
+        if (subPage == 5U)
+        {
+            const bool vehicleVoltageChanged =
+                HasValueChanged(
+                    data.vehicleVoltage,
+                    lastData.vehicleVoltage);
+
+            if (ShouldDraw(
+                    vehicleVoltageChanged))
+            {
+                DrawRowValue(
+                    data.vehicleVoltage,
+                    0U);
+            }
+
+            const bool reverseChargeChanged =
+                HasDisplayTextChanged(
+                    data.reverseCharge,
+                    lastData.reverseCharge);
+
+            if (ShouldDraw(
+                    reverseChargeChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    1U,
+                    data.reverseCharge);
+            }
+
+            return;
+        }
+
         // WIFI
         const bool wifiChanged =
             HasDisplayTextChanged(
@@ -2363,7 +2420,7 @@ namespace DisplayRenderer
         const DisplayTypes::FontType menuFont =
             language ==
                 Localization::Language::Korean
-            ? DisplayTypes::FontType::Korean20
+            ? DisplayTypes::FontType::KoreanGodic20
             : DisplayTypes::FontType::Default;
 
         //-------------------------------------------------

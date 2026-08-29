@@ -12,7 +12,6 @@
 #include "DataManager.h"
 #include "RemoteSystemState.h"
 
-
 namespace
 {
     DataManager::CommunicationState
@@ -288,6 +287,17 @@ namespace SVEMS::Remote
 
         DataManager::Vehicle.active =
             data.vehicle.active;
+
+        DataManager::Vehicle.voltage =
+            data.vehicle.voltage;
+
+        DataManager::Vehicle.reverseChargeEnabled =
+            data.vehicle.reverseChargeEnabled;
+
+        Serial.printf(
+            "[VEHICLE] V=%.2fV REV=%s\n",
+            DataManager::Vehicle.voltage,
+            DataManager::Vehicle.reverseChargeEnabled ? "ON" : "OFF");
 
         //-----------------------------------------------------
         // Communication Counters
