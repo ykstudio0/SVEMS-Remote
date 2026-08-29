@@ -237,11 +237,6 @@ namespace DisplayRenderer
         DisplayPages::Page page,
         uint8_t subPage)
     {
-        Serial.printf(
-            "[STATIC] page=%u subPage=%u\n",
-            static_cast<unsigned>(page),
-            static_cast<unsigned>(subPage));
-
         size_t count = 0;
 
         auto rows =
@@ -249,10 +244,6 @@ namespace DisplayRenderer
                 page,
                 subPage,
                 count);
-
-        Serial.printf(
-            "[STATIC] rows=%u\n",
-            static_cast<unsigned>(count));
 
         if (rows == nullptr)
         {
