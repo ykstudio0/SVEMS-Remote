@@ -294,10 +294,10 @@ namespace SVEMS::Remote
         DataManager::Vehicle.reverseChargeEnabled =
             data.vehicle.reverseChargeEnabled;
 
-        Serial.printf(
-            "[VEHICLE] V=%.2fV REV=%s\n",
-            DataManager::Vehicle.voltage,
-            DataManager::Vehicle.reverseChargeEnabled ? "ON" : "OFF");
+        // Serial.printf(
+        //     "[VEHICLE] V=%.2fV REV=%s\n",
+        //     DataManager::Vehicle.voltage,
+        //     DataManager::Vehicle.reverseChargeEnabled ? "ON" : "OFF");
 
         //-----------------------------------------------------
         // Communication Counters
