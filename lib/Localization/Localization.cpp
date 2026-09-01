@@ -126,6 +126,12 @@ namespace Localization
         "충전율"
     };
 
+    const Text OverViewBatteryPower =
+    {
+        "Bat Power",
+        "Bat전력"
+    };
+
     const Text OverViewLoad =
     {
         "Load",

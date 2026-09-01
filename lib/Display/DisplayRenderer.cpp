@@ -284,10 +284,10 @@ namespace DisplayRenderer
                             Localization::OverViewSOC);
                     break;
 
-                case DisplayTypes::TextKey::OverViewLoad:
+                case DisplayTypes::TextKey::OverViewBatteryPower:
                     label =
                         Localization::Get(
-                            Localization::OverViewLoad);
+                            Localization::OverViewBatteryPower);
                     break;
 
                 case DisplayTypes::TextKey::OverViewCabin:
@@ -951,15 +951,15 @@ namespace DisplayRenderer
                 2U);
         }
 
-        const bool loadChanged =
+        const bool batteryPowerChanged =
             HasValueChanged(
-                data.loadPower,
-                lastData.loadPower);
+                data.batteryPower,
+                lastData.batteryPower);
             
-        if (ShouldDraw(loadChanged))
+        if (ShouldDraw(batteryPowerChanged))
         {
             DrawRowValue(
-                data.loadPower,
+                data.batteryPower,
                 3U);
         }
 

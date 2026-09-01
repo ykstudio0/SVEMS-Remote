@@ -101,6 +101,7 @@
         OverViewBatRemain,
         OverViewSOC,
         OverViewLoad,
+        OverViewBatteryPower,
         OverViewCabin,
         OverViewHumidity,
         PvVoltage,

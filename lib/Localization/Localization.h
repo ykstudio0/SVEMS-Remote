@@ -47,6 +47,7 @@ namespace Localization
     extern const Text OverViewSolar;
     extern const Text OverViewBatRemain;
     extern const Text OverViewSOC;
+    extern const Text OverViewBatteryPower;
     extern const Text OverViewLoad;
     extern const Text OverViewCabin;
     extern const Text OverViewHumidity;

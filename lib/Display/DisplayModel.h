@@ -51,7 +51,7 @@ namespace DisplayModel
         DisplayTypes::DisplayValue solarPower;
         DisplayTypes::DisplayValue batteryRemaining;
         DisplayTypes::DisplayValue batteryPercent;
-        DisplayTypes::DisplayValue loadPower;
+        DisplayTypes::DisplayValue batteryPower;
         DisplayTypes::DisplayValue temperature;
         DisplayTypes::DisplayValue humidity;
 
@@ -74,7 +74,7 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::Percent)),
                 
-              loadPower(
+              batteryPower(
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::Power)),
@@ -649,8 +649,8 @@ namespace DisplayModel
             overview.batteryPercent =
                 battery.percent;
 
-            overview.loadPower =
-                load.power;
+            overview.batteryPower =
+                battery.power;
 
             overview.temperature =
                 temperature.cabinTemperature;
