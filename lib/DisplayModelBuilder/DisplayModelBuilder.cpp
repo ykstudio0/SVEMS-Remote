@@ -807,7 +807,9 @@ namespace
             mainState.modbusReady;
 
         system.deviceManagerReady =
-            true;
+            (mainState.deviceTotal == 0U) ||
+            (mainState.deviceCount ==
+            mainState.deviceTotal);
 
         // Status Text
         system.rs485Status.text =
@@ -853,9 +855,6 @@ namespace
 
         system.modbusCommunicationError =
             mainState.modbusCommunicationError;
-
-        system.deviceManagerReady =
-            true;
 
         system.deviceManagerStatus.text =
             system.deviceManagerReady
