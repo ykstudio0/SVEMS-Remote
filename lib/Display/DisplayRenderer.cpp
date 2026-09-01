@@ -696,11 +696,21 @@ namespace DisplayRenderer
 
         if (subPage > 0U)
         {
+            const char* detailBase =
+                DisplayPages::GetDetailTitle(page);
+
+            if (page == DisplayPages::Page::System)
+            {
+                detailBase =
+                    Localization::Get(
+                        Localization::HeaderSystemDetail);
+            }
+
             snprintf(
                 detailTitle,
                 sizeof(detailTitle),
                 "%s DTL(%u)",
-                GetLocalizedTitle(page),
+                detailBase,
                 static_cast<unsigned>(subPage));
 
             title = detailTitle;

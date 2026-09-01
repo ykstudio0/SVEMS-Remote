@@ -42,6 +42,7 @@ namespace Localization
     extern const Text HeaderLoad;
     extern const Text HeaderTemperature;
     extern const Text HeaderSystem;
+    extern const Text HeaderSystemDetail;
 
     // Contents
     extern const Text OverViewSolar;

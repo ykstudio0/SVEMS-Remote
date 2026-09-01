@@ -105,6 +105,12 @@ namespace Localization
         "REMOTE SYSTEM",
         "시스템"
     };
+
+    const Text HeaderSystemDetail =
+    {
+        "MAIN SYS",
+        "메인시스템"
+    };
     
     // Contents
     // OverView Main
