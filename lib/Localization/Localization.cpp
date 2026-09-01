@@ -132,10 +132,17 @@ namespace Localization
         "충전율"
     };
 
-    const Text OverViewBatteryPower =
+    // OverView 수정
+    // const Text OverViewBatteryPower =
+    // {
+    //     "Bat Power",
+    //     "Bat전력"
+    // };
+
+    const Text OverViewBatteryCurrent =
     {
-        "Bat Power",
-        "Bat전력"
+        "Bat Current",
+        "Bat전류"
     };
 
     const Text OverViewLoad =

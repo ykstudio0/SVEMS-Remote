@@ -284,10 +284,17 @@ namespace DisplayRenderer
                             Localization::OverViewSOC);
                     break;
 
-                case DisplayTypes::TextKey::OverViewBatteryPower:
+                // OverView 수정
+                // case DisplayTypes::TextKey::OverViewBatteryPower:
+                //     label =
+                //         Localization::Get(
+                //             Localization::OverViewBatteryPower);
+                //     break;
+
+                case DisplayTypes::TextKey::OverViewBatteryCurrent:
                     label =
                         Localization::Get(
-                            Localization::OverViewBatteryPower);
+                            Localization::OverViewBatteryCurrent);
                     break;
 
                 case DisplayTypes::TextKey::OverViewCabin:
@@ -961,15 +968,28 @@ namespace DisplayRenderer
                 2U);
         }
 
-        const bool batteryPowerChanged =
-            HasValueChanged(
-                data.batteryPower,
-                lastData.batteryPower);
+        // OverView 수정
+        // const bool batteryPowerChanged =
+        //     HasValueChanged(
+        //         data.batteryPower,
+        //         lastData.batteryPower);
             
-        if (ShouldDraw(batteryPowerChanged))
+        // if (ShouldDraw(batteryPowerChanged))
+        // {
+        //     DrawRowValue(
+        //         data.batteryPower,
+        //         3U);
+        // }
+
+        const bool batteryCurrentChanged =
+            HasValueChanged(
+                data.batteryCurrent,
+                lastData.batteryCurrent);
+            
+        if (ShouldDraw(batteryCurrentChanged))
         {
             DrawRowValue(
-                data.batteryPower,
+                data.batteryCurrent,
                 3U);
         }
 

@@ -19,7 +19,9 @@ namespace
         {0, "Solar",        true, DisplayTypes::TextKey::OverViewSolar },
         {1, "Bat Remain",   true, DisplayTypes::TextKey::OverViewBatRemain },
         {2, "SOC",          true, DisplayTypes::TextKey::OverViewSOC },
-        {3, "Bat Power",    true, DisplayTypes::TextKey::OverViewBatteryPower },
+        // OverView 수정
+        // {3, "Bat Power",    true, DisplayTypes::TextKey::OverViewBatteryPower },
+        {3, "Bat Current",    true, DisplayTypes::TextKey::OverViewBatteryCurrent },
         {4, "Cabin",        true, DisplayTypes::TextKey::OverViewCabin },
         {5, "Humidity",     true, DisplayTypes::TextKey::OverViewHumidity }
     };

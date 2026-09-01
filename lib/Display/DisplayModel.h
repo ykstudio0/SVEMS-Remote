@@ -51,7 +51,9 @@ namespace DisplayModel
         DisplayTypes::DisplayValue solarPower;
         DisplayTypes::DisplayValue batteryRemaining;
         DisplayTypes::DisplayValue batteryPercent;
-        DisplayTypes::DisplayValue batteryPower;
+        // OverView 수정
+        // DisplayTypes::DisplayValue batteryPower;
+        DisplayTypes::DisplayValue batteryCurrent;
         DisplayTypes::DisplayValue temperature;
         DisplayTypes::DisplayValue humidity;
 
@@ -68,16 +70,22 @@ namespace DisplayModel
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::Capacity)),
-
+              
               batteryPercent(
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::Percent)),
                 
-              batteryPower(
+              // OverView 수정
+            //   batteryPower(
+            //     DisplayTypes::MakeValue(
+            //         0.0f,
+            //         DisplayTypes::ValueType::Power)),
+
+              batteryCurrent(
                 DisplayTypes::MakeValue(
                     0.0f,
-                    DisplayTypes::ValueType::Power)),
+                    DisplayTypes::ValueType::Capacity)),
 
               temperature(
                 DisplayTypes::MakeValue(
@@ -653,8 +661,12 @@ namespace DisplayModel
             overview.batteryPercent =
                 battery.percent;
 
-            overview.batteryPower =
-                battery.power;
+            // OverView 수정
+            // overview.batteryPower =
+            //     battery.power;
+
+            overview.batteryCurrent =
+                battery.current;
 
             overview.temperature =
                 temperature.cabinTemperature;
