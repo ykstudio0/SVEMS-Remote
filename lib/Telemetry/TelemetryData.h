@@ -147,6 +147,9 @@ namespace SVEMS::Telemetry
         bool rs485Ready = false;
         bool modbusReady = false;
 
+        bool rs485CommunicationError = false;
+        bool modbusCommunicationError = false;
+
         HttpData http;
     };
 

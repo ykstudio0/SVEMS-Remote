@@ -40,6 +40,8 @@ namespace SVEMS::Remote
         const SVEMS::Telemetry::TimestampData& timestamp,
         bool rs485Ready,
         bool modbusReady,
+        bool rs485CommunicationError,
+        bool modbusCommunicationError,
         bool mainWifiConnected,
         int32_t mainWifiRssi,
         uint32_t mainUptimeSeconds,
@@ -90,6 +92,12 @@ namespace SVEMS::Remote
 
         m_state.modbusReady =
             modbusReady;
+
+        m_state.rs485CommunicationError =
+            rs485CommunicationError;
+
+        m_state.modbusCommunicationError =
+            modbusCommunicationError;
 
         m_state.mainWifiConnected =
             mainWifiConnected;

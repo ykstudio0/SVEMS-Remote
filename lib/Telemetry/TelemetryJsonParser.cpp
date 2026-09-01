@@ -410,6 +410,16 @@ namespace SVEMS::Telemetry
         data.communication.modbusReady =
             communication["modbus"] | false;
 
+        data.communication.rs485CommunicationError =
+            communication[
+                "rs485CommunicationError"
+            ] | false;
+
+        data.communication.modbusCommunicationError =
+            communication[
+                "modbusCommunicationError"
+            ] | false;
+
         data.communication.solarState =
             ParseTelemetryState(
                 communication["solarState"]

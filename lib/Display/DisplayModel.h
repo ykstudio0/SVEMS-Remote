@@ -387,6 +387,8 @@ namespace DisplayModel
         bool deviceManagerReady;
         bool epeverOnline;
         bool bmsOnline;
+        bool rs485CommunicationError = false;
+        bool modbusCommunicationError = false;
 
         constexpr SystemData()
             : currentTime(
@@ -506,7 +508,9 @@ namespace DisplayModel
             modbusReady(false),
             deviceManagerReady(false),
             epeverOnline(false),
-            bmsOnline(false)
+            bmsOnline(false),
+            rs485CommunicationError(false),
+            modbusCommunicationError(false)
         {
             currentTime.decimals = 0U;
             uptime.decimals = 0U;

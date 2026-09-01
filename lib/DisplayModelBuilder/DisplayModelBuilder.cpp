@@ -18,6 +18,7 @@
 #include "EpeverStatusParser.h"
 #include "WiFiService.h"
 #include "RemoteSystemState.h"
+#include "TelemetryData.h"
 
 namespace
 {
@@ -810,24 +811,51 @@ namespace
 
         // Status Text
         system.rs485Status.text =
-            system.rs485Ready
+            (
+                system.rs485Ready &&
+                !system.rs485CommunicationError
+            )
                 ? "OK"
                 : "FAIL";
 
         system.rs485Status.color =
-            system.rs485Ready
+            (
+                system.rs485Ready &&
+                !system.rs485CommunicationError
+            )
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_ALARM;
 
         system.modbusStatus.text =
-            system.modbusReady
+            (
+                system.modbusReady &&
+                !system.modbusCommunicationError
+            )
                 ? "OK"
                 : "FAIL";
 
         system.modbusStatus.color =
-            system.modbusReady
+            (
+                system.modbusReady &&
+                !system.modbusCommunicationError
+            )
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_ALARM;
+
+        system.rs485Ready =
+            mainState.rs485Ready;
+
+        system.modbusReady =
+            mainState.modbusReady;
+
+        system.rs485CommunicationError =
+            mainState.rs485CommunicationError;
+
+        system.modbusCommunicationError =
+            mainState.modbusCommunicationError;
+
+        system.deviceManagerReady =
+            true;
 
         system.deviceManagerStatus.text =
             system.deviceManagerReady
@@ -948,6 +976,28 @@ namespace
         else if (!system.wifiConnected)
         {
             header.status.text = "NET";
+            header.status.color =
+                DisplayTheme::COLOR_WARNING;
+        }
+        else if (
+            !system.rs485Ready ||
+            system.rs485CommunicationError)
+        {
+            header.status.text = "485";
+            header.status.color =
+                DisplayTheme::COLOR_WARNING;
+        }
+        else if (
+            !system.modbusReady ||
+            system.modbusCommunicationError)
+        {
+            header.status.text = "MOD";
+            header.status.color =
+                DisplayTheme::COLOR_WARNING;
+        }
+        else if (!system.deviceManagerReady)
+        {
+            header.status.text = "DEV";
             header.status.color =
                 DisplayTheme::COLOR_WARNING;
         }

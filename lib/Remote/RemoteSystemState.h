@@ -29,6 +29,9 @@ namespace SVEMS::Remote
             bool rs485Ready = false;
             bool modbusReady = false;
 
+            bool rs485CommunicationError = false;
+            bool modbusCommunicationError = false;
+
             bool mainWifiConnected = false;
             int32_t mainWifiRssi = 0;
 
@@ -60,6 +63,8 @@ namespace SVEMS::Remote
             const SVEMS::Telemetry::TimestampData& timestamp,
             bool rs485Ready,
             bool modbusReady,
+            bool rs485CommunicationError,
+            bool modbusCommunicationError,
             bool mainWifiConnected,
             int32_t mainWifiRssi,
             uint32_t mainUptimeSeconds,

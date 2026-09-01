@@ -324,6 +324,9 @@ namespace SVEMS::Remote
             data.communication.rs485Ready,
             data.communication.modbusReady,
 
+            data.communication.rs485CommunicationError,
+            data.communication.modbusCommunicationError,
+
             data.system.wifiConnected,
             data.system.wifiRssi,
             data.system.uptimeSeconds,
