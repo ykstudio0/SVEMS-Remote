@@ -1811,6 +1811,71 @@ namespace DisplayRenderer
             return;
         }
 
+        //-------------------------------------------------
+        // SYSTEM DTL(6) - Device Status
+        //-------------------------------------------------
+
+        if (subPage == 6U)
+        {
+            // MPPT
+            const bool mpptChanged =
+                HasDisplayTextChanged(
+                    data.epeverStatus,
+                    lastData.epeverStatus);
+
+            if (ShouldDraw(mpptChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    0U,
+                    data.epeverStatus);
+            }
+
+            // BMS
+            const bool bmsChanged =
+                HasDisplayTextChanged(
+                    data.bmsStatus,
+                    lastData.bmsStatus);
+
+            if (ShouldDraw(bmsChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    1U,
+                    data.bmsStatus);
+            }
+
+            // SHT40
+            const bool sht40Changed =
+                HasDisplayTextChanged(
+                    data.sht40Status,
+                    lastData.sht40Status);
+
+            if (ShouldDraw(sht40Changed))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    2U,
+                    data.sht40Status);
+            }
+
+            // RTC
+            const bool rtcChanged =
+                HasDisplayTextChanged(
+                    data.rtcStatus,
+                    lastData.rtcStatus);
+
+            if (ShouldDraw(rtcChanged))
+            {
+                DisplayWidgets::ValueWidget::DrawTextValue(
+                    *m_target,
+                    3U,
+                    data.rtcStatus);
+            }
+
+            return;
+        }
+
         // WIFI
         const bool wifiChanged =
             HasDisplayTextChanged(

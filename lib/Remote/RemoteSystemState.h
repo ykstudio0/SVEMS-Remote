@@ -55,6 +55,16 @@ namespace SVEMS::Remote
 
             uint32_t deviceCount = 0U;
             uint32_t deviceTotal = 0U;
+
+            bool mpptConfigured = false;
+            bool bmsConfigured = false;
+            bool sht40Configured = false;
+            bool rtcConfigured = false;
+
+            bool mpptOnline = false;
+            bool bmsOnline = false;
+            bool sht40Online = false;
+            bool rtcOnline = false;
         };
 
         static const State& Get();
@@ -72,6 +82,14 @@ namespace SVEMS::Remote
             const String& mainResetReason,
             uint32_t deviceCount,
             uint32_t deviceTotal,
+            bool mpptConfigured,
+            bool bmsConfigured,
+            bool sht40Configured,
+            bool rtcConfigured,
+            bool mpptOnline,
+            bool bmsOnline,
+            bool sht40Online,
+            bool rtcOnline,
             bool mainHttpOnline,
             const String& httpState,
             uint32_t httpSuccessCount,

@@ -69,7 +69,7 @@ namespace
     static constexpr DisplayLayout::StaticRow g_systemDetailRows[] =
     {
         { 0U, "RSSI",        true, DisplayTypes::TextKey::DtlRSSI },
-        { 1U, "EPEVER",      true, DisplayTypes::TextKey::DtlEpever },
+        { 1U, "MPPT",        true, DisplayTypes::TextKey::DtlEpever },
         { 2U, "BMS",         true, DisplayTypes::TextKey::DtlBMS },
         { 3U, "DEVICES",     true, DisplayTypes::TextKey::DtlDevices },
         { 4U, "UPTIME",      true, DisplayTypes::TextKey::DtlUptime },
@@ -106,6 +106,15 @@ namespace
     {
         { 0U, "Vehicle Bat",     true, DisplayTypes::TextKey::DtlSysVehicleBat },
         { 1U, "Reverse Chg",     true, DisplayTypes::TextKey::DtlSysReverseChg }
+    };
+
+    static constexpr DisplayLayout::StaticRow
+        g_systemDetail6Rows[] =
+    {
+        { 0U, "MPPT",  true, DisplayTypes::TextKey::DtlSysEpever },
+        { 1U, "BMS",   true, DisplayTypes::TextKey::DtlSysBMS },
+        { 2U, "SHT40", true, DisplayTypes::TextKey::DtlSysSHT40 },
+        { 3U, "RTC",   true, DisplayTypes::TextKey::DtlSysRTC }
     };
 
     const DisplayLayout::StaticRow g_loadRows[] =
@@ -243,6 +252,15 @@ const DisplayLayout::StaticRow*
                         sizeof(g_systemDetail5Rows[0]);
 
                     return g_systemDetail5Rows;
+                }
+
+                if (subPage == 6U)
+                {
+                    count =
+                        sizeof(g_systemDetail6Rows) /
+                        sizeof(g_systemDetail6Rows[0]);
+
+                    return g_systemDetail6Rows;
                 }
 
                 count =

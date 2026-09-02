@@ -362,6 +362,9 @@ namespace DisplayModel
         DisplayTypes::DisplayText epeverStatus;
         DisplayTypes::DisplayText bmsStatus;
 
+        DisplayTypes::DisplayText sht40Status;
+        DisplayTypes::DisplayText rtcStatus;
+
         // SYSTEM DTL(1)
         DisplayTypes::DisplayValue mainWifiSignal;
         DisplayTypes::DisplayValue mainUptime;
@@ -434,6 +437,8 @@ namespace DisplayModel
             wifiStatus(),
             epeverStatus(),
             bmsStatus(),
+            sht40Status(),
+            rtcStatus(),
 
             telemetryStatus(),
 

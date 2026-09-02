@@ -113,6 +113,10 @@ namespace Localization
     extern const Text DtlSysAge;
     extern const Text DtlSysVehicleBat;
     extern const Text DtlSysReverseChg;
+    extern const Text DtlSysEpever;
+    extern const Text DtlSysBMS;
+    extern const Text DtlSysSHT40;
+    extern const Text DtlSysRTC;
 
     // Footer
     extern const Text FooterPrev;

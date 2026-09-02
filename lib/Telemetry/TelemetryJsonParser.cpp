@@ -536,6 +536,36 @@ namespace SVEMS::Telemetry
         data.system.resetReason =
             system["resetReason"] | "Unknown";
 
+        JsonObject deviceConfig =
+            doc["deviceConfig"];
+
+        data.deviceConfig.mppt =
+            deviceConfig["mppt"] | false;
+
+        data.deviceConfig.bms =
+            deviceConfig["bms"] | false;
+
+        data.deviceConfig.sht40 =
+            deviceConfig["sht40"] | false;
+
+        data.deviceConfig.rtc =
+            deviceConfig["rtc"] | false;
+
+        JsonObject deviceStatus =
+            doc["deviceStatus"];
+
+        data.deviceStatus.mppt =
+            deviceStatus["mppt"] | false;
+
+        data.deviceStatus.bms =
+            deviceStatus["bms"] | false;
+
+        data.deviceStatus.sht40 =
+            deviceStatus["sht40"] | false;
+
+        data.deviceStatus.rtc =
+            deviceStatus["rtc"] | false;
+
         return true;
     }
 }

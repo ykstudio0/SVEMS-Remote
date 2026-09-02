@@ -355,42 +355,6 @@ namespace Localization
         "셀편차"
     };
 
-    const Text DtlRSSI =
-    {
-        "RSSI",
-        "RSSI"
-    };
-
-    const Text DtlEpever =
-    {
-        "EPEVER",
-        "EPEVER"
-    };
-
-    const Text DtlBMS =
-    {
-        "BMS",
-        "BMS"
-    };
-
-    const Text DtlDevices =
-    {
-        "Devices",
-        "장치"
-    };
-
-    const Text DtlUptime =
-    {
-        "Uptime",
-        "가동시간"
-    };
-
-    const Text DtlHttp =
-    {
-        "HTTP",
-        "HTTP"
-    };
-
     // System Main
     const Text DtlSysWifi =
     {
@@ -426,6 +390,43 @@ namespace Localization
     {
         "AGE",
         "수신경과"
+    };
+
+    // System Dtl(1)
+    const Text DtlRSSI =
+    {
+        "RSSI",
+        "RSSI"
+    };
+
+    const Text DtlEpever =
+    {
+        "MPPT",
+        "MPPT"
+    };
+
+    const Text DtlBMS =
+    {
+        "BMS",
+        "BMS"
+    };
+
+    const Text DtlDevices =
+    {
+        "Devices",
+        "장치"
+    };
+
+    const Text DtlUptime =
+    {
+        "Uptime",
+        "가동시간"
+    };
+
+    const Text DtlHttp =
+    {
+        "HTTP",
+        "HTTP"
     };
 
     // System Dtl(2)
@@ -515,6 +516,7 @@ namespace Localization
         "리셋원인"
     };
 
+    // System Dtl(5)
     const Text DtlSysVehicleBat =
     {
         "Vehicle Bat",
@@ -525,6 +527,31 @@ namespace Localization
     {
         "Reverse Chg",
         "역충전"
+    };
+
+    // System Dtl(6)
+    const Text DtlSysEpever =
+    {
+        "MPPT",
+        "MPPT"
+    };
+
+    const Text DtlSysBMS =
+    {
+        "BMS",
+        "BMS"
+    };
+
+    const Text DtlSysSHT40 =
+    {
+        "SHT40",
+        "SHT40"
+    };
+
+    const Text DtlSysRTC =
+    {
+        "RTC",
+        "RTC"
     };
 
     // Footer

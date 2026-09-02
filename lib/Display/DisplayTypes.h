@@ -164,7 +164,11 @@
         DtlSysTelemetry,
         DtlSysAge,
         DtlSysVehicleBat,
-        DtlSysReverseChg
+        DtlSysReverseChg,
+        DtlSysEpever,
+        DtlSysBMS,
+        DtlSysSHT40,
+        DtlSysRTC
     };
 
     struct DisplayText

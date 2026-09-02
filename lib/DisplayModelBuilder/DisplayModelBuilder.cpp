@@ -638,10 +638,129 @@ namespace
             deviceCountText;
 
         system.deviceCount.color =
-            (mainState.deviceTotal > 0U &&
-            mainState.deviceCount == mainState.deviceTotal)
-                ? DisplayTheme::COLOR_VALUE
-                : DisplayTheme::COLOR_WARNING;
+        (
+            (mainState.deviceTotal == 0U) ||
+            (mainState.deviceCount ==
+            mainState.deviceTotal)
+        )
+            ? DisplayTheme::COLOR_VALUE
+            : DisplayTheme::COLOR_WARNING;
+
+        //-------------------------------------------------
+        // MPPT
+        //-------------------------------------------------
+
+        if (!mainState.mpptConfigured)
+        {
+            system.epeverStatus.text =
+                "NOT USED";
+
+            system.epeverStatus.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+        else if (mainState.mpptOnline)
+        {
+            system.epeverStatus.text =
+                "ONLINE";
+
+            system.epeverStatus.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            system.epeverStatus.text =
+                "OFFLINE";
+
+            system.epeverStatus.color =
+                DisplayTheme::COLOR_ALARM;
+        }
+
+        //-------------------------------------------------
+        // BMS
+        //-------------------------------------------------
+
+        if (!mainState.bmsConfigured)
+        {
+            system.bmsStatus.text =
+                "NOT USED";
+
+            system.bmsStatus.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+        else if (mainState.bmsOnline)
+        {
+            system.bmsStatus.text =
+                "ONLINE";
+
+            system.bmsStatus.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            system.bmsStatus.text =
+                "OFFLINE";
+
+            system.bmsStatus.color =
+                DisplayTheme::COLOR_ALARM;
+        }
+
+        //-------------------------------------------------
+        // SHT40
+        //-------------------------------------------------
+
+        if (!mainState.sht40Configured)
+        {
+            system.sht40Status.text =
+                "NOT USED";
+
+            system.sht40Status.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+        else if (mainState.sht40Online)
+        {
+            system.sht40Status.text =
+                "ONLINE";
+
+            system.sht40Status.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            system.sht40Status.text =
+                "OFFLINE";
+
+            system.sht40Status.color =
+                DisplayTheme::COLOR_ALARM;
+        }
+
+        //-------------------------------------------------
+        // RTC
+        //-------------------------------------------------
+
+        if (!mainState.rtcConfigured)
+        {
+            system.rtcStatus.text =
+                "NOT USED";
+
+            system.rtcStatus.color =
+                DisplayTheme::COLOR_DISABLED;
+        }
+        else if (mainState.rtcOnline)
+        {
+            system.rtcStatus.text =
+                "ONLINE";
+
+            system.rtcStatus.color =
+                DisplayTheme::COLOR_VALUE;
+        }
+        else
+        {
+            system.rtcStatus.text =
+                "OFFLINE";
+
+            system.rtcStatus.color =
+                DisplayTheme::COLOR_ALARM;
+        }
 
         system.solarOfflineCount =
             DisplayTypes::MakeValue(
@@ -866,25 +985,25 @@ namespace
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_ALARM;
 
-        system.epeverStatus.text =
-            system.epeverOnline
-                ? "ONLINE"
-                : "OFF";
+        // system.epeverStatus.text =
+        //     system.epeverOnline
+        //         ? "ONLINE"
+        //         : "OFF";
 
-        system.epeverStatus.color =
-            system.epeverOnline
-                ? DisplayTheme::COLOR_VALUE
-                : DisplayTheme::COLOR_DISABLED;
+        // system.epeverStatus.color =
+        //     system.epeverOnline
+        //         ? DisplayTheme::COLOR_VALUE
+        //         : DisplayTheme::COLOR_DISABLED;
 
-        system.bmsStatus.text =
-            system.bmsOnline
-                ? "ONLINE"
-                : "OFF";
+        // system.bmsStatus.text =
+        //     system.bmsOnline
+        //         ? "ONLINE"
+        //         : "OFF";
 
-        system.bmsStatus.color =
-            system.bmsOnline
-                ? DisplayTheme::COLOR_VALUE
-                : DisplayTheme::COLOR_DISABLED;
+        // system.bmsStatus.color =
+        //     system.bmsOnline
+        //         ? DisplayTheme::COLOR_VALUE
+        //         : DisplayTheme::COLOR_DISABLED;
 
         //-------------------------------------------------
         // MAINSYS DTL(4) - Boot diagnostics

@@ -180,6 +180,22 @@ namespace SVEMS::Telemetry
         int32_t httpLastErrorCode = 0;
     };
 
+    struct DeviceConfigData
+    {
+        bool mppt = false;
+        bool bms = false;
+        bool sht40 = false;
+        bool rtc = false;
+    };
+
+    struct DeviceStatusData
+    {
+        bool mppt = false;
+        bool bms = false;
+        bool sht40 = false;
+        bool rtc = false;
+    };
+
     struct TelemetryData
     {
         TimestampData timestamp;
@@ -191,6 +207,8 @@ namespace SVEMS::Telemetry
         EnvironmentData environment;
         CommunicationData communication;
         SystemData system;
+        DeviceConfigData deviceConfig;
+        DeviceStatusData deviceStatus;
         VehicleData vehicle;
     };
 }
