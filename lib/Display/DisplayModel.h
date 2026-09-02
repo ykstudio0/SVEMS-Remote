@@ -400,6 +400,7 @@ namespace DisplayModel
         bool bmsOnline;
         bool rs485CommunicationError = false;
         bool modbusCommunicationError = false;
+        bool rs485Required = false;
 
         constexpr SystemData()
             : currentTime(
@@ -523,7 +524,8 @@ namespace DisplayModel
             epeverOnline(false),
             bmsOnline(false),
             rs485CommunicationError(false),
-            modbusCommunicationError(false)
+            modbusCommunicationError(false),
+            rs485Required(false)
         {
             currentTime.decimals = 0U;
             uptime.decimals = 0U;

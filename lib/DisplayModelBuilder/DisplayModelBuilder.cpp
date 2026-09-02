@@ -522,6 +522,9 @@ namespace
         const auto& mainState =
             SVEMS::Remote::RemoteSystemState::Get();
 
+        system.rs485Required =
+            mainState.mpptConfigured;
+
         const auto& timestamp =
             mainState.timestamp;
 
@@ -1098,16 +1101,22 @@ namespace
                 DisplayTheme::COLOR_WARNING;
         }
         else if (
-            !system.rs485Ready ||
-            system.rs485CommunicationError)
+            system.rs485Required &&
+            (
+                !system.rs485Ready ||
+                system.rs485CommunicationError
+            ))
         {
             header.status.text = "485";
             header.status.color =
                 DisplayTheme::COLOR_WARNING;
         }
         else if (
-            !system.modbusReady ||
-            system.modbusCommunicationError)
+            system.rs485Required &&
+            (
+                !system.modbusReady ||
+                system.modbusCommunicationError
+            ))
         {
             header.status.text = "MOD";
             header.status.color =
