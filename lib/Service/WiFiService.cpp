@@ -345,6 +345,37 @@ bool WiFiService::StartSetupMode()
     return true;
 }
 
+void WiFiService::StopSetupMode()
+{
+    //-------------------------------------------------
+    // Setup WebServer 종료
+    //-------------------------------------------------
+
+    SetupServer.stop();
+
+    //-------------------------------------------------
+    // Setup AP 종료
+    //-------------------------------------------------
+
+    WiFi.softAPdisconnect(
+        false
+    );
+
+    Serial.println(
+        "[WIFI] Setup AP stopped"
+    );
+
+    //-------------------------------------------------
+    // 기존 WiFi 설정으로 Station 복귀
+    //-------------------------------------------------
+
+    Begin();
+
+    Serial.println(
+        "[WIFI] Station recovery started"
+    );
+}
+
 bool WiFiService::IsSetupMode()
 {
     const wifi_mode_t mode =

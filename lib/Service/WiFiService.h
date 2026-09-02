@@ -29,6 +29,8 @@ public:
     static bool StartSetupMode();
 
     static bool IsSetupMode();
+
+    static void StopSetupMode();
 };
 
 #endif

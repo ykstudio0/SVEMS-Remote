@@ -332,6 +332,27 @@ namespace SVEMS::Remote
         }
 
         //-----------------------------------------------------
+        // WiFi Setup Mode
+        //-----------------------------------------------------
+
+        if (m_wifiSetupMode)
+        {
+            if (
+                x >= 80U &&
+                x <= 240U &&
+                y >= 190U &&
+                y <= 239U
+            )
+            {
+                return
+                    Action::WiFiSetupModeCancel;
+            }
+
+            return
+                Action::None;
+        }
+
+        //-----------------------------------------------------
         // Footer
         //-----------------------------------------------------
 
@@ -388,6 +409,13 @@ namespace SVEMS::Remote
         bool active)
     {
         m_wifiSetupConfirm =
+            active;
+    }
+
+    void TouchManager::SetWiFiSetupMode(
+        bool active)
+    {
+        m_wifiSetupMode =
             active;
     }
 }

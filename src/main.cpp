@@ -458,9 +458,46 @@ void loop()
                     true
                 );
 
+                touchManager.SetWiFiSetupMode(
+                    true);
+
                 forceDisplayRefresh =
                     true;
             }
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::WiFiSetupModeCancel:
+        {
+            Serial.println(
+                "[UI] WiFi Setup Mode Cancel"
+            );
+
+            //-------------------------------------------------
+            // AP 종료 + 기존 WiFi 복귀
+            //-------------------------------------------------
+
+            WiFiService::StopSetupMode();
+
+            //-------------------------------------------------
+            // Display / Touch Setup Mode 종료
+            //-------------------------------------------------
+
+            displayRenderer.SetWiFiSetupMode(
+                false
+            );
+
+            touchManager.SetWiFiSetupMode(
+                false
+            );
+
+            //-------------------------------------------------
+            // 정상 화면 강제 갱신
+            //-------------------------------------------------
+
+            forceDisplayRefresh =
+                true;
 
             break;
         }

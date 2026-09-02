@@ -2377,35 +2377,48 @@ namespace DisplayRenderer
     {
         m_target->DrawText(
             160,
-            55,
+            50,
             "WiFi Setup Mode",
             DisplayTheme::COLOR_VALUE,
             2U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center
+        );
 
         m_target->DrawText(
             160,
-            100,
+            95,
             "SSID: SVEMS-SETUP",
             DisplayTheme::COLOR_LABEL,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center
+        );
 
         m_target->DrawText(
             160,
-            130,
+            125,
             "Open: 192.168.4.1",
             DisplayTheme::COLOR_SUCCESS,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center
+        );
 
         m_target->DrawText(
             160,
-            165,
+            160,
             "Save -> Restart",
             DisplayTheme::COLOR_LABEL,
             1U,
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center
+        );
+
+        m_target->DrawText(
+            160,
+            205,
+            "CANCEL",
+            DisplayTheme::COLOR_LABEL,
+            2U,
+            DisplayTypes::TextAlign::Center
+        );
     }
 
     void Renderer::SetSettingsMenu(

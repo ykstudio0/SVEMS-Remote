@@ -37,7 +37,9 @@ namespace SVEMS::Remote
             Korean,
 
             Main,
-            TestMain
+            TestMain,
+
+            WiFiSetupModeCancel
         };
 
         bool Begin();
@@ -53,6 +55,9 @@ namespace SVEMS::Remote
             bool active);
 
         bool m_settingsMenu = false;
+
+        void SetWiFiSetupMode(
+            bool active);
 
     private:
         Action DetermineAction(
@@ -76,5 +81,7 @@ namespace SVEMS::Remote
 
         bool m_wifiSetupConfirm =
             false;
+
+        bool m_wifiSetupMode = false;
     };
 }
