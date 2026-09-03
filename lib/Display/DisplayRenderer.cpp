@@ -16,6 +16,8 @@
 #include "ValueWidget.h"
 #include "FooterWidget.h"
 #include "Localization.h"
+#include "DisplayBrightnessManager.h"
+#include "DisplayBrightnessSettings.h"
 
 // 한글화 (Header)
 namespace
@@ -2766,11 +2768,19 @@ namespace DisplayRenderer
                 DisplayTheme::FontRole::Large),
             DisplayTypes::TextAlign::Left);
 
+        const char* modeText =
+            m_brightnessEditMode ==
+                SVEMS::Remote::Display::
+                    BrightnessMode::Auto
+            ? Localization::Get(
+                Localization::DisplayAuto)
+            : Localization::Get(
+                Localization::DisplayManual);
+
         m_target->DrawText(
             290,
             70,
-            Localization::Get(
-                Localization::DisplayManual),
+            modeText,
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
@@ -2799,11 +2809,21 @@ namespace DisplayRenderer
             static_cast<unsigned>(
                 m_brightnessEditPercent));
 
+        const bool manualMode =
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Manual;
+
+        const DisplayTheme::Color brightnessColor =
+            manualMode
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_DISABLED;
+
         m_target->DrawText(
             290,
             105,
             brightnessText,
-            DisplayTheme::COLOR_VALUE,
+            brightnessColor,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
             DisplayTypes::TextAlign::Right);
@@ -2816,7 +2836,7 @@ namespace DisplayRenderer
             80,
             145,
             "-",
-            DisplayTheme::COLOR_ACTIVE,
+            brightnessColor,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
             DisplayTypes::TextAlign::Center);
@@ -2825,7 +2845,7 @@ namespace DisplayRenderer
             240,
             145,
             "+",
-            DisplayTheme::COLOR_ACTIVE,
+            brightnessColor,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
             DisplayTypes::TextAlign::Center);
@@ -2858,12 +2878,104 @@ namespace DisplayRenderer
     }
 
     void Renderer::BeginDisplaySettings(
+        SVEMS::Remote::Display::BrightnessMode mode,
         uint8_t brightnessPercent)
     {
         m_displayConfigMode = true;
         m_displayConfigDrawn = false;
 
+        m_brightnessEditMode =
+            mode;
+
         m_brightnessEditPercent =
             brightnessPercent;
+    }
+
+    void Renderer::DecreaseBrightness()
+    {
+        if (
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Auto
+        )
+        {
+            return;
+        }
+
+        if (m_brightnessEditPercent >= 5U)
+        {
+            m_brightnessEditPercent -= 5U;
+        }
+
+        m_displayConfigDrawn = false;
+    }
+
+    void Renderer::IncreaseBrightness()
+    {
+        if (
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Auto
+        )
+        {
+            return;
+        }
+
+        if (m_brightnessEditPercent <= 95U)
+        {
+            m_brightnessEditPercent += 5U;
+        }
+
+        m_displayConfigDrawn = false;
+    }
+
+    uint8_t Renderer::GetBrightnessPreview() const
+    {
+        return
+            SVEMS::Remote::Display::
+                DisplayBrightnessManager::
+                    PercentToBrightness(
+                        m_brightnessEditPercent);
+    }
+
+    uint8_t Renderer::GetBrightnessEditPercent() const
+    {
+        return m_brightnessEditPercent;
+    }
+
+    void Renderer::EndDisplaySettings()
+    {
+        m_displayConfigMode = false;
+        m_displayConfigDrawn = false;
+
+        m_firstRender = true;
+    }
+
+    void Renderer::ToggleBrightnessMode()
+    {
+        if (
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Manual
+        )
+        {
+            m_brightnessEditMode =
+                SVEMS::Remote::Display::
+                    BrightnessMode::Auto;
+        }
+        else
+        {
+            m_brightnessEditMode =
+                SVEMS::Remote::Display::
+                    BrightnessMode::Manual;
+        }
+
+        m_displayConfigDrawn = false;
+    }
+
+    SVEMS::Remote::Display::BrightnessMode
+    Renderer::GetBrightnessEditMode() const
+    {
+        return m_brightnessEditMode;
     }
 }

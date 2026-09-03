@@ -245,6 +245,15 @@ namespace SVEMS::Remote
         //-------------------------------------------------
         if (m_displaySettingsMode)
         {
+            // mode
+            if (
+                y >= 50U &&
+                y <= 90U
+            )
+            {
+                return Action::BrightnessModeToggle;
+            }
+
             // - button
             if (
                 x >= 40U &&

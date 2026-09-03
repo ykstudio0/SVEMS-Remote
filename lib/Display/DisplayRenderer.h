@@ -17,6 +17,7 @@
 #include "DisplayModel.h"
 #include "DisplayTypes.h"
 #include "IRenderTarget.h"
+#include "DisplayBrightnessSettings.h"
 
 namespace DisplayRenderer
 {
@@ -56,8 +57,22 @@ namespace DisplayRenderer
         bool m_settingsMenu = false;
         bool m_settingsMenuDrawn = false;
 
+        void DecreaseBrightness();
+        void IncreaseBrightness();
+
         void BeginDisplaySettings(
+            SVEMS::Remote::Display::BrightnessMode mode,
             uint8_t brightnessPercent);
+
+        uint8_t GetBrightnessPreview() const;
+
+        uint8_t GetBrightnessEditPercent() const;
+        void EndDisplaySettings();
+
+        void ToggleBrightnessMode();
+
+        SVEMS::Remote::Display::BrightnessMode
+            GetBrightnessEditMode() const;
 
     private:
         // Common
@@ -178,5 +193,10 @@ namespace DisplayRenderer
         uint8_t m_brightnessEditPercent = 50U;
 
         void DrawDisplaySettings();
+
+        SVEMS::Remote::Display::BrightnessMode
+            m_brightnessEditMode =
+                SVEMS::Remote::Display::
+                    BrightnessMode::Manual;
     };
 }

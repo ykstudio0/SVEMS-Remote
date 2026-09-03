@@ -297,7 +297,9 @@ void loop()
                     DisplayBrightnessManager::GetSettings();
 
             displayRenderer.BeginDisplaySettings(
-                settings.manualPercent);
+                settings.mode,
+                settings.manualPercent
+            );
 
             touchManager.SetDisplaySettingsMode(
                 true
@@ -308,7 +310,86 @@ void loop()
 
             break;
         }
+
+        case SVEMS::Remote::TouchManager::Action::BrightnessModeToggle:
+        {
+            displayRenderer.ToggleBrightnessMode();
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::BrightnessDecrease:
+        {
+            displayRenderer.DecreaseBrightness();
+
+            display.setBrightness(
+                displayRenderer.GetBrightnessPreview()
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::BrightnessIncrease:
+        {
+            displayRenderer.IncreaseBrightness();
+
+            display.setBrightness(
+                displayRenderer.GetBrightnessPreview()
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
+        case SVEMS::Remote::TouchManager::Action::DisplaySave:
+        {
+            SVEMS::Remote::Display::
+                DisplayBrightnessManager::SaveSettings(
+                    displayRenderer.GetBrightnessEditMode(),
+                    displayRenderer.GetBrightnessEditPercent()
+                );
+
+            displayRenderer.EndDisplaySettings();
+
+            touchManager.SetDisplaySettingsMode(
+                false
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
         
+        case SVEMS::Remote::TouchManager::Action::DisplayCancel:
+        {
+            const auto& settings =
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::GetSettings();
+
+            display.setBrightness(
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::
+                        PercentToBrightness(
+                            settings.manualPercent
+                        )
+            );
+
+            displayRenderer.EndDisplaySettings();
+
+            touchManager.SetDisplaySettingsMode(
+                false
+            );
+
+            forceDisplayRefresh = true;
+
+            break;
+        }
+
         case SVEMS::Remote::TouchManager::Action::WiFiSetup:
         {
             if (
@@ -602,5 +683,31 @@ void loop()
 
         default:
             break;
+    }
+
+    static uint32_t lastLightPrintMs = 0U;
+
+    const uint32_t nowMs =
+        millis();
+
+    if (
+        nowMs - lastLightPrintMs >=
+        1000U
+    )
+    {
+        lastLightPrintMs =
+            nowMs;
+
+        const uint16_t lightRaw =
+            analogRead(
+                PIN_LIGHT_SENSOR);
+
+        Serial.print(
+            "[LIGHT] "
+        );
+
+        Serial.println(
+            lightRaw
+        );
     }
 }

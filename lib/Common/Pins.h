@@ -40,4 +40,10 @@ constexpr uint8_t PIN_CTP_INT  = 7;
 // ===========================
 constexpr uint8_t PIN_SD_CS = 5;
 
+// ===========================
+// Light Sensor Configuration
+// ===========================
+
+constexpr uint8_t PIN_LIGHT_SENSOR = 4;
+
 #endif

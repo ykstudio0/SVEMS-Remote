@@ -45,6 +45,7 @@ namespace SVEMS::Remote
 
             BrightnessDecrease,
             BrightnessIncrease,
+            BrightnessModeToggle,
 
             DisplaySave,
             DisplayCancel

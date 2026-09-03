@@ -30,6 +30,10 @@ namespace SVEMS::Remote::Display
         static bool SetManualPercent(
             uint8_t percent);
 
+        static bool SaveSettings(
+            BrightnessMode mode,
+            uint8_t manualPercent);
+
     private:
         static BrightnessSettings Settings;
     };

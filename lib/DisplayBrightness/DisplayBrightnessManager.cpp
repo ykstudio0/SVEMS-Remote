@@ -61,6 +61,11 @@ namespace SVEMS::Remote::Display
     bool DisplayBrightnessManager::SetManualPercent(
         uint8_t percent)
     {
+        if (percent < 5U)
+        {
+            percent = 5U;
+        }
+
         if (percent > 100U)
         {
             percent = 100U;
@@ -71,6 +76,31 @@ namespace SVEMS::Remote::Display
 
         Settings.manualPercent =
             percent;
+
+        return
+            DisplayBrightnessStorage::Save(
+                Settings);
+    }
+
+    bool DisplayBrightnessManager::SaveSettings(
+        BrightnessMode mode,
+        uint8_t manualPercent)
+    {
+        if (manualPercent < 5U)
+        {
+            manualPercent = 5U;
+        }
+
+        if (manualPercent > 100U)
+        {
+            manualPercent = 100U;
+        }
+
+        Settings.mode =
+            mode;
+
+        Settings.manualPercent =
+            manualPercent;
 
         return
             DisplayBrightnessStorage::Save(

@@ -604,6 +604,12 @@ namespace Localization
         "수동"
     };
 
+    const Text DisplayAuto =
+    {
+        "AUTO",
+        "자동"
+    };
+
     const Text DisplayBrightness =
     {
         "BRIGHTNESS",
