@@ -20,6 +20,7 @@
 #include "TouchManager.h"
 #include "Localization.h"
 #include "DisplaySettings.h"
+#include "DisplayBrightnessManager.h"
 
 SVEMS::Remote::TouchManager touchManager;
 
@@ -119,9 +120,13 @@ void setup()
             );
         }
     }
+
+    SVEMS::Remote::Display::
+        DisplayBrightnessManager::Begin();
+
     display.setBrightness(
-        180
-    );
+        SVEMS::Remote::Display::
+            DisplayBrightnessManager::GetBrightness());
 
     display.fillScreen(
         TFT_BLACK
@@ -277,6 +282,33 @@ void loop()
 
     switch (touchAction)
     {
+        case SVEMS::Remote::TouchManager::Action::DisplaySettings:
+        {
+            displayRenderer.SetSettingsMenu(
+                false
+            );
+
+            touchManager.SetSettingsMenu(
+                false
+            );
+
+            const auto& settings =
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::GetSettings();
+
+            displayRenderer.BeginDisplaySettings(
+                settings.manualPercent);
+
+            touchManager.SetDisplaySettingsMode(
+                true
+            );
+
+            forceDisplayRefresh =
+                true;
+
+            break;
+        }
+        
         case SVEMS::Remote::TouchManager::Action::WiFiSetup:
         {
             if (

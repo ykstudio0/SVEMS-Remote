@@ -161,6 +161,15 @@ namespace DisplayRenderer
 
         m_target->BeginFrame();
 
+        if (m_displayConfigMode)
+        {
+            DrawDisplaySettings();
+
+            m_target->EndFrame();
+
+            return true;
+        }
+
         if (m_wifiSetupMode)
         {
             if (m_firstRender)
@@ -2548,7 +2557,7 @@ namespace DisplayRenderer
                     Localization::SettingsExit),
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
-                    DisplayTheme::FontRole::Small),
+                    DisplayTheme::FontRole::Large),
                 DisplayTypes::TextAlign::Right,
                 DisplayTypes::FontType::Korean14);
         }
@@ -2582,7 +2591,7 @@ namespace DisplayRenderer
 
         m_target->DrawTextFont(
             40,
-            105,
+            94,
             Localization::Get(
                 Localization::SettingsEnglish),
             DisplayTheme::COLOR_VALUE,
@@ -2598,7 +2607,7 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 200,
-                105,
+                94,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
@@ -2612,7 +2621,7 @@ namespace DisplayRenderer
 
         m_target->DrawTextFont(
             40,
-            150,
+            128,
             Localization::Get(
                 Localization::SettingsKorean),
             DisplayTheme::COLOR_VALUE,
@@ -2628,13 +2637,28 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 200,
-                150,
+                128,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Large),
                 DisplayTypes::TextAlign::Center);
         }
+
+        //-------------------------------------------------
+        // Display
+        //-------------------------------------------------
+
+        m_target->DrawTextFont(
+            40,
+            162,
+            Localization::Get(
+                Localization::DisplaySettings),
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left,
+            menuFont);
 
         //-------------------------------------------------
         // Data Source
@@ -2646,7 +2670,7 @@ namespace DisplayRenderer
         // MAIN
         m_target->DrawTextFont(
             40,
-            195,
+            200,
             "MAIN",
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
@@ -2661,7 +2685,7 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 120,
-                195,
+                200,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
@@ -2672,7 +2696,7 @@ namespace DisplayRenderer
         // TEST MAIN
         m_target->DrawTextFont(
             170,
-            195,
+            200,
             "TEST",
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
@@ -2687,12 +2711,159 @@ namespace DisplayRenderer
         {
             m_target->DrawText(
                 250,
-                195,
+                200,
                 "*",
                 DisplayTheme::COLOR_VALUE,
                 DisplayTheme::GetFontSize(
                     DisplayTheme::FontRole::Large),
                 DisplayTypes::TextAlign::Center);
         }
+    }
+
+    void Renderer::DrawDisplaySettings()
+    {   
+        if (m_displayConfigDrawn)
+        {
+            return;
+        }
+
+        //-------------------------------------------------
+        // Background
+        //-------------------------------------------------
+
+        m_target->FillRect(
+            0,
+            0,
+            320,
+            240,
+            DisplayTheme::COLOR_BACKGROUND);
+
+        //-------------------------------------------------
+        // Title
+        //-------------------------------------------------
+
+        m_target->DrawText(
+            160,
+            20,
+            Localization::Get(
+                Localization::DisplaySettings),
+            DisplayTheme::COLOR_LABEL,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Center);
+
+        //-------------------------------------------------
+        // Mode
+        //-------------------------------------------------
+
+        m_target->DrawText(
+            30,
+            70,
+            Localization::Get(
+                Localization::DisplayMode),
+            DisplayTheme::COLOR_LABEL,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left);
+
+        m_target->DrawText(
+            290,
+            70,
+            Localization::Get(
+                Localization::DisplayManual),
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Right);
+
+        //-------------------------------------------------
+        // Brightness
+        //-------------------------------------------------
+
+        m_target->DrawText(
+            30,
+            105,
+            Localization::Get(
+                Localization::DisplayBrightness),
+            DisplayTheme::COLOR_LABEL,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Left);
+
+        char brightnessText[16];
+
+        snprintf(
+            brightnessText,
+            sizeof(brightnessText),
+            "%u%%",
+            static_cast<unsigned>(
+                m_brightnessEditPercent));
+
+        m_target->DrawText(
+            290,
+            105,
+            brightnessText,
+            DisplayTheme::COLOR_VALUE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Right);
+
+        //-------------------------------------------------
+        // - / +
+        //-------------------------------------------------
+
+        m_target->DrawText(
+            80,
+            145,
+            "-",
+            DisplayTheme::COLOR_ACTIVE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Center);
+
+        m_target->DrawText(
+            240,
+            145,
+            "+",
+            DisplayTheme::COLOR_ACTIVE,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Center);
+
+        //-------------------------------------------------
+        // SAVE / CANCEL
+        //-------------------------------------------------
+
+        m_target->DrawText(
+            90,
+            205,
+            Localization::Get(
+                Localization::DisplaySave),
+            DisplayTheme::COLOR_SUCCESS,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Center);
+
+        m_target->DrawText(
+            230,
+            205,
+            Localization::Get(
+                Localization::DisplayCancel),
+            DisplayTheme::COLOR_WARNING,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Center);
+
+        m_displayConfigDrawn = true;
+    }
+
+    void Renderer::BeginDisplaySettings(
+        uint8_t brightnessPercent)
+    {
+        m_displayConfigMode = true;
+        m_displayConfigDrawn = false;
+
+        m_brightnessEditPercent =
+            brightnessPercent;
     }
 }

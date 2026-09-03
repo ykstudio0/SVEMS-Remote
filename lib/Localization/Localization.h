@@ -134,6 +134,13 @@ namespace Localization
     extern const Text WiFiConfirmCancel;
     extern const Text WiFiConfirmOk;
 
+    extern const Text DisplaySettings;
+    extern const Text DisplayMode;
+    extern const Text DisplayManual;
+    extern const Text DisplayBrightness;
+    extern const Text DisplaySave;
+    extern const Text DisplayCancel;
+
     Language GetLanguage();
     void SetLanguage(
         Language language);

@@ -39,7 +39,15 @@ namespace SVEMS::Remote
             Main,
             TestMain,
 
-            WiFiSetupModeCancel
+            WiFiSetupModeCancel,
+
+            DisplaySettings,
+
+            BrightnessDecrease,
+            BrightnessIncrease,
+
+            DisplaySave,
+            DisplayCancel
         };
 
         bool Begin();
@@ -58,6 +66,13 @@ namespace SVEMS::Remote
 
         void SetWiFiSetupMode(
             bool active);
+
+        void SetDisplaySettingsMode(
+            bool enabled)
+        {
+            m_displaySettingsMode =
+                enabled;
+        }
 
     private:
         Action DetermineAction(
@@ -83,5 +98,7 @@ namespace SVEMS::Remote
             false;
 
         bool m_wifiSetupMode = false;
+
+        bool m_displaySettingsMode = false;
     };
 }

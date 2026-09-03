@@ -586,6 +586,42 @@ namespace Localization
         "WiFi설정"
     };
 
+    const Text DisplaySettings =
+    {
+        "DISPLAY SETTINGS",
+        "화면 설정"
+    };
+
+    const Text DisplayMode =
+    {
+        "MODE",
+        "모드"
+    };
+
+    const Text DisplayManual =
+    {
+        "MANUAL",
+        "수동"
+    };
+
+    const Text DisplayBrightness =
+    {
+        "BRIGHTNESS",
+        "밝기"
+    };
+
+    const Text DisplaySave =
+    {
+        "SAVE",
+        "저장"
+    };
+
+    const Text DisplayCancel =
+    {
+        "CANCEL",
+        "취소"
+    };
+
     const Text SettingsEnglish =
     {
         "English",

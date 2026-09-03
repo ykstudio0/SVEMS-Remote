@@ -241,6 +241,58 @@ namespace SVEMS::Remote
         DisplayPages::Page page) const
     {
         //-------------------------------------------------
+        // Display Settings
+        //-------------------------------------------------
+        if (m_displaySettingsMode)
+        {
+            // - button
+            if (
+                x >= 40U &&
+                x <= 120U &&
+                y >= 120U &&
+                y <= 165U
+            )
+            {
+                return Action::BrightnessDecrease;
+            }
+
+            // + button
+            if (
+                x >= 200U &&
+                x <= 280U &&
+                y >= 120U &&
+                y <= 165U
+            )
+            {
+                return Action::BrightnessIncrease;
+            }
+
+            // SAVE
+            if (
+                x >= 40U &&
+                x <= 140U &&
+                y >= 190U &&
+                y <= 230U
+            )
+            {
+                return Action::DisplaySave;
+            }
+
+            // CANCEL
+            if (
+                x >= 180U &&
+                x <= 280U &&
+                y >= 190U &&
+                y <= 230U
+            )
+            {
+                return Action::DisplayCancel;
+            }
+
+            return Action::None;
+        }
+        
+        //-------------------------------------------------
         // Settings Menu
         //-------------------------------------------------
         if (m_settingsMenu)
@@ -260,7 +312,7 @@ namespace SVEMS::Remote
 
             if (
                 y >= 45U &&
-                y <= 82U
+                y <= 78U
             )
             {
                 return Action::WiFiSetup;
@@ -271,8 +323,8 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 83U &&
-                y <= 127U
+                y >= 79U &&
+                y <= 112U
             )
             {
                 return Action::English;
@@ -283,11 +335,23 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 128U &&
-                y <= 172U
+                y >= 113U &&
+                y <= 146U
             )
             {
                 return Action::Korean;
+            }
+
+            //-------------------------------------------------
+            // Display
+            //-------------------------------------------------
+
+            if (
+                y >= 147U &&
+                y <= 180U
+            )
+            {
+                return Action::DisplaySettings;
             }
 
             //-------------------------------------------------
@@ -295,7 +359,7 @@ namespace SVEMS::Remote
             //-------------------------------------------------
 
             if (
-                y >= 173U &&
+                y >= 181U &&
                 y <= 220U
             )
             {
@@ -310,6 +374,9 @@ namespace SVEMS::Remote
             return Action::None;
         }
 
+        //-----------------------------------------------------
+        // WiFi Setup Confirm
+        //-----------------------------------------------------
         if (m_wifiSetupConfirm)
         {
             if (y >= 135U &&

@@ -56,6 +56,9 @@ namespace DisplayRenderer
         bool m_settingsMenu = false;
         bool m_settingsMenuDrawn = false;
 
+        void BeginDisplaySettings(
+            uint8_t brightnessPercent);
+
     private:
         // Common
         void DrawHeader(
@@ -168,5 +171,12 @@ namespace DisplayRenderer
 
         bool m_wifiSetupMode =
             false;
+
+        bool m_displayConfigMode = false;
+        bool m_displayConfigDrawn = false;
+
+        uint8_t m_brightnessEditPercent = 50U;
+
+        void DrawDisplaySettings();
     };
 }
