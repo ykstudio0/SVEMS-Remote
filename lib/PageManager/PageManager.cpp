@@ -16,6 +16,9 @@ namespace PageManager
         m_currentPage =
             // DisplayPages::Page::Overview;
             DisplayPages::Page::Overview;
+
+            m_subPage =
+                0U;
     }
 
     DisplayPages::Page Manager::Current() const
@@ -25,6 +28,11 @@ namespace PageManager
 
     void Manager::Next()
     {
+        Serial.printf(
+            "[PAGE] Next() current=%u\n",
+            static_cast<uint8_t>(m_currentPage)
+        );
+        
         uint8_t page =
             static_cast<uint8_t>(m_currentPage);
 
@@ -41,10 +49,20 @@ namespace PageManager
             static_cast<DisplayPages::Page>(page);
 
         m_subPage = 0U;
+
+        Serial.printf(
+            "[PAGE] -> %u\n",
+            static_cast<uint8_t>(m_currentPage)
+        );
     }
 
     void Manager::Previous()
     {
+        Serial.printf(
+            "[PAGE] Previous() current=%u\n",
+            static_cast<uint8_t>(m_currentPage)
+        );
+
         int page =
             static_cast<uint8_t>(m_currentPage);
 
@@ -62,6 +80,11 @@ namespace PageManager
             static_cast<DisplayPages::Page>(page);
 
         m_subPage = 0U;
+
+        Serial.printf(
+            "[PAGE] -> %u\n",
+            static_cast<uint8_t>(m_currentPage)
+        );
     }
 
     uint8_t Manager::SubPage() const
@@ -92,6 +115,12 @@ namespace PageManager
     void Manager::SetPage(
         DisplayPages::Page page)
     {
+        Serial.printf(
+            "[PAGE] SetPage() %u -> %u\n",
+            static_cast<uint8_t>(m_currentPage),
+            static_cast<uint8_t>(page)
+        );
+
         m_currentPage =
             page;
 

@@ -47,7 +47,9 @@ namespace
         PIN_BUTTON_NEXT,
         HIGH,
         HIGH,
-        0UL
+        0UL,
+        0UL,
+        false
     };
 
     ButtonState g_home =
@@ -55,7 +57,9 @@ namespace
         PIN_BUTTON_HOME,
         HIGH,
         HIGH,
-        0UL
+        0UL,
+        0UL,
+        false
     };
 
     ButtonManager::Button g_pressed =
@@ -97,6 +101,15 @@ namespace
         {
             button.stableState =
                 button.rawState;
+
+            Serial.printf(
+                "[BUTTON STATE] id=%u pin=%u %s\n",
+                static_cast<uint8_t>(id),
+                button.pin,
+                button.stableState == LOW
+                    ? "PRESSED"
+                    : "RELEASED"
+            );
 
             // Pressed
             if (button.stableState == LOW)

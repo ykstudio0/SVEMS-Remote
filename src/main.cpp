@@ -203,6 +203,9 @@ void loop()
     switch (button)
     {   
         case ButtonManager::Button::Previous:
+            Serial.println(
+                "[BUTTON] Previous"); 
+
             pageManager.Previous();
 
             forceDisplayRefresh =
@@ -210,6 +213,9 @@ void loop()
             break;
 
         case ButtonManager::Button::Next:
+            Serial.println(
+                "[BUTTON] Next");
+
             pageManager.Next();
 
             forceDisplayRefresh =
@@ -217,6 +223,9 @@ void loop()
             break;
 
         case ButtonManager::Button::Home:
+            Serial.println(
+                "[BUTTON] Home");
+
             pageManager.SetPage(
                 DisplayPages::Page::Overview
             );
@@ -226,6 +235,8 @@ void loop()
             break;
 
         case ButtonManager::Button::HomeLong:
+            Serial.println(
+                "[BUTTON] HomeLong");
         {
             const uint8_t subPageCount =
                 DisplayPages::GetSubPageCount(
