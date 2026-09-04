@@ -9,7 +9,7 @@ v0.1.1
 
 v0.1.2 Vehicle Charge
 
-v0.1.3
+v0.1.3 Display Brightness Control
     Remote Brightness
     - Manual 밝기 설정 구조
     - NVS 저장/복원
@@ -31,3 +31,4 @@ v0.1.3
     HTTPS Telemetry Worker 분리
     HTTP timeout 중에도 터치/화면/AGE 정상 유지
     DISPLAY SETTINGS 한글 표시 정상화
+v0.1.4 Remote WiFi Multi-Profile Auto Connect
