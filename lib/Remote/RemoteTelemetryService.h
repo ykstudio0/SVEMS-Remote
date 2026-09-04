@@ -9,12 +9,15 @@
 
 #pragma once
 
-#include "TelemetryData.h"
+#include <Arduino.h>
 
+#include "TelemetryData.h"
 
 class RemoteTelemetryService
 {
 public:
+    static bool Begin();
+
     static void Update();
 
     static const SVEMS::Telemetry::TelemetryData&
@@ -23,7 +26,41 @@ public:
     static bool HasData();
 
 private:
-    static SVEMS::Telemetry::TelemetryData m_data;
+    //---------------------------------------------------------
+    // Current Data
+    //---------------------------------------------------------
 
-    static bool m_hasData;
+    static SVEMS::Telemetry::TelemetryData
+        m_data;
+
+    static bool
+        m_hasData;
+
+    //---------------------------------------------------------
+    // Worker
+    //---------------------------------------------------------
+
+    static TaskHandle_t
+        m_workerTask;
+
+    static bool
+        m_requestPending;
+
+    static bool
+        m_resultReady;
+
+    static SVEMS::Telemetry::TelemetryData
+        m_pendingData;
+
+    //---------------------------------------------------------
+    // Worker Functions
+    //---------------------------------------------------------
+
+    static void WorkerTask(
+        void* parameter);
+
+    static void FetchTelemetry();
+
+    static SemaphoreHandle_t
+        m_dataMutex;
 };

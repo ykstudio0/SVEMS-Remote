@@ -34,7 +34,14 @@ namespace SVEMS::Remote::Display
             BrightnessMode mode,
             uint8_t manualPercent);
 
+        static void SetAutoBrightnessPercent(
+            uint8_t percent);
+
+        static uint8_t GetAutoBrightnessPercent();
+
     private:
         static BrightnessSettings Settings;
+
+        static uint8_t AutoBrightnessPercent;
     };
 }

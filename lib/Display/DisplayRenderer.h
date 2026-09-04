@@ -198,5 +198,10 @@ namespace DisplayRenderer
             m_brightnessEditMode =
                 SVEMS::Remote::Display::
                     BrightnessMode::Manual;
+
+        void DrawDisplayBrightnessValue();
+
+        uint8_t m_lastDisplayedBrightness =
+            0xFFU;
     };
 }

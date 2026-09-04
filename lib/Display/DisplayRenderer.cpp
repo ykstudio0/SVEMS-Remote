@@ -164,8 +164,19 @@ namespace DisplayRenderer
         m_target->BeginFrame();
 
         if (m_displayConfigMode)
-        {
-            DrawDisplaySettings();
+{
+            if (!m_displayConfigDrawn)
+            {
+                DrawDisplaySettings();
+            }
+            else if (
+                m_brightnessEditMode ==
+                SVEMS::Remote::Display::
+                    BrightnessMode::Auto
+            )
+            {
+                DrawDisplayBrightnessValue();
+            }
 
             m_target->EndFrame();
 
@@ -2729,6 +2740,15 @@ namespace DisplayRenderer
             return;
         }
 
+        const Localization::Language language =
+            Localization::GetLanguage();
+
+        const DisplayTypes::FontType displayFont =
+            language ==
+                Localization::Language::Korean
+            ? DisplayTypes::FontType::KoreanGodic20
+            : DisplayTypes::FontType::Default;
+
         //-------------------------------------------------
         // Background
         //-------------------------------------------------
@@ -2744,7 +2764,7 @@ namespace DisplayRenderer
         // Title
         //-------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             160,
             20,
             Localization::Get(
@@ -2752,13 +2772,14 @@ namespace DisplayRenderer
             DisplayTheme::COLOR_LABEL,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            displayFont);
 
         //-------------------------------------------------
         // Mode
         //-------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             30,
             70,
             Localization::Get(
@@ -2766,7 +2787,8 @@ namespace DisplayRenderer
             DisplayTheme::COLOR_LABEL,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Left);
+            DisplayTypes::TextAlign::Left,
+            displayFont);
 
         const char* modeText =
             m_brightnessEditMode ==
@@ -2777,20 +2799,21 @@ namespace DisplayRenderer
             : Localization::Get(
                 Localization::DisplayManual);
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             290,
             70,
             modeText,
             DisplayTheme::COLOR_VALUE,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Right);
+            DisplayTypes::TextAlign::Right,
+            displayFont);
 
         //-------------------------------------------------
         // Brightness
         //-------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             30,
             105,
             Localization::Get(
@@ -2798,16 +2821,27 @@ namespace DisplayRenderer
             DisplayTheme::COLOR_LABEL,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Left);
+            DisplayTypes::TextAlign::Left,
+            displayFont);
 
         char brightnessText[16];
 
-        snprintf(
-            brightnessText,
-            sizeof(brightnessText),
-            "%u%%",
-            static_cast<unsigned>(
-                m_brightnessEditPercent));
+        uint8_t displayBrightnessPercent =
+            m_brightnessEditPercent;
+
+        if (
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Auto
+        )
+        {
+            displayBrightnessPercent =
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::
+                        GetAutoBrightnessPercent();
+        }
+
+        DrawDisplayBrightnessValue();
 
         const bool manualMode =
             m_brightnessEditMode ==
@@ -2854,7 +2888,7 @@ namespace DisplayRenderer
         // SAVE / CANCEL
         //-------------------------------------------------
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             90,
             205,
             Localization::Get(
@@ -2862,9 +2896,10 @@ namespace DisplayRenderer
             DisplayTheme::COLOR_SUCCESS,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            displayFont);
 
-        m_target->DrawText(
+        m_target->DrawTextFont(
             230,
             205,
             Localization::Get(
@@ -2872,7 +2907,8 @@ namespace DisplayRenderer
             DisplayTheme::COLOR_WARNING,
             DisplayTheme::GetFontSize(
                 DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Center);
+            DisplayTypes::TextAlign::Center,
+            displayFont);
 
         m_displayConfigDrawn = true;
     }
@@ -2889,6 +2925,9 @@ namespace DisplayRenderer
 
         m_brightnessEditPercent =
             brightnessPercent;
+
+        m_lastDisplayedBrightness =
+            0xFFU;
     }
 
     void Renderer::DecreaseBrightness()
@@ -2970,12 +3009,89 @@ namespace DisplayRenderer
                     BrightnessMode::Manual;
         }
 
-        m_displayConfigDrawn = false;
+        m_lastDisplayedBrightness =
+            0xFFU;
+
+        m_displayConfigDrawn =
+            false;
     }
 
     SVEMS::Remote::Display::BrightnessMode
     Renderer::GetBrightnessEditMode() const
     {
         return m_brightnessEditMode;
+    }
+
+    void Renderer::DrawDisplayBrightnessValue()
+    {
+        uint8_t displayBrightnessPercent =
+            m_brightnessEditPercent;
+
+        if (
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Auto
+        )
+        {
+            displayBrightnessPercent =
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::
+                        GetAutoBrightnessPercent();
+        }
+
+        //-------------------------------------------------
+        // 값이 같으면 redraw 하지 않음
+        //-------------------------------------------------
+
+        if (
+            displayBrightnessPercent ==
+            m_lastDisplayedBrightness
+        )
+        {
+            return;
+        }
+
+        m_lastDisplayedBrightness =
+            displayBrightnessPercent;
+
+        //-------------------------------------------------
+        // Value Area Clear
+        //-------------------------------------------------
+
+        m_target->FillRect(
+            220,
+            90,
+            80,
+            30,
+            DisplayTheme::COLOR_BACKGROUND);
+
+        //-------------------------------------------------
+        // Value Draw
+        //-------------------------------------------------
+
+        char brightnessText[16];
+
+        snprintf(
+            brightnessText,
+            sizeof(brightnessText),
+            "%u%%",
+            static_cast<unsigned>(
+                displayBrightnessPercent));
+
+        const bool manualMode =
+            m_brightnessEditMode ==
+            SVEMS::Remote::Display::
+                BrightnessMode::Manual;
+
+        m_target->DrawText(
+            290,
+            105,
+            brightnessText,
+            manualMode
+                ? DisplayTheme::COLOR_VALUE
+                : DisplayTheme::COLOR_DISABLED,
+            DisplayTheme::GetFontSize(
+                DisplayTheme::FontRole::Large),
+            DisplayTypes::TextAlign::Right);
     }
 }

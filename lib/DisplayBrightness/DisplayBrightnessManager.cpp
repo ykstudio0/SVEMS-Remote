@@ -14,6 +14,9 @@ namespace SVEMS::Remote::Display
     BrightnessSettings
         DisplayBrightnessManager::Settings;
 
+    uint8_t DisplayBrightnessManager::AutoBrightnessPercent =
+        5U;
+
     void DisplayBrightnessManager::Begin()
     {
         if (!DisplayBrightnessStorage::Load(
@@ -105,5 +108,29 @@ namespace SVEMS::Remote::Display
         return
             DisplayBrightnessStorage::Save(
                 Settings);
+    }
+
+    void DisplayBrightnessManager::
+        SetAutoBrightnessPercent(
+            uint8_t percent)
+    {
+        if (percent < 5U)
+        {
+            percent = 5U;
+        }
+
+        if (percent > 100U)
+        {
+            percent = 100U;
+        }
+
+        AutoBrightnessPercent =
+            percent;
+    }
+
+    uint8_t DisplayBrightnessManager::
+        GetAutoBrightnessPercent()
+    {
+        return AutoBrightnessPercent;
     }
 }

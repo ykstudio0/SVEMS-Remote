@@ -21,6 +21,7 @@
 #include "Localization.h"
 #include "DisplaySettings.h"
 #include "DisplayBrightnessManager.h"
+#include "LightSensor.h"
 
 SVEMS::Remote::TouchManager touchManager;
 
@@ -161,8 +162,10 @@ void setup()
 
     ButtonManager::Begin();
 
-    // Localization::SetLanguage(
-    //     Localization::Language::Korean);
+    SVEMS::Remote::LightSensor::Begin();
+
+    RemoteTelemetryService::Begin();
+
 }
 
 
@@ -685,10 +688,95 @@ void loop()
             break;
     }
 
-    static uint32_t lastLightPrintMs = 0U;
+    // Light Sensor
+    static uint32_t lastLightUpdateMs = 0U;
 
     const uint32_t nowMs =
         millis();
+
+    //-------------------------------------------------
+    // Auto Brightness Fade
+    //-------------------------------------------------
+
+    static uint8_t currentAutoBrightness =
+        SVEMS::Remote::LightSensor::
+            GetStableBrightnessPercent();
+
+    static uint32_t lastBrightnessFadeMs =
+        0U;
+
+    const auto& brightnessSettings =
+        SVEMS::Remote::Display::
+            DisplayBrightnessManager::GetSettings();
+
+    if (
+        brightnessSettings.mode ==
+        SVEMS::Remote::Display::
+            BrightnessMode::Auto
+    )
+    {
+        const uint8_t targetBrightness =
+            SVEMS::Remote::LightSensor::
+                GetStableBrightnessPercent();
+
+        SVEMS::Remote::Display::
+            DisplayBrightnessManager::
+                SetAutoBrightnessPercent(
+                    currentAutoBrightness);
+
+        display.setBrightness(
+            SVEMS::Remote::Display::
+                DisplayBrightnessManager::
+                    PercentToBrightness(
+                        currentAutoBrightness
+                    )
+        );
+
+        if (
+            nowMs - lastBrightnessFadeMs >=
+            50U
+        )
+        {
+            lastBrightnessFadeMs =
+                nowMs;
+
+            if (
+                currentAutoBrightness <
+                targetBrightness
+            )
+            {
+                ++currentAutoBrightness;
+            }
+            else if (
+                currentAutoBrightness >
+                targetBrightness
+            )
+            {
+                --currentAutoBrightness;
+            }
+
+            display.setBrightness(
+                SVEMS::Remote::Display::
+                    DisplayBrightnessManager::
+                        PercentToBrightness(
+                            currentAutoBrightness
+                        )
+            );
+        }
+    }
+
+    if (
+        nowMs - lastLightUpdateMs >=
+        100U
+    )
+    {
+        lastLightUpdateMs =
+            nowMs;
+
+        SVEMS::Remote::LightSensor::Update();
+    }
+
+    static uint32_t lastLightPrintMs = 0U;
 
     if (
         nowMs - lastLightPrintMs >=
@@ -698,16 +786,24 @@ void loop()
         lastLightPrintMs =
             nowMs;
 
-        const uint16_t lightRaw =
-            analogRead(
-                PIN_LIGHT_SENSOR);
+        // Serial.print("[LIGHT] RAW=");
+        // Serial.print(
+        //     SVEMS::Remote::LightSensor::GetRaw());
 
-        Serial.print(
-            "[LIGHT] "
-        );
+        // Serial.print(" FILTERED=");
+        // Serial.print(
+        //     SVEMS::Remote::LightSensor::GetFiltered());
 
-        Serial.println(
-            lightRaw
-        );
+        // Serial.print(" AUTO=");
+        // Serial.print(
+        //     SVEMS::Remote::LightSensor::
+        //         GetBrightnessPercent());
+
+        // Serial.print("% STABLE=");
+        // Serial.print(
+        //     SVEMS::Remote::LightSensor::
+        //         GetStableBrightnessPercent());
+
+        // Serial.println("%");
     }
 }
