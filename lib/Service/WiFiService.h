@@ -36,6 +36,11 @@ public:
         const String& password
     );
 
+    static bool LoadProfile(
+        uint8_t index,
+        WiFiProfile& profile
+    );
+    
     static bool SaveProfile(
         uint8_t index,
         const String& ssid,
@@ -50,10 +55,6 @@ public:
     static void StopSetupMode();
 
 private:
-    static bool LoadProfile(
-        uint8_t index,
-        WiFiProfile& profile
-    );
 
     static bool TryConnectProfiles();
 

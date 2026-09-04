@@ -300,7 +300,52 @@ namespace SVEMS::Remote
 
             return Action::None;
         }
+
+        //-----------------------------------------------------
+        // WiFi Setup Confirm
+        //-----------------------------------------------------
+        if (m_wifiSetupConfirm)
+        {
+            if (y >= 135U &&
+                y <= 162U)
+            {
+                if (x >= 70U &&
+                    x <= 144U)
+                {
+                    return Action::Cancel;
+                }
+
+                if (x >= 175U &&
+                    x <= 249U)
+                {
+                    return Action::Confirm;
+                }
+            }
+
+            return Action::None;
+        }
         
+        //-----------------------------------------------------
+        // WiFi Setup Mode
+        //-----------------------------------------------------
+
+        if (m_wifiSetupMode)
+        {
+            if (
+                x >= 80U &&
+                x <= 240U &&
+                y >= 190U &&
+                y <= 239U
+            )
+            {
+                return
+                    Action::WiFiSetupModeCancel;
+            }
+
+            return
+                Action::None;
+        }
+
         //-------------------------------------------------
         // Settings Menu
         //-------------------------------------------------
@@ -381,51 +426,6 @@ namespace SVEMS::Remote
             }
 
             return Action::None;
-        }
-
-        //-----------------------------------------------------
-        // WiFi Setup Confirm
-        //-----------------------------------------------------
-        if (m_wifiSetupConfirm)
-        {
-            if (y >= 135U &&
-                y <= 162U)
-            {
-                if (x >= 70U &&
-                    x <= 144U)
-                {
-                    return Action::Cancel;
-                }
-
-                if (x >= 175U &&
-                    x <= 249U)
-                {
-                    return Action::Confirm;
-                }
-            }
-
-            return Action::None;
-        }
-
-        //-----------------------------------------------------
-        // WiFi Setup Mode
-        //-----------------------------------------------------
-
-        if (m_wifiSetupMode)
-        {
-            if (
-                x >= 80U &&
-                x <= 240U &&
-                y >= 190U &&
-                y <= 239U
-            )
-            {
-                return
-                    Action::WiFiSetupModeCancel;
-            }
-
-            return
-                Action::None;
         }
 
         //-----------------------------------------------------

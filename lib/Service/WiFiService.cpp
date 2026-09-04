@@ -284,47 +284,143 @@ bool WiFiService::StartSetupMode()
         HTTP_GET,
         []()
         {
-            const char* html =
+            WiFiService::WiFiProfile p0;
+            WiFiService::WiFiProfile p1;
+            WiFiService::WiFiProfile p2;
+
+            WiFiService::LoadProfile(
+                0U,
+                p0
+            );
+
+            WiFiService::LoadProfile(
+                1U,
+                p1
+            );
+
+            WiFiService::LoadProfile(
+                2U,
+                p2
+            );
+
+            String html;
+
+            html.reserve(
+                3000
+            );
+
+            html +=
                 "<!DOCTYPE html>"
                 "<html>"
                 "<head>"
                 "<meta name='viewport' "
                 "content='width=device-width, initial-scale=1'>"
+
                 "<style>"
-                "body{font-family:Arial,sans-serif;padding:24px;}"
-                "input{font-size:20px;width:100%;padding:10px;"
-                "margin:8px 0 12px 0;box-sizing:border-box;}"
-                "button{font-size:22px;padding:12px 24px;}"
-                "label{font-size:22px;}"
-                "h3{margin-top:28px;}"
+
+                "body{"
+                "font-family:Arial,sans-serif;"
+                "padding:12px;"
+                "margin:0;"
+                "}"
+
+                "h2{"
+                "font-size:24px;"
+                "margin:4px 0 12px 0;"
+                "}"
+
+                "h3{"
+                "font-size:17px;"
+                "margin:10px 0 5px 0;"
+                "}"
+
+                "label{"
+                "font-size:14px;"
+                "display:block;"
+                "margin:3px 0 2px 0;"
+                "}"
+
+                "input{"
+                "font-size:15px;"
+                "width:100%;"
+                "height:34px;"
+                "padding:4px 6px;"
+                "margin:0 0 5px 0;"
+                "box-sizing:border-box;"
+                "}"
+
+                "button{"
+                "font-size:17px;"
+                "width:100%;"
+                "height:40px;"
+                "margin-top:10px;"
+                "}"
+
                 "</style>"
                 "</head>"
+
                 "<body>"
                 "<h2>SVEMS WiFi Setup</h2>"
+                "<form method='POST' action='/save'>";
 
-                "<form method='POST' action='/save'>"
+            //-------------------------------------------------
+            // Profile 1
+            //-------------------------------------------------
 
-                "<h3>Profile 1</h3>"
+            html +=
+                "<h3>Profile 1 : ";
+
+            html +=
+                p0.ssid.length() > 0U
+                    ? p0.ssid
+                    : "-";
+
+            html +=
+                "</h3>"
                 "<label>SSID</label>"
                 "<input name='ssid0' type='text'>"
                 "<label>Password</label>"
-                "<input name='pass0' type='password'>"
+                "<input name='pass0' type='password'>";
 
-                "<h3>Profile 2</h3>"
+            //-------------------------------------------------
+            // Profile 2
+            //-------------------------------------------------
+
+            html +=
+                "<h3>Profile 2 : ";
+
+            html +=
+                p1.ssid.length() > 0U
+                    ? p1.ssid
+                    : "-";
+
+            html +=
+                "</h3>"
                 "<label>SSID</label>"
                 "<input name='ssid1' type='text'>"
                 "<label>Password</label>"
-                "<input name='pass1' type='password'>"
+                "<input name='pass1' type='password'>";
 
-                "<h3>Profile 3</h3>"
+            //-------------------------------------------------
+            // Profile 3
+            //-------------------------------------------------
+
+            html +=
+                "<h3>Profile 3 : ";
+
+            html +=
+                p2.ssid.length() > 0U
+                    ? p2.ssid
+                    : "-";
+
+            html +=
+                "</h3>"
                 "<label>SSID</label>"
                 "<input name='ssid2' type='text'>"
                 "<label>Password</label>"
                 "<input name='pass2' type='password'>"
 
-                "<br><br>"
                 "<button type='submit'>Save</button>"
-
                 "</form>"
                 "</body>"
                 "</html>";
@@ -581,6 +677,17 @@ bool WiFiService::LoadProfile(
 
     const String prefix =
         "p" + String(index);
+
+    const String ssidKey =
+        prefix + "ssid";
+
+    if (!preferences.isKey(
+            ssidKey.c_str()))
+    {
+        preferences.end();
+
+        return false;
+    }
 
     profile.ssid =
         preferences.getString(
