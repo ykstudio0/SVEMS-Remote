@@ -90,87 +90,137 @@ namespace SVEMS::Remote
     //---------------------------------------------------------
 
     void TouchManager::Update(
-        DisplayPages::Page page)
+        DisplayPages::Page page
+    )
     {
-        m_action =
-            Action::None;
+        m_action = Action::None;
 
-        if (!m_device.Update())
-        {
-            return;
-        }
+        m_device.Update();
 
-        const bool touched =
+        bool touched =
             m_device.IsTouched();
 
-        //-----------------------------------------------------
+        // -------------------------------------------------
         // Released
-        //-----------------------------------------------------
-
+        // -------------------------------------------------
         if (!touched)
         {
-            m_wasTouched =
-                false;
+            m_wasTouched = false;
+            m_touchPending = false;
 
             return;
         }
 
-        //-----------------------------------------------------
-        // Already processed current touch
-        //-----------------------------------------------------
-
+        // -------------------------------------------------
+        // 이미 유효한 Touch Action 처리 완료
+        // 손을 뗄 때까지 추가 Action 금지
+        // -------------------------------------------------
         if (m_wasTouched)
         {
             return;
         }
 
-        m_wasTouched =
-            true;
+        uint16_t rawX = 0;
+        uint16_t rawY = 0;
 
-        //-----------------------------------------------------
-        // Read raw point
-        //-----------------------------------------------------
+        m_device.ReadPoint(
+            rawX,
+            rawY
+        );
 
-        uint16_t rawX = 0U;
-        uint16_t rawY = 0U;
-
-        if (!m_device.ReadPoint(
-                rawX,
-                rawY))
-        {
-            return;
-        }
-
-        //-----------------------------------------------------
-        // Convert to display coordinates
-        //-----------------------------------------------------
-
-        uint16_t screenX = 0U;
-        uint16_t screenY = 0U;
+        uint16_t screenX = 0;
+        uint16_t screenY = 0;
 
         ConvertCoordinates(
             rawX,
             rawY,
             screenX,
-            screenY);
+            screenY
+        );
+
+        // -------------------------------------------------
+        // 첫 Touch 후보
+        // -------------------------------------------------
+        if (!m_touchPending)
+        {
+            m_touchPending = true;
+
+            m_touchStartTime = millis();
+
+            m_firstScreenX = screenX;
+            m_firstScreenY = screenY;
+
+            Serial.printf(
+                "[TOUCH CANDIDATE] raw=(%u,%u) screen=(%u,%u)\n",
+                rawX,
+                rawY,
+                screenX,
+                screenY
+            );
+
+            return;
+        }
+
+        // -------------------------------------------------
+        // Confirm 시간 전
+        // -------------------------------------------------
+        if (
+            millis() - m_touchStartTime <
+            TOUCH_CONFIRM_MS
+        )
+        {
+            return;
+        }
+
+        // -------------------------------------------------
+        // 위치 안정성 확인
+        // -------------------------------------------------
+        int dx =
+            (int)screenX -
+            (int)m_firstScreenX;
+
+        int dy =
+            (int)screenY -
+            (int)m_firstScreenY;
+
+        if (
+            abs(dx) > TOUCH_MOVE_TOLERANCE ||
+            abs(dy) > TOUCH_MOVE_TOLERANCE
+        )
+        {
+            Serial.printf(
+                "[TOUCH REJECT] unstable "
+                "first=(%u,%u) now=(%u,%u)\n",
+                m_firstScreenX,
+                m_firstScreenY,
+                screenX,
+                screenY
+            );
+
+            m_touchPending = false;
+
+            return;
+        }
+
+        // -------------------------------------------------
+        // Valid Touch
+        // -------------------------------------------------
+        m_touchPending = false;
+        m_wasTouched = true;
 
         Serial.printf(
-            "[TOUCH RAW] raw=(%u,%u) screen=(%u,%u)\n",
+            "[TOUCH CONFIRMED] raw=(%u,%u) screen=(%u,%u)\n",
             rawX,
             rawY,
             screenX,
             screenY
         );
-        
-        //-----------------------------------------------------
-        // Determine action
-        //-----------------------------------------------------
 
-        m_action =
-            DetermineAction(
-                screenX,
-                screenY,
-                page);
+        m_action = DetermineAction(
+            screenX,
+            screenY,
+            page
+        );
     }
 
     void TouchManager::SetSettingsMenu(

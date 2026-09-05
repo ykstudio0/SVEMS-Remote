@@ -101,5 +101,15 @@ namespace SVEMS::Remote
         bool m_wifiSetupMode = false;
 
         bool m_displaySettingsMode = false;
+
+        static constexpr uint32_t TOUCH_CONFIRM_MS = 50;
+        static constexpr uint16_t TOUCH_MOVE_TOLERANCE = 15;
+
+        bool m_touchPending = false;
+
+        uint32_t m_touchStartTime = 0;
+
+        uint16_t m_firstScreenX = 0;
+        uint16_t m_firstScreenY = 0;
     };
 }
