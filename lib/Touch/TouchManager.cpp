@@ -154,6 +154,14 @@ namespace SVEMS::Remote
             screenX,
             screenY);
 
+        Serial.printf(
+            "[TOUCH RAW] raw=(%u,%u) screen=(%u,%u)\n",
+            rawX,
+            rawY,
+            screenX,
+            screenY
+        );
+        
         //-----------------------------------------------------
         // Determine action
         //-----------------------------------------------------

@@ -650,6 +650,8 @@ void loop()
         }
 
         case SVEMS::Remote::TouchManager::Action::Previous:
+            Serial.println(
+                "[TOUCH ACTION] Previous");
             pageManager.Previous();
 
             forceDisplayRefresh =
@@ -657,6 +659,9 @@ void loop()
             break;
 
         case SVEMS::Remote::TouchManager::Action::Next:
+            Serial.println(
+                "[TOUCH ACTION] Next");
+
             pageManager.Next();
 
             forceDisplayRefresh =
@@ -665,6 +670,9 @@ void loop()
 
         case SVEMS::Remote::TouchManager::Action::Content:
         {
+            Serial.println(
+                "[TOUCH ACTION] Content");
+                
             const uint8_t subPageCount =
                 DisplayPages::GetSubPageCount(
                     pageManager.Current()
