@@ -147,7 +147,7 @@ void RemoteTelemetryService::FetchTelemetry()
     // Telemetry Device ID
     //-------------------------------------------------
 
-    const char* deviceId = "unknown";
+    const char* deviceId = "main-car";
 
     if (
         Localization::GetDataSource() ==
