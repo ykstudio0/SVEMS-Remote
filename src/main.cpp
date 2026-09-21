@@ -25,6 +25,9 @@
 
 SVEMS::Remote::TouchManager touchManager;
 
+static bool displaySettingsEditing =
+    false;
+
 namespace
 {
     LGFX_SVEMS display;
@@ -319,6 +322,9 @@ void loop()
                 true
             );
 
+            displaySettingsEditing =
+                true;
+
             forceDisplayRefresh =
                 true;
 
@@ -328,6 +334,39 @@ void loop()
         case SVEMS::Remote::TouchManager::Action::BrightnessModeToggle:
         {
             displayRenderer.ToggleBrightnessMode();
+
+            if (
+                displayRenderer.GetBrightnessEditMode() ==
+                SVEMS::Remote::Display::
+                    BrightnessMode::Manual
+            )
+            {
+                //-------------------------------------------------
+                // Manual Preview
+                //-------------------------------------------------
+
+                display.setBrightness(
+                    displayRenderer.GetBrightnessPreview()
+                );
+            }
+            else
+            {
+                //-------------------------------------------------
+                // Auto Preview
+                //-------------------------------------------------
+
+                const uint8_t autoPercent =
+                    SVEMS::Remote::LightSensor::
+                        GetStableBrightnessPercent();
+
+                display.setBrightness(
+                    SVEMS::Remote::Display::
+                        DisplayBrightnessManager::
+                            PercentToBrightness(
+                                autoPercent
+                            )
+                );
+            }
 
             forceDisplayRefresh = true;
 
@@ -368,11 +407,18 @@ void loop()
                     displayRenderer.GetBrightnessEditPercent()
                 );
 
+            display.setBrightness(
+                displayRenderer.GetBrightnessPreview()
+            );
+
             displayRenderer.EndDisplaySettings();
 
             touchManager.SetDisplaySettingsMode(
                 false
             );
+
+            displaySettingsEditing =
+                false;
 
             forceDisplayRefresh = true;
 
@@ -398,6 +444,9 @@ void loop()
             touchManager.SetDisplaySettingsMode(
                 false
             );
+
+            displaySettingsEditing =
+                false;
 
             forceDisplayRefresh = true;
 
@@ -729,9 +778,10 @@ void loop()
             DisplayBrightnessManager::GetSettings();
 
     if (
+        !displaySettingsEditing &&
         brightnessSettings.mode ==
-        SVEMS::Remote::Display::
-            BrightnessMode::Auto
+            SVEMS::Remote::Display::
+                BrightnessMode::Auto
     )
     {
         const uint8_t targetBrightness =
