@@ -16,6 +16,7 @@
 #include "SVEMS_KR_18.h"
 #include "SVEMS_KR_20.h"
 #include "SVEMS_KR_GODIC_20.h"
+#include "DisplayConfig.h"
 
 TFTRenderTarget::TFTRenderTarget(
     lgfx::LGFX_Device& display)
@@ -60,7 +61,7 @@ bool TFTRenderTarget::Begin()
 
     m_display->init();
 
-    m_display->setRotation(3);
+    m_display->setRotation(DISPLAY_ROTATION);
 
     m_ready =
         m_display->width() == DisplayLayout::SCREEN_WIDTH &&

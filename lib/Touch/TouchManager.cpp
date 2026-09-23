@@ -8,6 +8,7 @@
 //-------------------------------------------------------------
 
 #include "TouchManager.h"
+#include "DisplayConfig.h"
 
 namespace
 {
@@ -258,33 +259,69 @@ namespace SVEMS::Remote
         uint16_t& screenY) const
     {
         //-----------------------------------------------------
-        // LCD Rotation = 3
+        // Raw touch coordinates:
+        // X : 0 ~ 239
+        // Y : 0 ~ 319
         //
-        // Raw touch:
-        // X = vertical axis
-        // Y = horizontal axis
+        // LCD landscape:
+        // X : 0 ~ 319
+        // Y : 0 ~ 239
+        //-----------------------------------------------------
+
+        int x = 0;
+        int y = 0;
+
+        switch (DISPLAY_ROTATION)
+        {
+            //-------------------------------------------------
+            // Rotation 1
+            //-------------------------------------------------
+            case 1U:
+
+                x = 319 -
+                    static_cast<int>(rawY);
+
+                y =
+                    static_cast<int>(rawX);
+
+                break;
+
+            //-------------------------------------------------
+            // Rotation 3
+            //-------------------------------------------------
+            case 3U:
+
+                x =
+                    static_cast<int>(rawY);
+
+                y = 239 -
+                    static_cast<int>(rawX);
+
+                break;
+
+            default:
+                return;
+        }
+
+        //-----------------------------------------------------
+        // Screen bounds
         //-----------------------------------------------------
 
         screenX =
-            rawY;
+            static_cast<uint16_t>(
+                constrain(
+                    x,
+                    0,
+                    static_cast<int>(
+                        SCREEN_WIDTH - 1U)));
 
-        if (screenX >= SCREEN_WIDTH)
-        {
-            screenX =
-                SCREEN_WIDTH - 1U;
-        }
-
-        if (rawX < SCREEN_HEIGHT)
-        {
-            screenY =
-                (SCREEN_HEIGHT - 1U) -
-                rawX;
-        }
-        else
-        {
-            screenY =
-                0U;
-        }
+        screenY =
+            static_cast<uint16_t>(
+                constrain(
+                    y,
+                    0,
+                    static_cast<int>(
+                        SCREEN_HEIGHT - 1U)));
     }
 
 

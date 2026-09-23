@@ -22,6 +22,7 @@
 #include "DisplaySettings.h"
 #include "DisplayBrightnessManager.h"
 #include "LightSensor.h"
+#include "DisplayConfig.h"
 
 SVEMS::Remote::TouchManager touchManager;
 
@@ -100,9 +101,7 @@ void setup()
 
     display.init();
 
-    display.setRotation(
-        3
-    );
+    display.setRotation(DISPLAY_ROTATION);
 
     Serial.println(
         "[I2C] Scanning..."
