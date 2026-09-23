@@ -10,6 +10,7 @@
 #include "ButtonManager.h"
 #include "Pins.h"
 #include "Config.h"
+#include "DisplayConfig.h"
 
 namespace
 {
@@ -205,20 +206,44 @@ namespace ButtonManager
 
     void Update()
     {
-        UpdateButton(
-            g_previous,
-            Button::Previous);
+        if (DISPLAY_ROTATION == 1U)
+        {
+            //-------------------------------------------------
+            // Rotation 1 : Physical buttons reversed
+            //-------------------------------------------------
 
-        UpdateButton(
-            g_next,
-            Button::Next);
+            UpdateButton(
+                g_previous,
+                Button::Next);
+
+            UpdateButton(
+                g_next,
+                Button::Previous);
+        }
+        else
+        {
+            //-------------------------------------------------
+            // Rotation 3 : Original button mapping
+            //-------------------------------------------------
+
+            UpdateButton(
+                g_previous,
+                Button::Previous);
+
+            UpdateButton(
+                g_next,
+                Button::Next);
+        }
+
+        //-----------------------------------------------------
+        // Home button : Unchanged
+        //-----------------------------------------------------
 
         UpdateButton(
             g_home,
             Button::Home,
             true);
     }
-
 
     Button GetPressed()
     {
