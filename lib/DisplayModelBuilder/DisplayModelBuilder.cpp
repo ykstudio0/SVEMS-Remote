@@ -1033,7 +1033,7 @@ namespace
                 DisplayTypes::ValueType::Voltage);
 
         system.vehicleVoltage.decimals =
-            1U;
+            2U;
 
         system.reverseCharge.text =
             DataManager::Vehicle.reverseChargeEnabled
