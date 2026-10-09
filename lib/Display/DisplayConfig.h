@@ -12,6 +12,6 @@
 
 #include <Arduino.h>
 
-constexpr uint8_t DISPLAY_ROTATION = 1U;
+constexpr uint8_t DISPLAY_ROTATION = 3U;
 
 #endif
