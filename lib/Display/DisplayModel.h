@@ -707,7 +707,7 @@ namespace DisplayModel
                 return EnergyStatus::Warning;
             }
 
-            if (solar.power.value > 1.6f)
+            if (solar.power.value > 10.0f)
             {
                 return EnergyStatus::Charging;
             }
