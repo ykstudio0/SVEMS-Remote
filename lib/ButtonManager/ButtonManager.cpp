@@ -206,38 +206,22 @@ namespace ButtonManager
 
     void Update()
     {
-        if (DISPLAY_ROTATION == 1U)
-        {
-            //-------------------------------------------------
-            // Rotation 1 : Physical buttons reversed
-            //-------------------------------------------------
+        //-------------------------------------------------
+        // Physical button mapping
+        // Independent of DISPLAY_ROTATION
+        //-------------------------------------------------
 
-            UpdateButton(
-                g_previous,
-                Button::Next);
+        UpdateButton(
+            g_previous,
+            Button::Previous);
 
-            UpdateButton(
-                g_next,
-                Button::Previous);
-        }
-        else
-        {
-            //-------------------------------------------------
-            // Rotation 3 : Original button mapping
-            //-------------------------------------------------
+        UpdateButton(
+            g_next,
+            Button::Next);
 
-            UpdateButton(
-                g_previous,
-                Button::Previous);
-
-            UpdateButton(
-                g_next,
-                Button::Next);
-        }
-
-        //-----------------------------------------------------
-        // Home button : Unchanged
-        //-----------------------------------------------------
+        //-------------------------------------------------
+        // Home button
+        //-------------------------------------------------
 
         UpdateButton(
             g_home,
