@@ -502,11 +502,12 @@ namespace SVEMS::Telemetry
         data.vehicle.reverseChargeEnabled =
             vehicle["reverseChargeEnabled"] | false;
 
-        // Serial.printf(
-        //     "[VEHICLE] ACTIVE=%s V=%.3fV REV=%s\n",
-        //     data.vehicle.active ? "ON" : "OFF",
-        //     data.vehicle.voltage,
-        //     data.vehicle.reverseChargeEnabled ? "ON" : "OFF");
+        // Vehicle Battery SOC
+        data.vehicle.soc =
+            vehicle["soc"] | 0.0f;
+
+        data.vehicle.socValid =
+            vehicle["socValid"] | false;
 
         //---------------------------------------------------------
         // System

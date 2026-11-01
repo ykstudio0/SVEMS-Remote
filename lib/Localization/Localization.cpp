@@ -523,6 +523,13 @@ namespace Localization
         "차량전압"
     };
 
+    // Vehicle Battery SOC
+    const Text DtlSysVehicleSoc =
+    {
+        "Vehicle SOC",
+        "차량SOC"
+    };
+
     const Text DtlSysReverseChg =
     {
         "Reverse Chg",

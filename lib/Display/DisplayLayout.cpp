@@ -104,8 +104,9 @@ namespace
 
     static constexpr DisplayLayout::StaticRow g_systemDetail5Rows[]
     {
-        { 0U, "Vehicle Bat",     true, DisplayTypes::TextKey::DtlSysVehicleBat },
-        { 1U, "Reverse Chg",     true, DisplayTypes::TextKey::DtlSysReverseChg }
+        { 0U, "Vehicle Bat", true, DisplayTypes::TextKey::DtlSysVehicleBat },
+        { 1U, "Vehicle SOC", true, DisplayTypes::TextKey::DtlSysVehicleSoc },
+        { 2U, "Reverse Chg", true, DisplayTypes::TextKey::DtlSysReverseChg }
     };
 
     static constexpr DisplayLayout::StaticRow

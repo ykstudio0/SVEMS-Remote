@@ -679,6 +679,12 @@ namespace DisplayRenderer
                             Localization::DtlSysVehicleBat);
                     break;
 
+                case DisplayTypes::TextKey::DtlSysVehicleSoc:
+                    label =
+                        Localization::Get(
+                            Localization::DtlSysVehicleSoc);
+                    break;
+
                 case DisplayTypes::TextKey::DtlSysReverseChg:
                     label =
                         Localization::Get(
@@ -1803,6 +1809,7 @@ namespace DisplayRenderer
 
         if (subPage == 5U)
         {
+            // Row 0 : Vehicle Voltage
             const bool vehicleVoltageChanged =
                 HasValueChanged(
                     data.vehicleVoltage,
@@ -1816,6 +1823,21 @@ namespace DisplayRenderer
                     0U);
             }
 
+            // Row 1 : Vehicle SOC
+            const bool vehicleSocChanged =
+                HasValueChanged(
+                    data.vehicleSoc,
+                    lastData.vehicleSoc);
+
+            if (ShouldDraw(
+                    vehicleSocChanged))
+            {
+                DrawRowValue(
+                    data.vehicleSoc,
+                    1U);
+            }
+
+            // Row 2 : Reverse Charge
             const bool reverseChargeChanged =
                 HasDisplayTextChanged(
                     data.reverseCharge,
@@ -1826,7 +1848,7 @@ namespace DisplayRenderer
             {
                 DisplayWidgets::ValueWidget::DrawTextValue(
                     *m_target,
-                    1U,
+                    2U,
                     data.reverseCharge);
             }
 

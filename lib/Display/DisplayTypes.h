@@ -164,6 +164,7 @@
         DtlSysTelemetry,
         DtlSysAge,
         DtlSysVehicleBat,
+        DtlSysVehicleSoc,
         DtlSysReverseChg,
         DtlSysEpever,
         DtlSysBMS,

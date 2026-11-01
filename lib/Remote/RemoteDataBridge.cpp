@@ -291,6 +291,12 @@ namespace SVEMS::Remote
         DataManager::Vehicle.voltage =
             data.vehicle.voltage;
 
+        DataManager::Vehicle.soc =
+            data.vehicle.soc;
+
+        DataManager::Vehicle.socValid =
+            data.vehicle.socValid;
+
         DataManager::Vehicle.reverseChargeEnabled =
             data.vehicle.reverseChargeEnabled;
 

@@ -1035,6 +1035,19 @@ namespace
         system.vehicleVoltage.decimals =
             2U;
 
+        // Vehicle Battery SOC
+        system.vehicleSoc =
+            DisplayTypes::MakeValue(
+                DataManager::Vehicle.soc,
+                DisplayTypes::ValueType::Percent);
+
+        system.vehicleSoc.decimals = 2U;
+
+        system.vehicleSoc.state =
+            DataManager::Vehicle.socValid
+                ? DisplayTypes::WidgetState::Normal
+                : DisplayTypes::WidgetState::NoData;
+
         system.reverseCharge.text =
             DataManager::Vehicle.reverseChargeEnabled
                 ? "ON"

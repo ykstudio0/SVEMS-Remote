@@ -112,6 +112,7 @@ namespace Localization
     extern const Text DtlSysTelemetry;
     extern const Text DtlSysAge;
     extern const Text DtlSysVehicleBat;
+    extern const Text DtlSysVehicleSoc;
     extern const Text DtlSysReverseChg;
     extern const Text DtlSysEpever;
     extern const Text DtlSysBMS;

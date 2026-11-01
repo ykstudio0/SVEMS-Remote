@@ -179,6 +179,10 @@ public:
         float voltage = 0.0f;
 
         bool reverseChargeEnabled = false;
+
+        // Vehicle Battery SOC
+        float soc = 0.0f;
+        bool socValid = false;
     };
 
     static SolarData Solar;
