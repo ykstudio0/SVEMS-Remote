@@ -8,10 +8,14 @@
 //-------------------------------------------------------------
 
 #include <Arduino.h>
+#include "TouchDevice.h"
+#include "Pins.h"
+
+#if defined(SVEMS_REMOTE)
+
 #include <Wire.h>
 
-#include "TouchDevice.h"
-
+// FT6336G (capacitive / I2C)
 namespace
 {
     constexpr uint8_t TOUCH_I2C_ADDRESS =
@@ -286,3 +290,168 @@ namespace SVEMS::Device
         return true;
     }
 }
+
+#elif defined(SVEMS_REMOTE_SPI)
+
+#include <SPI.h>
+
+// XPT2046 (resistive / SPI)
+namespace
+{
+    constexpr uint8_t CMD_READ_X =
+        0xD0U;
+
+    constexpr uint8_t CMD_READ_Y =
+        0x90U;
+}
+
+namespace SVEMS::Device
+{
+    bool TouchDevice::Begin()
+    {
+        m_ready = false;
+        m_touched = false;
+        m_x = 0U;
+        m_y = 0U;
+
+        pinMode(
+            PIN_TOUCH_CS,
+            OUTPUT
+        );
+
+        digitalWrite(
+            PIN_TOUCH_CS,
+            HIGH
+        );
+
+        pinMode(
+            PIN_TOUCH_IRQ,
+            INPUT_PULLUP
+        );
+
+        SPI.begin(
+            PIN_TOUCH_CLK,
+            PIN_TOUCH_DO,
+            PIN_TOUCH_DIN,
+            PIN_TOUCH_CS
+        );
+        
+        m_ready = true;
+
+        return true;
+    }
+
+    bool TouchDevice::Update()
+    {
+        if (!m_ready)
+        {
+            return false;
+        }
+
+        //---------------------------------------------------------
+        // IRQ LOW = Touch detected
+        //---------------------------------------------------------
+
+        if (
+            digitalRead(
+                PIN_TOUCH_IRQ
+            ) != LOW
+        )
+        {
+            m_touched = false;
+
+            return true;
+        }
+
+        //---------------------------------------------------------
+        // Read raw coordinates
+        //---------------------------------------------------------
+
+        SPI.beginTransaction(
+            SPISettings(
+                2000000,
+                MSBFIRST,
+                SPI_MODE0
+            )
+        );
+
+        digitalWrite(
+            PIN_TOUCH_CS,
+            LOW
+        );
+
+        SPI.transfer(
+            CMD_READ_X
+        );
+
+        uint16_t rawX =
+            static_cast<uint16_t>(
+                SPI.transfer(0x00)
+            ) << 8;
+
+        rawX |=
+            SPI.transfer(0x00);
+
+        rawX >>= 3;
+
+        SPI.transfer(
+            CMD_READ_Y
+        );
+
+        uint16_t rawY =
+            static_cast<uint16_t>(
+                SPI.transfer(0x00)
+            ) << 8;
+
+        rawY |=
+            SPI.transfer(0x00);
+
+        rawY >>= 3;
+
+        digitalWrite(
+            PIN_TOUCH_CS,
+            HIGH
+        );
+
+        SPI.endTransaction();
+
+        m_x = rawX;
+        m_y = rawY;
+
+        m_touched = true;
+
+        return true;
+    }
+
+    bool TouchDevice::IsReady() const
+    {
+        return m_ready;
+    }
+
+    bool TouchDevice::IsTouched() const
+    {
+        return
+            m_ready &&
+            m_touched;
+    }
+
+    bool TouchDevice::ReadPoint(
+        uint16_t& x,
+        uint16_t& y
+    ) const
+    {
+        if (!IsTouched())
+        {
+            return false;
+        }
+
+        x = m_x;
+        y = m_y;
+
+        return true;
+    }
+}
+
+#else
+#error "Remote hardware type is not defined"
+#endif

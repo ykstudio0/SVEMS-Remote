@@ -74,6 +74,16 @@ void setup()
     //---------------------------------------------------------
     Wire.begin(8, 9);
 
+    #if defined(SVEMS_REMOTE_SPI)
+
+        // XPT2046 Touch IRQ
+        pinMode(
+            PIN_TOUCH_IRQ,
+            INPUT_PULLUP
+        );
+
+    #endif
+
     if (!touchManager.Begin())
     {
         Serial.println(
@@ -101,7 +111,20 @@ void setup()
 
     display.init();
 
-    display.setRotation(DISPLAY_ROTATION);
+    #if defined(SVEMS_REMOTE)
+
+        // FT6336G Remote
+        display.setRotation(
+            DISPLAY_ROTATION
+        );
+
+    #elif defined(SVEMS_REMOTE_SPI)
+
+        // XPT2046 Remote
+        // 기존 SPI 버전은 회전 설정을 호출하지 않음.
+        // LovyanGFX 기본 회전 상태 유지.
+
+    #endif
 
     Serial.println(
         "[I2C] Scanning..."

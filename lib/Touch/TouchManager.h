@@ -103,7 +103,22 @@ namespace SVEMS::Remote
         bool m_displaySettingsMode = false;
 
         static constexpr uint32_t TOUCH_CONFIRM_MS = 50;
-        static constexpr uint16_t TOUCH_MOVE_TOLERANCE = 15;
+
+        #if defined(SVEMS_REMOTE)
+
+            static constexpr uint16_t
+                TOUCH_MOVE_TOLERANCE = 15;
+
+        #elif defined(SVEMS_REMOTE_SPI)
+
+            static constexpr uint16_t
+                TOUCH_MOVE_TOLERANCE = 40;
+
+        #else
+
+            #error "Remote hardware type is not defined"
+
+        #endif
 
         bool m_touchPending = false;
 

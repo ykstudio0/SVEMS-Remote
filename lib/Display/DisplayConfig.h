@@ -12,6 +12,22 @@
 
 #include <Arduino.h>
 
+//-------------------------------------------------------------
+// Display Rotation by Hardware Type
+//-------------------------------------------------------------
+
+#if defined(SVEMS_REMOTE)
+
 constexpr uint8_t DISPLAY_ROTATION = 1U;
+
+#elif defined(SVEMS_REMOTE_SPI)
+
+constexpr uint8_t DISPLAY_ROTATION = 4U;
+
+#else
+
+#error "Remote hardware type is not defined"
+
+#endif
 
 #endif

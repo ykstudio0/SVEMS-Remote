@@ -19,8 +19,19 @@ namespace
     constexpr uint16_t HEADER_BOTTOM =
         39U;
 
-    constexpr uint16_t HEADER_STATUS_LEFT =
-        290U;
+    #if defined(SVEMS_REMOTE)
+
+        constexpr uint16_t HEADER_STATUS_LEFT = 290U;
+
+    #elif defined(SVEMS_REMOTE_SPI)
+
+        constexpr uint16_t HEADER_STATUS_LEFT = 250U;
+
+    #else
+
+        #error "Remote hardware type is not defined"
+
+    #endif
 
     constexpr uint16_t HEADER_STATUS_RIGHT =
         319U;
@@ -46,8 +57,15 @@ namespace
     constexpr uint16_t CONTENT_BOTTOM =
         199U;
 
-    constexpr uint16_t FOOTER_TOP =
-        200U;
+    #if defined(SVEMS_REMOTE)
+
+        constexpr uint16_t FOOTER_TOP = 200U;
+
+    #elif defined(SVEMS_REMOTE_SPI)
+
+        constexpr uint16_t FOOTER_TOP = 215U;
+
+    #endif
 
     constexpr uint16_t FOOTER_BOTTOM =
         239U;
@@ -258,14 +276,10 @@ namespace SVEMS::Remote
         uint16_t& screenX,
         uint16_t& screenY) const
     {
+    #if defined(SVEMS_REMOTE)
+
         //-----------------------------------------------------
-        // Raw touch coordinates:
-        // X : 0 ~ 239
-        // Y : 0 ~ 319
-        //
-        // LCD landscape:
-        // X : 0 ~ 319
-        // Y : 0 ~ 239
+        // FT6336G Capacitive Touch
         //-----------------------------------------------------
 
         int x = 0;
@@ -273,55 +287,80 @@ namespace SVEMS::Remote
 
         switch (DISPLAY_ROTATION)
         {
-            //-------------------------------------------------
-            // Rotation 1
-            //-------------------------------------------------
             case 1U:
-
-                x = 319 -
-                    static_cast<int>(rawY);
-
-                y =
-                    static_cast<int>(rawX);
-
+                x = 319 - static_cast<int>(rawY);
+                y = static_cast<int>(rawX);
                 break;
 
-            //-------------------------------------------------
-            // Rotation 3
-            //-------------------------------------------------
             case 3U:
-
-                x =
-                    static_cast<int>(rawY);
-
-                y = 239 -
-                    static_cast<int>(rawX);
-
+                x = static_cast<int>(rawY);
+                y = 239 - static_cast<int>(rawX);
                 break;
 
             default:
                 return;
         }
 
-        //-----------------------------------------------------
-        // Screen bounds
-        //-----------------------------------------------------
-
         screenX =
             static_cast<uint16_t>(
                 constrain(
                     x,
                     0,
-                    static_cast<int>(
-                        SCREEN_WIDTH - 1U)));
+                    static_cast<int>(SCREEN_WIDTH - 1U)));
 
         screenY =
             static_cast<uint16_t>(
                 constrain(
                     y,
                     0,
-                    static_cast<int>(
-                        SCREEN_HEIGHT - 1U)));
+                    static_cast<int>(SCREEN_HEIGHT - 1U)));
+
+    #elif defined(SVEMS_REMOTE_SPI)
+
+        //-----------------------------------------------------
+        // XPT2046 Resistive Touch
+        //-----------------------------------------------------
+
+        constexpr uint16_t RAW_X_MIN = 380;
+        constexpr uint16_t RAW_X_MAX = 3800;
+
+        constexpr uint16_t RAW_Y_MIN = 290;
+        constexpr uint16_t RAW_Y_MAX = 3750;
+
+        rawX = constrain(
+            rawX,
+            RAW_X_MIN,
+            RAW_X_MAX);
+
+        rawY = constrain(
+            rawY,
+            RAW_Y_MIN,
+            RAW_Y_MAX);
+
+        // XPT2046 axis is swapped
+        screenX =
+            static_cast<uint16_t>(
+                map(
+                    rawY,
+                    RAW_Y_MIN,
+                    RAW_Y_MAX,
+                    0,
+                    319));
+
+        screenY =
+            static_cast<uint16_t>(
+                map(
+                    rawX,
+                    RAW_X_MIN,
+                    RAW_X_MAX,
+                    0,
+                    239));
+
+    #else
+
+        #error "Remote hardware type is not defined"
+
+    #endif
     }
 
 

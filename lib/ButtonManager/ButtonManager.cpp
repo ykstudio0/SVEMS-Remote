@@ -10,7 +10,6 @@
 #include "ButtonManager.h"
 #include "Pins.h"
 #include "Config.h"
-#include "DisplayConfig.h"
 
 namespace
 {

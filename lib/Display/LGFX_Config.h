@@ -2,16 +2,16 @@
 // File : LGFX_Config.h
 // Author : JongOh Kim + ChatGPT
 // Date : 2026-07-23
-// Project : SVEMS
-// Version : 0.3.3
-// Description : LovyanGFX configuration for ILI9341V
+// Project : SVEMS Remote Display
+// Description : LovyanGFX Hardware Configuration
 //-------------------------------------------------------------
 
 #ifndef LGFX_CONFIG_H
 #define LGFX_CONFIG_H
-#define LGFX_USE_V1
-#include <LovyanGFX.hpp>
 
+#define LGFX_USE_V1
+
+#include <LovyanGFX.hpp>
 #include "Pins.h"
 
 class LGFX_SVEMS : public lgfx::LGFX_Device
@@ -24,7 +24,9 @@ private:
 public:
     LGFX_SVEMS()
     {
-        // SPI bus configuration
+        //-----------------------------------------------------
+        // SPI Bus Configuration
+        //-----------------------------------------------------
         {
             auto config = m_bus.config();
 
@@ -42,38 +44,59 @@ public:
             config.pin_dc      = PIN_TFT_DC;
 
             m_bus.config(config);
-
             m_panel.setBus(&m_bus);
         }
 
-        // ILI9341 panel configuration
+        //-----------------------------------------------------
+        // ILI9341 Panel Configuration
+        //-----------------------------------------------------
         {
             auto config = m_panel.config();
 
-            config.pin_cs          = PIN_TFT_CS;
-            config.pin_rst         = PIN_TFT_RST;
-            config.pin_busy        = -1;
+            config.pin_cs   = PIN_TFT_CS;
+            config.pin_rst  = PIN_TFT_RST;
+            config.pin_busy = -1;
 
-            config.memory_width    = 240;
-            config.memory_height   = 320;
-            config.panel_width     = 240;
-            config.panel_height    = 320;
+#if defined(SVEMS_REMOTE)
+
+            // Capacitive Touch Remote
+            config.memory_width  = 240;
+            config.memory_height = 320;
+            config.panel_width   = 240;
+            config.panel_height  = 320;
+
+            config.invert    = true;
+            config.rgb_order = false;
+
+#elif defined(SVEMS_REMOTE_SPI)
+
+            // Resistive Touch Remote (XPT2046)
+            config.memory_width  = 320;
+            config.memory_height = 240;
+            config.panel_width   = 320;
+            config.panel_height  = 240;
+
+            config.invert    = false;
+            config.rgb_order = true;
+
+#else
+    #error "Remote hardware type is not defined"
+#endif
 
             config.offset_x        = 0;
             config.offset_y        = 0;
             config.offset_rotation = 0;
-            
-            config.readable        = true;
-            config.invert          = true;
-            config.rgb_order       = false;
-            config.dlen_16bit      = false;
-            
-            config.bus_shared      = true;
+
+            config.readable   = true;
+            config.dlen_16bit = false;
+            config.bus_shared = true;
 
             m_panel.config(config);
         }
 
-        // Backlight PWM configuration
+        //-----------------------------------------------------
+        // Backlight PWM Configuration
+        //-----------------------------------------------------
         {
             auto config = m_light.config();
 
