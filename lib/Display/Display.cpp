@@ -41,10 +41,10 @@ bool Display::Begin()
 
     g_pageManager.Begin();
 
-    if (!InitializeLCD())
-    {
-        return false;
-    }
+    // if (!InitializeLCD())
+    // {
+    //     return false;
+    // }
 
     if (!g_renderer.Begin(g_renderTarget))
     {
@@ -56,10 +56,10 @@ bool Display::Begin()
     return true;
 }
 
-bool Display::InitializeLCD()
-{
-    return g_renderTarget.Begin();
-}
+// bool Display::InitializeLCD()
+// {
+//     return g_renderTarget.Begin();
+// }
 
 void Display::Update()
 {

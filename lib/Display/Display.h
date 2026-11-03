@@ -21,5 +21,5 @@ public:
     static void NextSubPage();
 
 private:
-    static bool InitializeLCD();    
+    // static bool InitializeLCD();    
 };

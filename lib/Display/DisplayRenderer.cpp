@@ -164,7 +164,7 @@ namespace DisplayRenderer
         m_target->BeginFrame();
 
         if (m_displayConfigMode)
-{
+        {
             if (!m_displayConfigDrawn)
             {
                 DrawDisplaySettings();
