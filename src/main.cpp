@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-#include "Display.h"
+// #include "Display.h"
 #include "DisplayModel.h"
 #include "IRenderTarget.h"
 #include "DisplayRenderer.h"
@@ -105,27 +105,6 @@ void setup()
         SVEMS::Remote::DisplaySettings::LoadDataSource()
     );
 
-    //---------------------------------------------------------
-    // LCD
-    //---------------------------------------------------------
-
-    display.init();
-
-    // #if defined(SVEMS_REMOTE)
-
-    //     // FT6336G Remote
-    //     display.setRotation(
-    //         DISPLAY_ROTATION
-    //     );
-
-    // #elif defined(SVEMS_REMOTE_SPI)
-
-    //     // XPT2046 Remote
-    //     // 기존 SPI 버전은 회전 설정을 호출하지 않음.
-    //     // LovyanGFX 기본 회전 상태 유지.
-
-    // #endif
-
     Serial.println(
         "[I2C] Scanning..."
     );
@@ -147,22 +126,9 @@ void setup()
         }
     }
 
-    SVEMS::Remote::Display::
-        DisplayBrightnessManager::Begin();
-
-    display.setBrightness(
-        SVEMS::Remote::Display::
-            DisplayBrightnessManager::GetBrightness());
-
-    display.fillScreen(
-        TFT_BLACK
-    );
-
     //---------------------------------------------------------
     // Display Framework
     //---------------------------------------------------------
-    Display::Begin();
-
     if (!displayRenderer.Begin(
             tftTarget))
     {
@@ -178,6 +144,20 @@ void setup()
     );
 
     pageManager.Begin();
+
+    //---------------------------------------------------------
+    // LCD Brightness
+    //---------------------------------------------------------
+    SVEMS::Remote::Display::
+        DisplayBrightnessManager::Begin();
+
+    display.setBrightness(
+        SVEMS::Remote::Display::
+            DisplayBrightnessManager::GetBrightness());
+
+    display.fillScreen(
+        TFT_BLACK
+    );
 
     //---------------------------------------------------------
     // Wi-Fi
