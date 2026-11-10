@@ -404,7 +404,7 @@ namespace DisplayModel
         bool rs485CommunicationError = false;
         bool modbusCommunicationError = false;
         bool rs485Required = false;
-
+        
         constexpr SystemData()
             : currentTime(
                 DisplayTypes::MakeValue(
@@ -416,13 +416,6 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::Duration)),
 
-            mainBootCount(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::None)),
-
-            mainResetReason(),
-
             heapPercent(
                 DisplayTypes::MakeValue(
                     0.0f,
@@ -433,17 +426,8 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::SignalStrength)),
 
-            deviceCount(),
-
-            rs485Status(),
-            modbusStatus(),
-            deviceManagerStatus(),
             wifiStatus(),
-            epeverStatus(),
-            bmsStatus(),
-            sht40Status(),
-            rtcStatus(),
-
+            deviceCount(),
             telemetryStatus(),
 
             telemetryAge(
@@ -451,6 +435,58 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::Duration)),
 
+            rs485Status(),
+            modbusStatus(),
+            deviceManagerStatus(),
+
+            epeverStatus(),
+            bmsStatus(),
+
+            sht40Status(),
+            rtcStatus(),
+
+            // SYSTEM DTL(1)
+            mainWifiSignal(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::SignalStrength)),
+
+            mainUptime(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::Duration)),
+
+            mainHttpStatus(),
+
+            // SYSTEM DTL(2)
+            httpState(),
+
+            httpSuccessCount(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpFailureCount(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpConsecutiveFailures(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpMaxConsecutiveFailures(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            httpLastErrorCode(
+                DisplayTypes::MakeValue(
+                    0.0f,
+                    DisplayTypes::ValueType::None)),
+
+            // SYSTEM DTL(3)
             solarOfflineCount(
                 DisplayTypes::MakeValue(
                     0.0f,
@@ -481,44 +517,17 @@ namespace DisplayModel
                     0.0f,
                     DisplayTypes::ValueType::None)),
 
-            mainWifiSignal(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::SignalStrength)),
-
-            mainUptime(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::Duration)),
-
-            mainHttpStatus(),
-
-            httpState(),
-
-            httpSuccessCount(
+            // SYSTEM DTL(4)
+            mainBootCount(
                 DisplayTypes::MakeValue(
                     0.0f,
                     DisplayTypes::ValueType::None)),
 
-            httpFailureCount(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::None)),
+            mainResetReason(),
 
-            httpConsecutiveFailures(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::None)),
-
-            httpMaxConsecutiveFailures(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::None)),
-
-            httpLastErrorCode(
-                DisplayTypes::MakeValue(
-                    0.0f,
-                    DisplayTypes::ValueType::None)),
+            // SYSTEM DTL(5)
+            // vehicleVoltage, vehicleSoc, reverseCharge는
+            // 기존과 동일하게 기본 생성자로 초기화됨
 
             wifiConnected(false),
             rs485Ready(false),
@@ -526,6 +535,7 @@ namespace DisplayModel
             deviceManagerReady(false),
             epeverOnline(false),
             bmsOnline(false),
+
             rs485CommunicationError(false),
             modbusCommunicationError(false),
             rs485Required(false)

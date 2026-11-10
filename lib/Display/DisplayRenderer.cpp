@@ -950,6 +950,9 @@ namespace DisplayRenderer
                     model.GetSystem(),
                     subPage);
                 break;
+
+            case DisplayPages::Page::Count:
+                break;
         }
     }
 
@@ -2229,7 +2232,7 @@ namespace DisplayRenderer
                 snprintf(
                     buffer,
                     bufferSize,
-                    "%02u:%02u:%02u",
+                    "%02lu:%02lu:%02lu",
                     static_cast<unsigned long>(hours),
                     static_cast<unsigned long>(minutes),
                     static_cast<unsigned long>(seconds));
@@ -2846,23 +2849,10 @@ namespace DisplayRenderer
             DisplayTypes::TextAlign::Left,
             displayFont);
 
-        char brightnessText[16];
-
-        uint8_t displayBrightnessPercent =
-            m_brightnessEditPercent;
-
-        if (
-            m_brightnessEditMode ==
-            SVEMS::Remote::Display::
-                BrightnessMode::Auto
-        )
-        {
-            displayBrightnessPercent =
-                SVEMS::Remote::Display::
-                    DisplayBrightnessManager::
-                        GetAutoBrightnessPercent();
-        }
-
+        //-------------------------------------------------
+        // Brightness Value
+        //-------------------------------------------------
+        m_lastDisplayedBrightness = 255U;
         DrawDisplayBrightnessValue();
 
         const bool manualMode =
@@ -2874,15 +2864,6 @@ namespace DisplayRenderer
             manualMode
                 ? DisplayTheme::COLOR_VALUE
                 : DisplayTheme::COLOR_DISABLED;
-
-        m_target->DrawText(
-            290,
-            105,
-            brightnessText,
-            brightnessColor,
-            DisplayTheme::GetFontSize(
-                DisplayTheme::FontRole::Large),
-            DisplayTypes::TextAlign::Right);
 
         //-------------------------------------------------
         // - / +
@@ -2963,7 +2944,7 @@ namespace DisplayRenderer
             return;
         }
 
-        if (m_brightnessEditPercent >= 5U)
+        if (m_brightnessEditPercent > 5U)
         {
             m_brightnessEditPercent -= 5U;
         }
