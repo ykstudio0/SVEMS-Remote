@@ -66,6 +66,44 @@ namespace
         { 5U, "RUNTIME",    true, DisplayTypes::TextKey::Runtime }
     };
 
+    const DisplayLayout::StaticRow g_loadRows[] =
+    {
+        {0, "Voltage",      true, DisplayTypes::TextKey::LoadVoltage },
+        {1, "Current",      true, DisplayTypes::TextKey::LoadCurrent },
+        {2, "Power",        true, DisplayTypes::TextKey::LoadPower }
+    };
+
+    const DisplayLayout::StaticRow g_temperatureRows[] =
+    {
+        {0, "Cabin",        true, DisplayTypes::TextKey::TemperatureCabin },
+        {1, "Battery",      true, DisplayTypes::TextKey::TemperatureBattery },
+        {2, "BMS",          true, DisplayTypes::TextKey::TemperatureBMS },
+        {3, "Controller",   true, DisplayTypes::TextKey::TemperatureController }
+    };
+
+    //---------------------------------------------------------
+    // GNSS Static Rows
+    //---------------------------------------------------------
+    const DisplayLayout::StaticRow g_gnssRows[] =
+    {
+        {0, "STATUS",     true, DisplayTypes::TextKey::None},
+        {1, "LATITUDE",   true, DisplayTypes::TextKey::None},
+        {2, "LONGITUDE",  true, DisplayTypes::TextKey::None},
+        {3, "SPEED",      true, DisplayTypes::TextKey::None},
+        {4, "ALTITUDE",   true, DisplayTypes::TextKey::None},
+        {5, "SAT / HDOP", true, DisplayTypes::TextKey::None}
+    };
+    
+    const DisplayLayout::StaticRow g_systemRows[] =
+    {
+        { 0U, "WIFI",      true, DisplayTypes::TextKey::DtlSysWifi },
+        { 1U, "RSSI",      true, DisplayTypes::TextKey::DtlSysRSSI },
+        { 2U, "HEAP",      true, DisplayTypes::TextKey::DtlSysHeap },
+        { 3U, "UPTIME",    true, DisplayTypes::TextKey::DtlSysUptime },
+        { 4U, "TELEMETRY", true, DisplayTypes::TextKey::DtlSysTelemetry },
+        { 5U, "AGE",       true, DisplayTypes::TextKey::DtlSysAge }
+    };
+
     static constexpr DisplayLayout::StaticRow g_systemDetailRows[] =
     {
         { 0U, "RSSI",        true, DisplayTypes::TextKey::DtlRSSI },
@@ -116,31 +154,6 @@ namespace
         { 1U, "BMS",   true, DisplayTypes::TextKey::DtlSysBMS },
         { 2U, "SHT40", true, DisplayTypes::TextKey::DtlSysSHT40 },
         { 3U, "RTC",   true, DisplayTypes::TextKey::DtlSysRTC }
-    };
-
-    const DisplayLayout::StaticRow g_loadRows[] =
-    {
-        {0, "Voltage",      true, DisplayTypes::TextKey::LoadVoltage },
-        {1, "Current",      true, DisplayTypes::TextKey::LoadCurrent },
-        {2, "Power",        true, DisplayTypes::TextKey::LoadPower }
-    };
-
-    const DisplayLayout::StaticRow g_temperatureRows[] =
-    {
-        {0, "Cabin",        true, DisplayTypes::TextKey::TemperatureCabin },
-        {1, "Battery",      true, DisplayTypes::TextKey::TemperatureBattery },
-        {2, "BMS",          true, DisplayTypes::TextKey::TemperatureBMS },
-        {3, "Controller",   true, DisplayTypes::TextKey::TemperatureController }
-    };
-
-    const DisplayLayout::StaticRow g_systemRows[] =
-    {
-        { 0U, "WIFI",      true, DisplayTypes::TextKey::DtlSysWifi },
-        { 1U, "RSSI",      true, DisplayTypes::TextKey::DtlSysRSSI },
-        { 2U, "HEAP",      true, DisplayTypes::TextKey::DtlSysHeap },
-        { 3U, "UPTIME",    true, DisplayTypes::TextKey::DtlSysUptime },
-        { 4U, "TELEMETRY", true, DisplayTypes::TextKey::DtlSysTelemetry },
-        { 5U, "AGE",       true, DisplayTypes::TextKey::DtlSysAge }
     };
 
 } // anonymous namespace
@@ -208,6 +221,13 @@ const DisplayLayout::StaticRow*
 
                 return g_temperatureRows;
 
+            case DisplayPages::Page::GNSS:
+                count =
+                    sizeof(g_gnssRows) /
+                    sizeof(g_gnssRows[0]);
+
+                return g_gnssRows;
+                
             case DisplayPages::Page::System:
             {
                 if (subPage == 1U)

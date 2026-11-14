@@ -40,6 +40,9 @@ DataManager::CommunicationStats
 DataManager::VehicleData 
     DataManager::Vehicle;
 
+DataManager::GNSSData
+    DataManager::GNSS{};
+
 void DataManager::ClearUpdates()
 {
     Solar.status.updated = false;

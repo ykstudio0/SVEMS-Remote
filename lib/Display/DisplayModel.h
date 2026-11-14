@@ -343,6 +343,36 @@ namespace DisplayModel
         }
     };
 
+    //---------------------------------------------------------
+    // GNSS Display Data
+    //---------------------------------------------------------
+
+    struct GNSSData
+    {
+        enum class State : uint8_t
+        {
+            Invalid = 0,
+            Valid,
+            Stale
+        };
+
+        State state = State::Invalid;
+        bool valid = false;
+
+        double latitude = 0.0;
+        double longitude = 0.0;
+
+        float altitude = 0.0f;
+        float speedKmh = 0.0f;
+
+        uint8_t satellites = 0U;
+        uint8_t fixQuality = 0U;
+
+        float hdop = 0.0f;
+
+        uint64_t utcTimestamp = 0ULL;
+    };
+
     // System page data
     struct SystemData
     {
@@ -633,6 +663,16 @@ namespace DisplayModel
             return temperature;
         }
 
+        GNSSData& GetGNSS()
+        {
+            return gnss;
+        }
+
+        const GNSSData& GetGNSS() const
+        {
+            return gnss;
+        }
+
         SystemData& GetSystem()
         {
             return system;
@@ -664,6 +704,8 @@ namespace DisplayModel
             temperature = 
                 TemperatureData();
 
+            gnss =
+                GNSSData();
             system = 
                 SystemData();
         }
@@ -733,6 +775,7 @@ namespace DisplayModel
         BatteryData battery;
         LoadData load;
         TemperatureData temperature;
+        GNSSData gnss;
         SystemData system;
     };
 }

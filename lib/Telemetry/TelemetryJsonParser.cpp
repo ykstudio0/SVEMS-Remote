@@ -510,6 +510,46 @@ namespace SVEMS::Telemetry
             vehicle["socValid"] | false;
 
         //---------------------------------------------------------
+        // GNSS
+        //---------------------------------------------------------
+
+        JsonObject gnss =
+            doc["gnss"];
+
+        data.gnss.state =
+            gnss["state"] | "Invalid";
+
+        data.gnss.valid =
+            gnss["valid"] | false;
+
+        data.gnss.latitude =
+            gnss["latitude"] | 0.0;
+
+        data.gnss.longitude =
+            gnss["longitude"] | 0.0;
+
+        data.gnss.altitude =
+            gnss["altitude"] | 0.0f;
+
+        data.gnss.speedKmh =
+            gnss["speedKmh"] | 0.0f;
+
+        data.gnss.satellites =
+            gnss["satellites"] | 0U;
+
+        data.gnss.fixQuality =
+            gnss["fixQuality"] | 0U;
+
+        data.gnss.hdop =
+            gnss["hdop"] | 0.0f;
+
+        data.gnss.utcTimestamp =
+            gnss["utcTimestamp"] | 0ULL;
+
+        data.gnss.lastUpdateMs =
+            gnss["lastUpdateMs"] | 0U;
+            
+        //---------------------------------------------------------
         // System
         //---------------------------------------------------------
 

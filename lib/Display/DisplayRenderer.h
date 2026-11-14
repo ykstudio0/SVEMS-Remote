@@ -104,6 +104,9 @@ namespace DisplayRenderer
         void DrawTemperature(
             const DisplayModel::TemperatureData& data);
 
+        void DrawGNSS(
+            const DisplayModel::GNSSData& data);
+
         void DrawSystem(
             const DisplayModel::SystemData& data,
             uint8_t subPage);

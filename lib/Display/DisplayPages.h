@@ -20,6 +20,7 @@ namespace DisplayPages
         Battery,
         Load,
         Temperature,
+        GNSS,
         System,
 
         Count
@@ -70,6 +71,9 @@ namespace DisplayPages
 
             case Page::Temperature:
                 return "TEMPERATURE";
+
+            case Page::GNSS:
+                return "GNSS";
 
             case Page::System:
                 return "REMOTE SYSTEM";
@@ -146,6 +150,9 @@ namespace DisplayPages
 
             case Page::Temperature:
                 return "TEMP";
+
+            case Page::GNSS:
+                return "GNSS";
 
             case Page::System:
                 return "MAIN SYS";

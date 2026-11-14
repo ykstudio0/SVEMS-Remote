@@ -300,10 +300,63 @@ namespace SVEMS::Remote
         DataManager::Vehicle.reverseChargeEnabled =
             data.vehicle.reverseChargeEnabled;
 
-        // Serial.printf(
-        //     "[VEHICLE] V=%.2fV REV=%s\n",
-        //     DataManager::Vehicle.voltage,
-        //     DataManager::Vehicle.reverseChargeEnabled ? "ON" : "OFF");
+        //-----------------------------------------------------
+        // GNSS
+        //-----------------------------------------------------
+
+        // Convert GNSS state
+        if (data.gnss.state == "Valid")
+        {
+            DataManager::GNSS.state =
+                DataManager::GNSSData::State::Valid;
+        }
+        else if (data.gnss.state == "Stale")
+        {
+            DataManager::GNSS.state =
+                DataManager::GNSSData::State::Stale;
+        }
+        else
+        {
+            DataManager::GNSS.state =
+                DataManager::GNSSData::State::Invalid;
+        }
+
+        // Position and status
+        DataManager::GNSS.valid =
+            data.gnss.valid &&
+            (DataManager::GNSS.state ==
+                DataManager::GNSSData::State::Valid);
+
+        DataManager::GNSS.latitude =
+            data.gnss.latitude;
+
+        DataManager::GNSS.longitude =
+            data.gnss.longitude;
+
+        DataManager::GNSS.altitude =
+            data.gnss.altitude;
+
+        DataManager::GNSS.speedKmh =
+            data.gnss.speedKmh;
+
+        DataManager::GNSS.satellites =
+            data.gnss.satellites;
+
+        DataManager::GNSS.fixQuality =
+            data.gnss.fixQuality;
+
+        DataManager::GNSS.hdop =
+            data.gnss.hdop;
+
+        DataManager::GNSS.utcTimestamp =
+            data.gnss.utcTimestamp;
+
+        DataManager::GNSS.lastUpdateMs =
+            data.gnss.lastUpdateMs;
+
+        // Remote local receive time
+        DataManager::GNSS.lastReceivedMs =
+            millis();
 
         //-----------------------------------------------------
         // Communication Counters
@@ -433,5 +486,23 @@ namespace SVEMS::Remote
 
         DataManager::Environment.status.online =
             false;
+
+        //-----------------------------------------------------
+        // GNSS
+        //-----------------------------------------------------
+        const bool hasLastPosition =
+            DataManager::GNSS.latitude >= -90.0 &&
+            DataManager::GNSS.latitude <= 90.0 &&
+            DataManager::GNSS.longitude >= -180.0 &&
+            DataManager::GNSS.longitude <= 180.0 &&
+            (DataManager::GNSS.latitude != 0.0 ||
+            DataManager::GNSS.longitude != 0.0);
+
+        DataManager::GNSS.valid = false;
+
+        DataManager::GNSS.state =
+            hasLastPosition
+                ? DataManager::GNSSData::State::Stale
+                : DataManager::GNSSData::State::Invalid;
     }
 }

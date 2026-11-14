@@ -514,6 +514,68 @@ namespace
             DataManager::Environment.status);
     }
 
+    //---------------------------------------------------------
+    // GNSS Display Model
+    //---------------------------------------------------------
+    void BuildGNSS(DisplayModel::Model& model)
+    {
+        DisplayModel::GNSSData& gnss =
+            model.GetGNSS();
+
+        const auto& source =
+            DataManager::GNSS;
+
+        //-----------------------------------------------------
+        // State
+        //-----------------------------------------------------
+        switch (source.state)
+        {
+            case DataManager::GNSSData::State::Valid:
+                gnss.state =
+                    DisplayModel::GNSSData::State::Valid;
+                break;
+
+            case DataManager::GNSSData::State::Stale:
+                gnss.state =
+                    DisplayModel::GNSSData::State::Stale;
+                break;
+
+            default:
+                gnss.state =
+                    DisplayModel::GNSSData::State::Invalid;
+                break;
+        }
+
+        gnss.valid =
+            source.valid &&
+            (gnss.state ==
+                DisplayModel::GNSSData::State::Valid);
+
+        //-----------------------------------------------------
+        // Position
+        //-----------------------------------------------------
+        gnss.latitude = source.latitude;
+        gnss.longitude = source.longitude;
+        gnss.altitude = source.altitude;
+
+        //-----------------------------------------------------
+        // Motion
+        //-----------------------------------------------------
+        gnss.speedKmh = source.speedKmh;
+
+        //-----------------------------------------------------
+        // Fix Quality
+        //-----------------------------------------------------
+        gnss.satellites = source.satellites;
+        gnss.fixQuality = source.fixQuality;
+        gnss.hdop = source.hdop;
+
+        //-----------------------------------------------------
+        // UTC
+        //-----------------------------------------------------
+        gnss.utcTimestamp = source.utcTimestamp;
+    }
+
     void BuildSystem(DisplayModel::Model& model)
     {
         DisplayModel::SystemData& system =
@@ -1204,6 +1266,7 @@ namespace DisplayModelBuilder
         BuildBattery(model);
         BuildLoad(model);
         BuildTemperature(model);
+        BuildGNSS(model);
         BuildSystem(model);
 
         // Overview는 별도의 데이터를 생성하지 않는다.

@@ -945,6 +945,11 @@ namespace DisplayRenderer
                     model.GetTemperature());
                 break;
 
+            case DisplayPages::Page::GNSS:
+                DrawGNSS(
+                    model.GetGNSS());
+                break;
+
             case DisplayPages::Page::System:
                 DrawSystem(
                     model.GetSystem(),
@@ -1506,6 +1511,234 @@ namespace DisplayRenderer
             DrawRowValue(
                 data.controllerTemperature,
                 3U);
+        }
+    }
+
+    //-------------------------------------------------------------
+    // GNSS Page
+    //-------------------------------------------------------------
+    void Renderer::DrawGNSS(
+        const DisplayModel::GNSSData& data)
+    {
+        const DisplayModel::GNSSData& lastData =
+            m_lastModel.GetGNSS();
+
+        using State = DisplayModel::GNSSData::State;
+
+        const bool statusChanged =
+            (data.state != lastData.state) ||
+            (data.valid != lastData.valid);
+
+        const bool currentValid =
+            data.valid &&
+            data.state == State::Valid;
+
+        const bool hasPosition =
+            (currentValid || data.state == State::Stale) &&
+            data.latitude >= -90.0 &&
+            data.latitude <= 90.0 &&
+            data.longitude >= -180.0 &&
+            data.longitude <= 180.0 &&
+            (data.latitude != 0.0 ||
+            data.longitude != 0.0);
+
+        //---------------------------------------------------------
+        // Common Row Drawing
+        //---------------------------------------------------------
+        auto DrawGNSSRow =
+            [&](uint8_t row,
+                const char* text,
+                DisplayTheme::Color color,
+                DisplayTheme::FontRole fontRole)
+        {
+            const int16_t rowY =
+                DisplayLayout::GetRowY(row);
+
+            m_target->FillRect(
+                DisplayLayout::CONTENT_DYNAMIC_X,
+                rowY,
+                DisplayLayout::CONTENT_DYNAMIC_WIDTH,
+                DisplayLayout::CONTENT_ROW_HEIGHT,
+                DisplayTheme::COLOR_BACKGROUND);
+
+            m_target->DrawText(
+                DisplayLayout::CONTENT_RIGHT - 6,
+                rowY,
+                text,
+                color,
+                DisplayTheme::GetFontSize(fontRole),
+                DisplayTypes::TextAlign::Right);
+        };
+
+        char buffer[48];
+
+        //---------------------------------------------------------
+        // Row 0 : STATUS
+        //---------------------------------------------------------
+        if (ShouldDraw(statusChanged))
+        {
+            const char* status = "INVALID";
+
+            if (currentValid)
+            {
+                status = "VALID";
+            }
+            else if (data.state == State::Stale)
+            {
+                status = "STALE";
+            }
+
+            DrawGNSSRow(
+                0U,
+                status,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
+        }
+
+        //---------------------------------------------------------
+        // Row 1 : LATITUDE
+        //---------------------------------------------------------
+        if (ShouldDraw(
+            statusChanged ||
+            data.latitude != lastData.latitude ||
+            data.longitude != lastData.longitude))
+        {
+            if (hasPosition)
+            {
+                snprintf(
+                    buffer, sizeof(buffer),
+                    "%.7f",
+                    data.latitude);
+            }
+            else
+            {
+                snprintf(buffer, sizeof(buffer), "--");
+            }
+
+            DrawGNSSRow(
+                1U,
+                buffer,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
+        }
+
+        //---------------------------------------------------------
+        // Row 2 : LONGITUDE
+        //---------------------------------------------------------
+        if (ShouldDraw(
+            statusChanged ||
+            data.latitude != lastData.latitude ||
+            data.longitude != lastData.longitude))
+        {
+            if (hasPosition)
+            {
+                snprintf(
+                    buffer, sizeof(buffer),
+                    "%.7f",
+                    data.longitude);
+            }
+            else
+            {
+                snprintf(buffer, sizeof(buffer), "--");
+            }
+
+            DrawGNSSRow(
+                2U,
+                buffer,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
+        }
+
+        //---------------------------------------------------------
+        // Row 3 : SPEED
+        //---------------------------------------------------------
+        if (ShouldDraw(
+            statusChanged ||
+            data.speedKmh != lastData.speedKmh))
+        {
+            if (currentValid)
+            {
+                snprintf(
+                    buffer, sizeof(buffer),
+                    "%.1f km/h",
+                    data.speedKmh);
+            }
+            else
+            {
+                snprintf(buffer, sizeof(buffer), "--");
+            }
+
+            DrawGNSSRow(
+                3U,
+                buffer,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
+        }
+
+        //---------------------------------------------------------
+        // Row 4 : ALTITUDE
+        //---------------------------------------------------------
+        if (ShouldDraw(
+            statusChanged ||
+            data.altitude != lastData.altitude))
+        {
+            if (currentValid)
+            {
+                snprintf(
+                    buffer, sizeof(buffer),
+                    "%.1f m",
+                    data.altitude);
+            }
+            else
+            {
+                snprintf(buffer, sizeof(buffer), "--");
+            }
+
+            DrawGNSSRow(
+                4U,
+                buffer,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
+        }
+
+        //---------------------------------------------------------
+        // Row 5 : SAT / HDOP
+        //---------------------------------------------------------
+        if (ShouldDraw(
+            statusChanged ||
+            data.satellites != lastData.satellites ||
+            data.hdop != lastData.hdop))
+        {
+            if (currentValid)
+            {
+                snprintf(
+                    buffer, sizeof(buffer),
+                    "%u / %.2f",
+                    static_cast<unsigned>(data.satellites),
+                    data.hdop);
+            }
+            else
+            {
+                snprintf(buffer, sizeof(buffer), "--");
+            }
+
+            DrawGNSSRow(
+                5U,
+                buffer,
+                currentValid
+                    ? DisplayTheme::COLOR_VALUE
+                    : DisplayTheme::COLOR_DISABLED,
+                DisplayTheme::FontRole::Value);
         }
     }
 

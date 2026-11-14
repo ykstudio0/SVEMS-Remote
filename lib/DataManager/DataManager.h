@@ -185,6 +185,42 @@ public:
         bool socValid = false;
     };
 
+    //---------------------------------------------------------
+    // GNSS
+    //---------------------------------------------------------
+
+    struct GNSSData
+    {
+        enum class State : uint8_t
+        {
+            Invalid = 0,
+            Valid,
+            Stale
+        };
+
+        State state = State::Invalid;
+        bool valid = false;
+
+        double latitude = 0.0;
+        double longitude = 0.0;
+
+        float altitude = 0.0f;
+        float speedKmh = 0.0f;
+
+        uint8_t satellites = 0U;
+        uint8_t fixQuality = 0U;
+
+        float hdop = 0.0f;
+
+        uint64_t utcTimestamp = 0ULL;
+
+        // Main ESP32의 millis() 기준
+        uint32_t lastUpdateMs = 0U;
+
+        // Remote ESP32의 millis() 기준
+        uint32_t lastReceivedMs = 0U;
+    };
+
     static SolarData Solar;
     static BatteryData Battery;
     static ControllerBatteryData ControllerBattery;
@@ -196,6 +232,8 @@ public:
     
     static CommunicationStats CommStats;
     static VehicleData Vehicle;
+
+    static GNSSData GNSS;
     
     static void ClearUpdates();
     static void UpdateOnlineStatus(uint32_t now);

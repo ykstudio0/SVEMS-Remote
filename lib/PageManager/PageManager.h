@@ -38,11 +38,5 @@ namespace PageManager
             DisplayPages::Page::Overview;
 
         uint8_t m_subPage = 0U;
-        
-        // static uint8_t ToIndex(
-        //     DisplayPages::Page page)
-        // {
-        //     return static_cast<uint8_t>(page);
-        // }
     };
 }
