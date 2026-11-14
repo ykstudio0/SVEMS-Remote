@@ -41,6 +41,7 @@ namespace Localization
     extern const Text HeaderBattery;
     extern const Text HeaderLoad;
     extern const Text HeaderTemperature;
+    extern const Text HeaderGNSS;
     extern const Text HeaderSystem;
     extern const Text HeaderSystemDetail;
 
@@ -75,6 +76,12 @@ namespace Localization
     extern const Text TemperatureController;
     extern const Text BMSTemp;
     extern const Text ExtTemp;
+    extern const Text GNSSStatus;
+    extern const Text GNSSLatitude;
+    extern const Text GNSSLongitude;
+    extern const Text GNSSSpeed;
+    extern const Text GNSSAltitude;
+    extern const Text GNSSSatHdop;
     extern const Text Capacity;
     extern const Text DtlRemaining;
     extern const Text DtlSOC;

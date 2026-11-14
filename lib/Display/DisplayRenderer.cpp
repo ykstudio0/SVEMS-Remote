@@ -47,6 +47,10 @@ namespace
                 return Localization::Get(
                     Localization::HeaderTemperature);
 
+            case DisplayPages::Page::GNSS:
+                return Localization::Get(
+                    Localization::HeaderGNSS);
+
             case DisplayPages::Page::System:
                 return Localization::Get(
                     Localization::HeaderSystem);
@@ -455,6 +459,42 @@ namespace DisplayRenderer
                     label =
                         Localization::Get(
                             Localization::ExtTemp);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSStatus:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSStatus);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSLatitude:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSLatitude);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSLongitude:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSLongitude);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSSpeed:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSSpeed);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSAltitude:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSAltitude);
+                    break;
+
+                case DisplayTypes::TextKey::GNSSSatHdop:
+                    label =
+                        Localization::Get(
+                            Localization::GNSSSatHdop);
                     break;
 
                 case DisplayTypes::TextKey::Capacity:

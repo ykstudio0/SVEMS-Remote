@@ -86,12 +86,12 @@ namespace
     //---------------------------------------------------------
     const DisplayLayout::StaticRow g_gnssRows[] =
     {
-        {0, "STATUS",     true, DisplayTypes::TextKey::None},
-        {1, "LATITUDE",   true, DisplayTypes::TextKey::None},
-        {2, "LONGITUDE",  true, DisplayTypes::TextKey::None},
-        {3, "SPEED",      true, DisplayTypes::TextKey::None},
-        {4, "ALTITUDE",   true, DisplayTypes::TextKey::None},
-        {5, "SAT / HDOP", true, DisplayTypes::TextKey::None}
+        {0, "STATUS",     true, DisplayTypes::TextKey::GNSSStatus},
+        {1, "LATITUDE",   true, DisplayTypes::TextKey::GNSSLatitude},
+        {2, "LONGITUDE",  true, DisplayTypes::TextKey::GNSSLongitude},
+        {3, "SPEED",      true, DisplayTypes::TextKey::GNSSSpeed},
+        {4, "ALTITUDE",   true, DisplayTypes::TextKey::GNSSAltitude},
+        {5, "SAT / HDOP", true, DisplayTypes::TextKey::GNSSSatHdop}
     };
     
     const DisplayLayout::StaticRow g_systemRows[] =

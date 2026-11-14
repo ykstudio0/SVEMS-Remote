@@ -100,6 +100,12 @@ namespace Localization
         "온도"
     };
 
+    const Text HeaderGNSS =
+    {
+        "GNSS",
+        "위성정보"
+    };
+
     const Text HeaderSystem =
     {
         "REMOTE SYSTEM",
@@ -353,6 +359,42 @@ namespace Localization
     {
         "Delta",
         "셀편차"
+    };
+
+    const Text GNSSStatus =
+    {
+        "STATUS",
+        "상태"
+    };
+
+    const Text GNSSLatitude
+    {
+        "LATITUDE",
+        "위도"
+    };
+
+    const Text GNSSLongitude
+    {
+        "LONGITUDE",
+        "경도"
+    };
+
+    const Text GNSSSpeed
+    {
+        "SPEED",
+        "속도"
+    };
+
+    const Text GNSSAltitude
+    {
+        "ALTITUDE",
+        "고도"
+    };
+
+    const Text GNSSSatHdop
+    {
+        "SAT / HDOP",
+        "정밀도"
     };
 
     // System Main
